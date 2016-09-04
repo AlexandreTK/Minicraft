@@ -13,16 +13,16 @@ import java.util.List;
 
 public class InputHandler implements KeyListener {
 	public class Key {
-		public int presses, absorbs;
-		public boolean down, clicked;
+		private int presses, absorbs;
+		private boolean keyIsDown, keyWasClicked;
 
 		public Key() {
 			keys.add(this);
 		}
 
-		public void toggle(boolean pressed) {
-			if (pressed != down) {
-				down = pressed;
+		public void toggleKey(boolean pressed) {
+			if (pressed != keyIsDown) {
+				keyIsDown = pressed;
 			}
 			if (pressed) {
 				presses++;
@@ -32,10 +32,18 @@ public class InputHandler implements KeyListener {
 		public void tick() {
 			if (absorbs < presses) {
 				absorbs++;
-				clicked = true;
+				keyWasClicked = true;
 			} else {
-				clicked = false;
+				keyWasClicked = false;
 			}
+		}
+		
+		public boolean wasKeyClicked() {
+			return this.keyWasClicked;
+		}
+		
+		public boolean isKeyDown() {
+			return this.keyIsDown;
 		}
 	}
 
@@ -48,9 +56,9 @@ public class InputHandler implements KeyListener {
 	public Key attack = new Key();
 	public Key menu = new Key();
 
-	public void releaseAll() {
+	public void releaseAllKeys() {
 		for (int i = 0; i < keys.size(); i++) {
-			keys.get(i).down = false;
+			keys.get(i).keyIsDown = false;
 		}
 	}
 
@@ -73,73 +81,96 @@ public class InputHandler implements KeyListener {
 	}
 
 	private void toggle(KeyEvent keyEvent, boolean pressed) {
-		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD8) {
-			up.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD2) {
-			down.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD4) {
-			left.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD6) {
-			right.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_W) {
-			up.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
-			down.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_A) {
-			left.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_D) {
-			right.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-			up.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-			down.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-			left.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-			right.toggle(pressed);
-		}
-
-		if (keyEvent.getKeyCode() == KeyEvent.VK_TAB) {
-			menu.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_ALT) {
-			menu.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_ALT_GRAPH){
-			menu.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-			attack.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_CONTROL) {
-			attack.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD0) {
-			attack.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_INSERT) {
-			attack.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-			menu.toggle(pressed);
-		}
-
-		if (keyEvent.getKeyCode() == KeyEvent.VK_X) {
-			menu.toggle(pressed);
-		}
-		if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
-			attack.toggle(pressed);
+		switch( keyEvent.getKeyCode() ) {
+		
+			case KeyEvent.VK_NUMPAD8:
+				up.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_NUMPAD2:
+				down.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_NUMPAD4:
+				left.toggleKey(pressed);
+				break;	
+				
+			case KeyEvent.VK_NUMPAD6:
+				right.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_W:
+				up.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_S:
+				down.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_A:
+				left.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_D:
+				right.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_UP:
+				up.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_DOWN:
+				down.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_LEFT:
+				left.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_RIGHT:
+				right.toggleKey(pressed);
+				break;
+				
+			case KeyEvent.VK_TAB:
+				menu.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_ALT:
+				menu.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_ALT_GRAPH:
+				menu.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_SPACE:
+				attack.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_CONTROL:
+				attack.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_NUMPAD0:
+				attack.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_INSERT:
+				attack.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_ENTER:
+				menu.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_X:
+				menu.toggleKey(pressed);
+				break;		
+				
+			case KeyEvent.VK_C:
+				attack.toggleKey(pressed);
+				break;		
+				
 		}
 	}
 

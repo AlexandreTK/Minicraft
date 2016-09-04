@@ -178,7 +178,7 @@ public class Game extends Canvas implements Runnable {
 	public void tick() {
 		tickCount++;
 		if (!hasFocus()) {
-			input.releaseAll();
+			input.releaseAllKeys();
 		} else {
 			if (!player.removed && !hasWon) gameTime++;
 

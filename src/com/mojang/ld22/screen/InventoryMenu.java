@@ -19,17 +19,17 @@ public class InventoryMenu extends Menu {
 	}
 
 	public void tick() {
-		if (input.menu.clicked) game.setMenu(null);
+		if (input.menu.wasKeyClicked()) game.setMenu(null);
 
-		if (input.up.clicked) selected--;
-		if (input.down.clicked) selected++;
+		if (input.up.wasKeyClicked()) selected--;
+		if (input.down.wasKeyClicked()) selected++;
 
 		int len = player.inventory.items.size();
 		if (len == 0) selected = 0;
 		if (selected < 0) selected += len;
 		if (selected >= len) selected -= len;
 
-		if (input.attack.clicked && len > 0) {
+		if (input.attack.wasKeyClicked() && len > 0) {
 			Item item = player.inventory.items.remove(selected);
 			player.activeItem = item;
 			game.setMenu(null);

@@ -14,14 +14,14 @@ public class TitleMenu extends Menu {
 	}
 
 	public void tick() {
-		if (input.up.clicked) selected--;
-		if (input.down.clicked) selected++;
+		if (input.up.wasKeyClicked()) selected--;
+		if (input.down.wasKeyClicked()) selected++;
 
 		int len = options.length;
 		if (selected < 0) selected += len;
 		if (selected >= len) selected -= len;
 
-		if (input.attack.clicked || input.menu.clicked) {
+		if (input.attack.wasKeyClicked() || input.menu.wasKeyClicked()) {
 			if (selected == 0) {
 				Sound.test.play();
 				game.resetGame();
