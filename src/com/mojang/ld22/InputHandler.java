@@ -1,3 +1,9 @@
+/*
+* Objective:  Input Management - Handles the keyboard inputs.
+* Last Modification: 04/09/2016.
+* Modifier: Alexandre T Kryonidis.
+*/
+
 package com.mojang.ld22;
 
 import java.awt.event.KeyEvent;
@@ -58,39 +64,83 @@ public class InputHandler implements KeyListener {
 		game.addKeyListener(this);
 	}
 
-	public void keyPressed(KeyEvent ke) {
-		toggle(ke, true);
+	public void keyPressed(KeyEvent keyEvent) {
+		toggle(keyEvent, true);
 	}
 
-	public void keyReleased(KeyEvent ke) {
-		toggle(ke, false);
+	public void keyReleased(KeyEvent keyEvent) {
+		toggle(keyEvent, false);
 	}
 
-	private void toggle(KeyEvent ke, boolean pressed) {
-		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD8) up.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD2) down.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD4) left.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD6) right.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_W) up.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_S) down.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_A) left.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_D) right.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_UP) up.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_DOWN) down.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_LEFT) left.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_RIGHT) right.toggle(pressed);
+	private void toggle(KeyEvent keyEvent, boolean pressed) {
+		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD8) {
+			up.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD2) {
+			down.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD4) {
+			left.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD6) {
+			right.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_W) {
+			up.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
+			down.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_A) {
+			left.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_D) {
+			right.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+			up.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+			down.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+			left.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+			right.toggle(pressed);
+		}
 
-		if (ke.getKeyCode() == KeyEvent.VK_TAB) menu.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_ALT) menu.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_ALT_GRAPH) menu.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_SPACE) attack.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_CONTROL) attack.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD0) attack.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_INSERT) attack.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_ENTER) menu.toggle(pressed);
+		if (keyEvent.getKeyCode() == KeyEvent.VK_TAB) {
+			menu.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_ALT) {
+			menu.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_ALT_GRAPH){
+			menu.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+			attack.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_CONTROL) {
+			attack.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_NUMPAD0) {
+			attack.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_INSERT) {
+			attack.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+			menu.toggle(pressed);
+		}
 
-		if (ke.getKeyCode() == KeyEvent.VK_X) menu.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_C) attack.toggle(pressed);
+		if (keyEvent.getKeyCode() == KeyEvent.VK_X) {
+			menu.toggle(pressed);
+		}
+		if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
+			attack.toggle(pressed);
+		}
 	}
 
 	public void keyTyped(KeyEvent ke) {

@@ -1,3 +1,10 @@
+/*
+* Objective:  Game Management - Game main methods and attributes.
+* Last Modification: 04/09/2016.
+* Modifier: Alexandre T Kryonidis.
+*/
+
+
 package com.mojang.ld22;
 
 import java.awt.BorderLayout;
@@ -27,6 +34,7 @@ import com.mojang.ld22.screen.TitleMenu;
 import com.mojang.ld22.screen.WonMenu;
 
 public class Game extends Canvas implements Runnable {
+	// java uses serialVersionUID as an identifier of the class version
 	private static final long serialVersionUID = 1L;
 	private Random random = new Random();
 	public static final String NAME = "Minicraft";
