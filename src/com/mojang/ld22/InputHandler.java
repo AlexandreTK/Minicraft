@@ -23,9 +23,13 @@ public class InputHandler implements KeyListener {
 		public void toggleKey(boolean pressed) {
 			if (pressed != keyIsDown) {
 				keyIsDown = pressed;
+			} else {
+				// Do nothing
 			}
 			if (pressed) {
 				presses++;
+			} else {
+				// Do nothing
 			}
 		}
 
