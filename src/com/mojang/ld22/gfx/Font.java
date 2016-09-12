@@ -12,6 +12,8 @@ public class Font {
 			int ix = chars.indexOf(msg.charAt(i));
 			if (ix >= 0) {
 				screen.render(x + i * 8, y, ix + 30 * 32, col, 0);
+			} else {
+				//Do nothing
 			}
 		}
 	}
