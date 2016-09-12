@@ -14,8 +14,8 @@ public class AirWizard extends Mob {
 	private int attackType = 0;
 
 	public AirWizard() {
-		x = random.nextInt(64 * 16);
-		y = random.nextInt(64 * 16);
+		positionX = random.nextInt(64 * 16);
+		positionY = random.nextInt(64 * 16);
 		health = maxHealth = 2000;
 	}
 
@@ -23,10 +23,10 @@ public class AirWizard extends Mob {
 		super.tick();
 
 		if (attackDelay > 0) {
-			dir = (attackDelay - 45) / 4 % 4;
-			dir = (dir * 2 % 4) + (dir / 2);
+			direction = (attackDelay - 45) / 4 % 4;
+			direction = (direction * 2 % 4) + (direction / 2);
 			if (attackDelay < 45) {
-				dir = 0;
+				direction = 0;
 			}
 			attackDelay--;
 			if (attackDelay == 0) {
@@ -47,8 +47,8 @@ public class AirWizard extends Mob {
 		}
 
 		if (level.player != null && randomWalkTime == 0) {
-			int xd = level.player.x - x;
-			int yd = level.player.y - y;
+			int xd = level.player.positionX - positionX;
+			int yd = level.player.positionY - positionY;
 			if (xd * xd + yd * yd < 32 * 32) {
 				xa = 0;
 				ya = 0;
@@ -75,8 +75,8 @@ public class AirWizard extends Mob {
 		if (randomWalkTime > 0) {
 			randomWalkTime--;
 			if (level.player != null && randomWalkTime == 0) {
-				int xd = level.player.x - x;
-				int yd = level.player.y - y;
+				int xd = level.player.positionX - positionX;
+				int yd = level.player.positionY - positionY;
 				if (random.nextInt(4) == 0 && xd * xd + yd * yd < 50 * 50) {
 					if (attackDelay == 0 && attackTime == 0) {
 						attackDelay = 60 * 2;
@@ -97,24 +97,24 @@ public class AirWizard extends Mob {
 		int xt = 8;
 		int yt = 14;
 
-		int flip1 = (walkDist >> 3) & 1;
-		int flip2 = (walkDist >> 3) & 1;
+		int flip1 = (walkedDistancy >> 3) & 1;
+		int flip2 = (walkedDistancy >> 3) & 1;
 
-		if (dir == 1) {
+		if (direction == 1) {
 			xt += 2;
 		}
-		if (dir > 1) {
+		if (direction > 1) {
 
 			flip1 = 0;
-			flip2 = ((walkDist >> 4) & 1);
-			if (dir == 2) {
+			flip2 = ((walkedDistancy >> 4) & 1);
+			if (direction == 2) {
 				flip1 = 1;
 			}
-			xt += 4 + ((walkDist >> 3) & 1) * 2;
+			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
 		}
 
-		int xo = x - 8;
-		int yo = y - 11;
+		int xo = positionX - 8;
+		int yo = positionY - 11;
 
 		int col1 = Color.get(-1, 100, 500, 555);
 		int col2 = Color.get(-1, 100, 500, 532);
@@ -142,7 +142,7 @@ public class AirWizard extends Mob {
 
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player) {
-			entity.hurt(this, 3, dir);
+			entity.hurt(this, 3, direction);
 		}
 	}
 

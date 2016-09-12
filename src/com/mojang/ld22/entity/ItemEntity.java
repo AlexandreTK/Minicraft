@@ -18,10 +18,10 @@ public class ItemEntity extends Entity {
 
 	public ItemEntity(Item item, int x, int y) {
 		this.item = item;
-		xx = this.x = x;
-		yy = this.y = y;
-		xr = 3;
-		yr = 3;
+		xx = this.positionX = x;
+		yy = this.positionY = y;
+		positionXRelative = 3;
+		positionYRelative = 3;
 
 		zz = 2;
 		xa = random.nextGaussian() * 0.3;
@@ -47,15 +47,15 @@ public class ItemEntity extends Entity {
 			ya *= 0.6;
 		}
 		za -= 0.15;
-		int ox = x;
-		int oy = y;
+		int ox = positionX;
+		int oy = positionY;
 		int nx = (int) xx;
 		int ny = (int) yy;
-		int expectedx = nx - x;
-		int expectedy = ny - y;
-		move(nx - x, ny - y);
-		int gotx = x - ox;
-		int goty = y - oy;
+		int expectedx = nx - positionX;
+		int expectedy = ny - positionY;
+		move(nx - positionX, ny - positionY);
+		int gotx = positionX - ox;
+		int goty = positionY - oy;
 		xx += gotx - expectedx;
 		yy += goty - expectedy;
 
@@ -70,8 +70,8 @@ public class ItemEntity extends Entity {
 		if (time >= lifeTime - 6 * 20) {
 			if (time / 6 % 2 == 0) return;
 		}
-		screen.render(x - 4, y - 4, item.getSprite(), Color.get(-1, 0, 0, 0), 0);
-		screen.render(x - 4, y - 4 - (int) (zz), item.getSprite(), item.getColor(), 0);
+		screen.render(positionX - 4, positionY - 4, item.getSprite(), Color.get(-1, 0, 0, 0), 0);
+		screen.render(positionX - 4, positionY - 4 - (int) (zz), item.getSprite(), item.getColor(), 0);
 	}
 
 	protected void touchedBy(Entity entity) {

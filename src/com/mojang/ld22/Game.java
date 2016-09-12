@@ -193,12 +193,11 @@ public class Game extends Canvas implements Runnable {
 			} else {
 				// Do nothing
 			}
-
 			input.tick();
 			if (menu != null) {
 				menu.tick();
 			} else {
-				if (player.removed) {
+				if (player.isRemoved) {
 					playerDeadTime++;
 					if (playerDeadTime > 60) {
 						setMenu(new DeadMenu());
@@ -232,8 +231,8 @@ public class Game extends Canvas implements Runnable {
 		level.remove(player);
 		currentLevel += dir;
 		level = levels[currentLevel];
-		player.x = (player.x >> 4) * 16 + 8;
-		player.y = (player.y >> 4) * 16 + 8;
+		player.positionX = (player.positionX >> 4) * 16 + 8;
+		player.positionY = (player.positionY >> 4) * 16 + 8;
 		level.add(player);
 
 	}

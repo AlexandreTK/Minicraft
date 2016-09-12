@@ -14,8 +14,8 @@ public class TextParticle extends Entity {
 
 	public TextParticle(String msg, int x, int y, int col) {
 		this.msg = msg;
-		this.x = x;
-		this.y = y;
+		this.positionX = x;
+		this.positionY = y;
 		this.col = col;
 		xx = x;
 		yy = y;
@@ -40,14 +40,14 @@ public class TextParticle extends Entity {
 			ya *= 0.6;
 		}
 		za -= 0.15;
-		x = (int) xx;
-		y = (int) yy;
+		positionX = (int) xx;
+		positionY = (int) yy;
 	}
 
 	public void render(Screen screen) {
 //		Font.draw(msg, screen, x - msg.length() * 4, y, Color.get(-1, 0, 0, 0));
-		Font.draw(msg, screen, x - msg.length() * 4 + 1, y - (int) (zz) + 1, Color.get(-1, 0, 0, 0));
-		Font.draw(msg, screen, x - msg.length() * 4, y - (int) (zz), col);
+		Font.draw(msg, screen, positionX - msg.length() * 4 + 1, positionY - (int) (zz) + 1, Color.get(-1, 0, 0, 0));
+		Font.draw(msg, screen, positionX - msg.length() * 4, positionY - (int) (zz), col);
 	}
 
 }

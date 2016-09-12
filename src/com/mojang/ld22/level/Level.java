@@ -19,7 +19,7 @@ import com.mojang.ld22.level.tile.Tile;
 public class Level {
 	private Random random = new Random();
 
-	public int w, h;
+	public int width, height;
 
 	public byte[] tiles;
 	public byte[] data;
@@ -34,8 +34,8 @@ public class Level {
 	public List<Entity> entities = new ArrayList<Entity>();
 	private Comparator<Entity> spriteSorter = new Comparator<Entity>() {
 		public int compare(Entity e0, Entity e1) {
-			if (e1.y < e0.y) return +1;
-			if (e1.y > e0.y) return -1;
+			if (e1.positionY < e0.positionY) return +1;
+			if (e1.positionY > e0.positionY) return -1;
 			return 0;
 		}
 
@@ -47,8 +47,8 @@ public class Level {
 			dirtColor = 222;
 		}
 		this.depth = level;
-		this.w = w;
-		this.h = h;
+		this.width = w;
+		this.height = h;
 		byte[][] maps;
 
 		if (level == 1) {
@@ -104,8 +104,8 @@ public class Level {
 		
 		if (level==1) {
 			AirWizard aw = new AirWizard();
-			aw.x = w*8;
-			aw.y = h*8;
+			aw.positionX = w*8;
+			aw.positionY = h*8;
 			add(aw);
 		}
 	}
@@ -137,8 +137,8 @@ public class Level {
 		screen.setOffset(xScroll, yScroll);
 		for (int y = yo; y <= h + yo; y++) {
 			for (int x = xo; x <= w + xo; x++) {
-				if (x < 0 || y < 0 || x >= this.w || y >= this.h) continue;
-				rowSprites.addAll(entitiesInTiles[x + y * this.w]);
+				if (x < 0 || y < 0 || x >= this.width || y >= this.height) continue;
+				rowSprites.addAll(entitiesInTiles[x + y * this.width]);
 			}
 			if (rowSprites.size() > 0) {
 				sortAndRender(screen, rowSprites);
@@ -158,13 +158,13 @@ public class Level {
 		int r = 4;
 		for (int y = yo - r; y <= h + yo + r; y++) {
 			for (int x = xo - r; x <= w + xo + r; x++) {
-				if (x < 0 || y < 0 || x >= this.w || y >= this.h) continue;
-				List<Entity> entities = entitiesInTiles[x + y * this.w];
+				if (x < 0 || y < 0 || x >= this.width || y >= this.height) continue;
+				List<Entity> entities = entitiesInTiles[x + y * this.width];
 				for (int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
 					// e.render(screen);
 					int lr = e.getLightRadius();
-					if (lr > 0) screen.renderLight(e.x - 1, e.y - 4, lr * 8);
+					if (lr > 0) screen.renderLight(e.positionX - 1, e.positionY - 4, lr * 8);
 				}
 				int lr = getTile(x, y).getLightRadius(this, x, y);
 				if (lr > 0) screen.renderLight(x * 16 + 8, y * 16 + 8, lr * 8);
@@ -185,52 +185,52 @@ public class Level {
 	}
 
 	public Tile getTile(int x, int y) {
-		if (x < 0 || y < 0 || x >= w || y >= h) return Tile.rock;
-		return Tile.tiles[tiles[x + y * w]];
+		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.rock;
+		return Tile.tiles[tiles[x + y * width]];
 	}
 
 	public void setTile(int x, int y, Tile t, int dataVal) {
-		if (x < 0 || y < 0 || x >= w || y >= h) return;
-		tiles[x + y * w] = t.id;
-		data[x + y * w] = (byte) dataVal;
+		if (x < 0 || y < 0 || x >= width || y >= height) return;
+		tiles[x + y * width] = t.id;
+		data[x + y * width] = (byte) dataVal;
 	}
 
 	public int getData(int x, int y) {
-		if (x < 0 || y < 0 || x >= w || y >= h) return 0;
-		return data[x + y * w] & 0xff;
+		if (x < 0 || y < 0 || x >= width || y >= height) return 0;
+		return data[x + y * width] & 0xff;
 	}
 
 	public void setData(int x, int y, int val) {
-		if (x < 0 || y < 0 || x >= w || y >= h) return;
-		data[x + y * w] = (byte) val;
+		if (x < 0 || y < 0 || x >= width || y >= height) return;
+		data[x + y * width] = (byte) val;
 	}
 
 	public void add(Entity entity) {
 		if (entity instanceof Player) {
 			player = (Player) entity;
 		}
-		entity.removed = false;
+		entity.isRemoved = false;
 		entities.add(entity);
 		entity.init(this);
 
-		insertEntity(entity.x >> 4, entity.y >> 4, entity);
+		insertEntity(entity.positionX >> 4, entity.positionY >> 4, entity);
 	}
 
 	public void remove(Entity e) {
 		entities.remove(e);
-		int xto = e.x >> 4;
-		int yto = e.y >> 4;
+		int xto = e.positionX >> 4;
+		int yto = e.positionY >> 4;
 		removeEntity(xto, yto, e);
 	}
 
 	private void insertEntity(int x, int y, Entity e) {
-		if (x < 0 || y < 0 || x >= w || y >= h) return;
-		entitiesInTiles[x + y * w].add(e);
+		if (x < 0 || y < 0 || x >= width || y >= height) return;
+		entitiesInTiles[x + y * width].add(e);
 	}
 
 	private void removeEntity(int x, int y, Entity e) {
-		if (x < 0 || y < 0 || x >= w || y >= h) return;
-		entitiesInTiles[x + y * w].remove(e);
+		if (x < 0 || y < 0 || x >= width || y >= height) return;
+		entitiesInTiles[x + y * width].remove(e);
 	}
 
 	public void trySpawn(int count) {
@@ -261,24 +261,24 @@ public class Level {
 	public void tick() {
 		trySpawn(1);
 
-		for (int i = 0; i < w * h / 50; i++) {
-			int xt = random.nextInt(w);
-			int yt = random.nextInt(w);
+		for (int i = 0; i < width * height / 50; i++) {
+			int xt = random.nextInt(width);
+			int yt = random.nextInt(width);
 			getTile(xt, yt).tick(this, xt, yt);
 		}
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-			int xto = e.x >> 4;
-			int yto = e.y >> 4;
+			int xto = e.positionX >> 4;
+			int yto = e.positionY >> 4;
 
 			e.tick();
 
-			if (e.removed) {
+			if (e.isRemoved) {
 				entities.remove(i--);
 				removeEntity(xto, yto, e);
 			} else {
-				int xt = e.x >> 4;
-				int yt = e.y >> 4;
+				int xt = e.positionX >> 4;
+				int yt = e.positionY >> 4;
 
 				if (xto != xt || yto != yt) {
 					removeEntity(xto, yto, e);
@@ -296,8 +296,8 @@ public class Level {
 		int yt1 = (y1 >> 4) + 1;
 		for (int y = yt0; y <= yt1; y++) {
 			for (int x = xt0; x <= xt1; x++) {
-				if (x < 0 || y < 0 || x >= w || y >= h) continue;
-				List<Entity> entities = entitiesInTiles[x + y * this.w];
+				if (x < 0 || y < 0 || x >= width || y >= height) continue;
+				List<Entity> entities = entitiesInTiles[x + y * this.width];
 				for (int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
 					if (e.intersects(x0, y0, x1, y1)) result.add(e);

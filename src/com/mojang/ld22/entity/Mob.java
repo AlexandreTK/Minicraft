@@ -7,25 +7,25 @@ import com.mojang.ld22.level.tile.Tile;
 import com.mojang.ld22.sound.Sound;
 
 public class Mob extends Entity {
-	protected int walkDist = 0;
-	protected int dir = 0;
+	protected int walkedDistancy = 0;
+	protected int direction = 0;
 	public int hurtTime = 0;
-	protected int xKnockback, yKnockback;
+	protected int positionXKnockback, positionYKnockback;
 	public int maxHealth = 10;
 	public int health = maxHealth;
 	public int swimTimer = 0;
 	public int tickTime = 0;
 
 	public Mob() {
-		x = y = 8;
-		xr = 4;
-		yr = 3;
+		positionX = positionY = 8;
+		positionXRelative = 4;
+		positionYRelative = 3;
 	}
 
 	public void tick() {
 		tickTime++;
-		if (level.getTile(x >> 4, y >> 4) == Tile.lava) {
-			hurt(this, 4, dir ^ 1);
+		if (level.getTile(positionX >> 4, positionY >> 4) == Tile.lava) {
+			hurt(this, 4, direction ^ 1);
 		}
 
 		if (health <= 0) {
@@ -38,100 +38,136 @@ public class Mob extends Entity {
 		remove();
 	}
 
-	public boolean move(int xa, int ya) {
+	public boolean move(int positionXAbsolute, int positionYAbsolute) {
+		
 		if (isSwimming()) {
-			if (swimTimer++ % 2 == 0) return true;
+			if (swimTimer++ % 2 == 0)
+				return true;
 		}
-		if (xKnockback < 0) {
+		
+		if (positionXKnockback < 0) {
 			move2(-1, 0);
-			xKnockback++;
+			positionXKnockback++;
 		}
-		if (xKnockback > 0) {
+		if (positionXKnockback > 0) {
 			move2(1, 0);
-			xKnockback--;
+			positionXKnockback--;
 		}
-		if (yKnockback < 0) {
+		
+		if (positionYKnockback < 0) {
 			move2(0, -1);
-			yKnockback++;
+			positionYKnockback++;
 		}
-		if (yKnockback > 0) {
+		
+		if (positionYKnockback > 0) {
 			move2(0, 1);
-			yKnockback--;
+			positionYKnockback--;
 		}
-		if (hurtTime > 0) return true;
-		if (xa != 0 || ya != 0) {
-			walkDist++;
-			if (xa < 0) dir = 2;
-			if (xa > 0) dir = 3;
-			if (ya < 0) dir = 1;
-			if (ya > 0) dir = 0;
+		
+		if (hurtTime > 0)
+			return true;
+		
+		if (positionXAbsolute != 0 || positionYAbsolute != 0) {
+			walkedDistancy++;
+			if (positionXAbsolute < 0)
+				direction = 2;
+			
+			if (positionXAbsolute > 0)
+				direction = 3;
+			
+			if (positionYAbsolute < 0)
+				direction = 1;
+			
+			if (positionYAbsolute > 0)
+				direction = 0;
 		}
-		return super.move(xa, ya);
+		return super.move(positionXAbsolute, positionYAbsolute);
 	}
 
 	protected boolean isSwimming() {
-		Tile tile = level.getTile(x >> 4, y >> 4);
+		Tile tile = level.getTile(positionX >> 4, positionY >> 4);
 		return tile == Tile.water || tile == Tile.lava;
 	}
 
-	public boolean blocks(Entity e) {
-		return e.isBlockableBy(this);
+	public boolean blocks(Entity entity) {
+		return entity.isBlockableBy(this);
 	}
 
-	public void hurt(Tile tile, int x, int y, int damage) {
-		int attackDir = dir ^ 1;
-		doHurt(damage, attackDir);
+	public void hurt(Tile tile, int positionX, int positionY, int damage) {
+		int attackDirection = direction ^ 1;
+		doHurt(damage, attackDirection);
 	}
 
-	public void hurt(Mob mob, int damage, int attackDir) {
-		doHurt(damage, attackDir);
+	public void hurt(Mob mob, int damage, int attackDirection) {
+		doHurt(damage, attackDirection);
 	}
 
 	public void heal(int heal) {
-		if (hurtTime > 0) return;
+		if (hurtTime > 0)
+			return;
 
-		level.add(new TextParticle("" + heal, x, y, Color.get(-1, 50, 50, 50)));
+		level.add(new TextParticle("" + heal, positionX, positionY, Color.get(-1, 50, 50, 50)));
 		health += heal;
-		if (health > maxHealth) health = maxHealth;
+		
+		if (health > maxHealth)
+			health = maxHealth;
 	}
 
-	protected void doHurt(int damage, int attackDir) {
-		if (hurtTime > 0) return;
+	protected void doHurt(int damage, int attackDirection) {
+		
+		if (hurtTime > 0)
+			return;
 
 		if (level.player != null) {
-			int xd = level.player.x - x;
-			int yd = level.player.y - y;
-			if (xd * xd + yd * yd < 80 * 80) {
+			int positionXWalked = level.player.positionX - positionX;
+			int positionYWalked = level.player.positionY - positionY;
+			
+			if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 80 * 80) {
 				Sound.monsterHurt.play();
 			}
 		}
-		level.add(new TextParticle("" + damage, x, y, Color.get(-1, 500, 500, 500)));
+		level.add(new TextParticle("" + damage, positionX, positionY, Color.get(-1, 500, 500, 500)));
 		health -= damage;
-		if (attackDir == 0) yKnockback = +6;
-		if (attackDir == 1) yKnockback = -6;
-		if (attackDir == 2) xKnockback = -6;
-		if (attackDir == 3) xKnockback = +6;
+		
+		if (attackDirection == 0)
+			positionYKnockback = +6;
+		
+		if (attackDirection == 1)
+			positionYKnockback = -6;
+		
+		if (attackDirection == 2)
+			positionXKnockback = -6;
+		
+		if (attackDirection == 3)
+			positionXKnockback = +6;
 		hurtTime = 10;
 	}
 
 	public boolean findStartPos(Level level) {
-		int x = random.nextInt(level.w);
-		int y = random.nextInt(level.h);
-		int xx = x * 16 + 8;
-		int yy = y * 16 + 8;
+		int positionX = random.nextInt(level.width);
+		int positionY = random.nextInt(level.height);
+		int positionXX = positionX * 16 + 8;
+		int positionYY = positionY * 16 + 8;
 
 		if (level.player != null) {
-			int xd = level.player.x - xx;
-			int yd = level.player.y - yy;
-			if (xd * xd + yd * yd < 80 * 80) return false;
+			int positionXWalked = level.player.positionX - positionXX;
+			int positionYWalked = level.player.positionY - positionYY;
+			
+			if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 80 * 80)
+				return false;
 		}
 
-		int r = level.monsterDensity * 16;
-		if (level.getEntities(xx - r, yy - r, xx + r, yy + r).size() > 0) return false;
+		int radius = level.monsterDensity * 16;
+		
+		if (level.getEntities(positionXX - radius,
+							  positionYY - radius,
+							  positionXX + radius,
+							  positionYY + radius).size() > 0)
+			return false;
 
-		if (level.getTile(x, y).mayPass(level, x, y, this)) {
-			this.x = xx;
-			this.y = yy;
+		if (level.getTile(positionX, positionY).mayPass(level, positionX, positionY, this)) {
+			this.positionX = positionXX;
+			this.positionY = positionYY;
 			return true;
 		}
 

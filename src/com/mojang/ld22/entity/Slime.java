@@ -12,8 +12,8 @@ public class Slime extends Mob {
 
 	public Slime(int lvl) {
 		this.lvl = lvl;
-		x = random.nextInt(64 * 16);
-		y = random.nextInt(64 * 16);
+		positionX = random.nextInt(64 * 16);
+		positionY = random.nextInt(64 * 16);
 		health = maxHealth = lvl * lvl * 5;
 	}
 
@@ -27,8 +27,8 @@ public class Slime extends Mob {
 				ya = (random.nextInt(3) - 1);
 
 				if (level.player != null) {
-					int xd = level.player.x - x;
-					int yd = level.player.y - y;
+					int xd = level.player.positionX - positionX;
+					int yd = level.player.positionY - positionY;
 					if (xd * xd + yd * yd < 50 * 50) {
 						if (xd < 0) xa = -1;
 						if (xd > 0) xa = +1;
@@ -53,7 +53,7 @@ public class Slime extends Mob {
 
 		int count = random.nextInt(2) + 1;
 		for (int i = 0; i < count; i++) {
-			level.add(new ItemEntity(new ResourceItem(Resource.slime), x + random.nextInt(11) - 5, y + random.nextInt(11) - 5));
+			level.add(new ItemEntity(new ResourceItem(Resource.slime), positionX + random.nextInt(11) - 5, positionY + random.nextInt(11) - 5));
 		}
 
 		if (level.player != null) {
@@ -66,8 +66,8 @@ public class Slime extends Mob {
 		int xt = 0;
 		int yt = 18;
 
-		int xo = x - 8;
-		int yo = y - 11;
+		int xo = positionX - 8;
+		int yo = positionY - 11;
 
 		if (jumpTime > 0) {
 			xt += 2;
@@ -91,7 +91,7 @@ public class Slime extends Mob {
 
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player) {
-			entity.hurt(this, lvl, dir);
+			entity.hurt(this, lvl, direction);
 		}
 	}
 }
