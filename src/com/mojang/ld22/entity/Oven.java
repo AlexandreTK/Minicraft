@@ -7,13 +7,13 @@ import com.mojang.ld22.screen.CraftingMenu;
 public class Oven extends Furniture {
 	public Oven() {
 		super("Oven");
-		col = Color.get(-1, 000, 332, 442);
+		color = Color.get(-1, 000, 332, 442);
 		sprite = 2;
 		positionXRelative = 3;
 		positionYRelative = 2;
 	}
 
-	public boolean use(Player player, int attackDir) {
+	public boolean use(Player player, int attackDirection) {
 		player.game.setMenu(new CraftingMenu(Crafting.ovenRecipes, player));
 		return true;
 	}

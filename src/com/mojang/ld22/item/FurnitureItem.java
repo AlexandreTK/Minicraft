@@ -18,7 +18,7 @@ public class FurnitureItem extends Item {
 	}
 
 	public int getColor() {
-		return furniture.col;
+		return furniture.color;
 	}
 
 	public int getSprite() {
