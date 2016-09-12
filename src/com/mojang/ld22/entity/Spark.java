@@ -39,7 +39,7 @@ public class Spark extends Entity {
 		for (int i = 0; i < toHit.size(); i++) {
 			Entity e = toHit.get(i);
 			if (e instanceof Mob && !(e instanceof AirWizard)) {
-				e.hurt(owner, 1, ((Mob) e).dir ^ 1);
+				e.hurt(owner, 1, ((Mob) e).direction ^ 1);
 			}
 		}
 	}

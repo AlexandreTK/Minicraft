@@ -47,20 +47,20 @@ public class Zombie extends Mob {
 		int xt = 0;
 		int yt = 14;
 
-		int flip1 = (walkDist >> 3) & 1;
-		int flip2 = (walkDist >> 3) & 1;
+		int flip1 = (walkedDistancy >> 3) & 1;
+		int flip2 = (walkedDistancy >> 3) & 1;
 
-		if (dir == 1) {
+		if (direction == 1) {
 			xt += 2;
 		}
-		if (dir > 1) {
+		if (direction > 1) {
 
 			flip1 = 0;
-			flip2 = ((walkDist >> 4) & 1);
-			if (dir == 2) {
+			flip2 = ((walkedDistancy >> 4) & 1);
+			if (direction == 2) {
 				flip1 = 1;
 			}
-			xt += 4 + ((walkDist >> 3) & 1) * 2;
+			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
 		}
 
 		int xo = positionX - 8;
@@ -82,7 +82,7 @@ public class Zombie extends Mob {
 
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player) {
-			entity.hurt(this, lvl + 1, dir);
+			entity.hurt(this, lvl + 1, direction);
 		}
 	}
 

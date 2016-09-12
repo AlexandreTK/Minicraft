@@ -91,7 +91,7 @@ public class Slime extends Mob {
 
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player) {
-			entity.hurt(this, lvl, dir);
+			entity.hurt(this, lvl, direction);
 		}
 	}
 }

@@ -23,10 +23,10 @@ public class AirWizard extends Mob {
 		super.tick();
 
 		if (attackDelay > 0) {
-			dir = (attackDelay - 45) / 4 % 4;
-			dir = (dir * 2 % 4) + (dir / 2);
+			direction = (attackDelay - 45) / 4 % 4;
+			direction = (direction * 2 % 4) + (direction / 2);
 			if (attackDelay < 45) {
-				dir = 0;
+				direction = 0;
 			}
 			attackDelay--;
 			if (attackDelay == 0) {
@@ -97,20 +97,20 @@ public class AirWizard extends Mob {
 		int xt = 8;
 		int yt = 14;
 
-		int flip1 = (walkDist >> 3) & 1;
-		int flip2 = (walkDist >> 3) & 1;
+		int flip1 = (walkedDistancy >> 3) & 1;
+		int flip2 = (walkedDistancy >> 3) & 1;
 
-		if (dir == 1) {
+		if (direction == 1) {
 			xt += 2;
 		}
-		if (dir > 1) {
+		if (direction > 1) {
 
 			flip1 = 0;
-			flip2 = ((walkDist >> 4) & 1);
-			if (dir == 2) {
+			flip2 = ((walkedDistancy >> 4) & 1);
+			if (direction == 2) {
 				flip1 = 1;
 			}
-			xt += 4 + ((walkDist >> 3) & 1) * 2;
+			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
 		}
 
 		int xo = positionX - 8;
@@ -142,7 +142,7 @@ public class AirWizard extends Mob {
 
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player) {
-			entity.hurt(this, 3, dir);
+			entity.hurt(this, 3, direction);
 		}
 	}
 

@@ -222,8 +222,8 @@ public class Game extends Canvas implements Runnable {
 		int yScroll = player.positionY - (screen.h - 8) / 2;
 		if (xScroll < 16) xScroll = 16;
 		if (yScroll < 16) yScroll = 16;
-		if (xScroll > level.w * 16 - screen.w - 16) xScroll = level.w * 16 - screen.w - 16;
-		if (yScroll > level.h * 16 - screen.h - 16) yScroll = level.h * 16 - screen.h - 16;
+		if (xScroll > level.width * 16 - screen.w - 16) xScroll = level.width * 16 - screen.w - 16;
+		if (yScroll > level.height * 16 - screen.h - 16) yScroll = level.height * 16 - screen.h - 16;
 		if (currentLevel > 3) {
 			int col = Color.get(20, 20, 121, 121);
 			for (int y = 0; y < 14; y++)

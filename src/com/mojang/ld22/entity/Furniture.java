@@ -47,7 +47,7 @@ public class Furniture extends Entity {
 
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player && pushTime == 0) {
-			pushDir = ((Player) entity).dir;
+			pushDir = ((Player) entity).direction;
 			pushTime = 10;
 		}
 	}
