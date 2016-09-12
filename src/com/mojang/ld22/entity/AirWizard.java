@@ -14,8 +14,8 @@ public class AirWizard extends Mob {
 	private int attackType = 0;
 
 	public AirWizard() {
-		x = random.nextInt(64 * 16);
-		y = random.nextInt(64 * 16);
+		positionX = random.nextInt(64 * 16);
+		positionY = random.nextInt(64 * 16);
 		health = maxHealth = 2000;
 	}
 
@@ -47,8 +47,8 @@ public class AirWizard extends Mob {
 		}
 
 		if (level.player != null && randomWalkTime == 0) {
-			int xd = level.player.x - x;
-			int yd = level.player.y - y;
+			int xd = level.player.positionX - positionX;
+			int yd = level.player.positionY - positionY;
 			if (xd * xd + yd * yd < 32 * 32) {
 				xa = 0;
 				ya = 0;
@@ -75,8 +75,8 @@ public class AirWizard extends Mob {
 		if (randomWalkTime > 0) {
 			randomWalkTime--;
 			if (level.player != null && randomWalkTime == 0) {
-				int xd = level.player.x - x;
-				int yd = level.player.y - y;
+				int xd = level.player.positionX - positionX;
+				int yd = level.player.positionY - positionY;
 				if (random.nextInt(4) == 0 && xd * xd + yd * yd < 50 * 50) {
 					if (attackDelay == 0 && attackTime == 0) {
 						attackDelay = 60 * 2;
@@ -113,8 +113,8 @@ public class AirWizard extends Mob {
 			xt += 4 + ((walkDist >> 3) & 1) * 2;
 		}
 
-		int xo = x - 8;
-		int yo = y - 11;
+		int xo = positionX - 8;
+		int yo = positionY - 11;
 
 		int col1 = Color.get(-1, 100, 500, 555);
 		int col2 = Color.get(-1, 100, 500, 532);

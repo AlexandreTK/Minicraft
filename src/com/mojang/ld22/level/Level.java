@@ -34,8 +34,8 @@ public class Level {
 	public List<Entity> entities = new ArrayList<Entity>();
 	private Comparator<Entity> spriteSorter = new Comparator<Entity>() {
 		public int compare(Entity e0, Entity e1) {
-			if (e1.y < e0.y) return +1;
-			if (e1.y > e0.y) return -1;
+			if (e1.positionY < e0.positionY) return +1;
+			if (e1.positionY > e0.positionY) return -1;
 			return 0;
 		}
 
@@ -104,8 +104,8 @@ public class Level {
 		
 		if (level==1) {
 			AirWizard aw = new AirWizard();
-			aw.x = w*8;
-			aw.y = h*8;
+			aw.positionX = w*8;
+			aw.positionY = h*8;
 			add(aw);
 		}
 	}
@@ -164,7 +164,7 @@ public class Level {
 					Entity e = entities.get(i);
 					// e.render(screen);
 					int lr = e.getLightRadius();
-					if (lr > 0) screen.renderLight(e.x - 1, e.y - 4, lr * 8);
+					if (lr > 0) screen.renderLight(e.positionX - 1, e.positionY - 4, lr * 8);
 				}
 				int lr = getTile(x, y).getLightRadius(this, x, y);
 				if (lr > 0) screen.renderLight(x * 16 + 8, y * 16 + 8, lr * 8);
@@ -209,17 +209,17 @@ public class Level {
 		if (entity instanceof Player) {
 			player = (Player) entity;
 		}
-		entity.removed = false;
+		entity.isRemoved = false;
 		entities.add(entity);
 		entity.init(this);
 
-		insertEntity(entity.x >> 4, entity.y >> 4, entity);
+		insertEntity(entity.positionX >> 4, entity.positionY >> 4, entity);
 	}
 
 	public void remove(Entity e) {
 		entities.remove(e);
-		int xto = e.x >> 4;
-		int yto = e.y >> 4;
+		int xto = e.positionX >> 4;
+		int yto = e.positionY >> 4;
 		removeEntity(xto, yto, e);
 	}
 
@@ -268,17 +268,17 @@ public class Level {
 		}
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-			int xto = e.x >> 4;
-			int yto = e.y >> 4;
+			int xto = e.positionX >> 4;
+			int yto = e.positionY >> 4;
 
 			e.tick();
 
-			if (e.removed) {
+			if (e.isRemoved) {
 				entities.remove(i--);
 				removeEntity(xto, yto, e);
 			} else {
-				int xt = e.x >> 4;
-				int yt = e.y >> 4;
+				int xt = e.positionX >> 4;
+				int yt = e.positionY >> 4;
 
 				if (xto != xt || yto != yt) {
 					removeEntity(xto, yto, e);

@@ -38,8 +38,8 @@ public class Player extends Mob {
 	public Player(Game game, InputHandler input) {
 		this.game = game;
 		this.input = input;
-		x = 24;
-		y = 24;
+		positionX = 24;
+		positionY = 24;
 		stamina = maxStamina;
 
 		inventory.add(new FurnitureItem(new Workbench()));
@@ -50,7 +50,7 @@ public class Player extends Mob {
 		super.tick();
 
 		if (invulnerableTime > 0) invulnerableTime--;
-		Tile onTile = level.getTile(x >> 4, y >> 4);
+		Tile onTile = level.getTile(positionX >> 4, positionY >> 4);
 		if (onTile == Tile.stairsDown || onTile == Tile.stairsUp) {
 			if (onStairDelay == 0) {
 				changeLevel((onTile == Tile.stairsUp) ? 1 : -1);
@@ -119,18 +119,18 @@ public class Player extends Mob {
 
 	private boolean use() {
 		int yo = -2;
-		if (dir == 0 && use(x - 8, y + 4 + yo, x + 8, y + 12 + yo)) return true;
-		if (dir == 1 && use(x - 8, y - 12 + yo, x + 8, y - 4 + yo)) return true;
-		if (dir == 3 && use(x + 4, y - 8 + yo, x + 12, y + 8 + yo)) return true;
-		if (dir == 2 && use(x - 12, y - 8 + yo, x - 4, y + 8 + yo)) return true;
+		if (dir == 0 && use(positionX - 8, positionY + 4 + yo, positionX + 8, positionY + 12 + yo)) return true;
+		if (dir == 1 && use(positionX - 8, positionY - 12 + yo, positionX + 8, positionY - 4 + yo)) return true;
+		if (dir == 3 && use(positionX + 4, positionY - 8 + yo, positionX + 12, positionY + 8 + yo)) return true;
+		if (dir == 2 && use(positionX - 12, positionY - 8 + yo, positionX - 4, positionY + 8 + yo)) return true;
 
-		int xt = x >> 4;
-		int yt = (y + yo) >> 4;
+		int xt = positionX >> 4;
+		int yt = (positionY + yo) >> 4;
 		int r = 12;
-		if (attackDir == 0) yt = (y + r + yo) >> 4;
-		if (attackDir == 1) yt = (y - r + yo) >> 4;
-		if (attackDir == 2) xt = (x - r) >> 4;
-		if (attackDir == 3) xt = (x + r) >> 4;
+		if (attackDir == 0) yt = (positionY + r + yo) >> 4;
+		if (attackDir == 1) yt = (positionY - r + yo) >> 4;
+		if (attackDir == 2) xt = (positionX - r) >> 4;
+		if (attackDir == 3) xt = (positionX + r) >> 4;
 
 		if (xt >= 0 && yt >= 0 && xt < level.w && yt < level.h) {
 			if (level.getTile(xt, yt).use(level, xt, yt, this, attackDir)) return true;
@@ -149,19 +149,19 @@ public class Player extends Mob {
 			attackTime = 10;
 			int yo = -2;
 			int range = 12;
-			if (dir == 0 && interact(x - 8, y + 4 + yo, x + 8, y + range + yo)) done = true;
-			if (dir == 1 && interact(x - 8, y - range + yo, x + 8, y - 4 + yo)) done = true;
-			if (dir == 3 && interact(x + 4, y - 8 + yo, x + range, y + 8 + yo)) done = true;
-			if (dir == 2 && interact(x - range, y - 8 + yo, x - 4, y + 8 + yo)) done = true;
+			if (dir == 0 && interact(positionX - 8, positionY + 4 + yo, positionX + 8, positionY + range + yo)) done = true;
+			if (dir == 1 && interact(positionX - 8, positionY - range + yo, positionX + 8, positionY - 4 + yo)) done = true;
+			if (dir == 3 && interact(positionX + 4, positionY - 8 + yo, positionX + range, positionY + 8 + yo)) done = true;
+			if (dir == 2 && interact(positionX - range, positionY - 8 + yo, positionX - 4, positionY + 8 + yo)) done = true;
 			if (done) return;
 
-			int xt = x >> 4;
-			int yt = (y + yo) >> 4;
+			int xt = positionX >> 4;
+			int yt = (positionY + yo) >> 4;
 			int r = 12;
-			if (attackDir == 0) yt = (y + r + yo) >> 4;
-			if (attackDir == 1) yt = (y - r + yo) >> 4;
-			if (attackDir == 2) xt = (x - r) >> 4;
-			if (attackDir == 3) xt = (x + r) >> 4;
+			if (attackDir == 0) yt = (positionY + r + yo) >> 4;
+			if (attackDir == 1) yt = (positionY - r + yo) >> 4;
+			if (attackDir == 2) xt = (positionX - r) >> 4;
+			if (attackDir == 3) xt = (positionX + r) >> 4;
 
 			if (xt >= 0 && yt >= 0 && xt < level.w && yt < level.h) {
 				if (activeItem.interactOn(level.getTile(xt, yt), level, xt, yt, this, attackDir)) {
@@ -183,18 +183,18 @@ public class Player extends Mob {
 			attackTime = 5;
 			int yo = -2;
 			int range = 20;
-			if (dir == 0) hurt(x - 8, y + 4 + yo, x + 8, y + range + yo);
-			if (dir == 1) hurt(x - 8, y - range + yo, x + 8, y - 4 + yo);
-			if (dir == 3) hurt(x + 4, y - 8 + yo, x + range, y + 8 + yo);
-			if (dir == 2) hurt(x - range, y - 8 + yo, x - 4, y + 8 + yo);
+			if (dir == 0) hurt(positionX - 8, positionY + 4 + yo, positionX + 8, positionY + range + yo);
+			if (dir == 1) hurt(positionX - 8, positionY - range + yo, positionX + 8, positionY - 4 + yo);
+			if (dir == 3) hurt(positionX + 4, positionY - 8 + yo, positionX + range, positionY + 8 + yo);
+			if (dir == 2) hurt(positionX - range, positionY - 8 + yo, positionX - 4, positionY + 8 + yo);
 
-			int xt = x >> 4;
-			int yt = (y + yo) >> 4;
+			int xt = positionX >> 4;
+			int yt = (positionY + yo) >> 4;
 			int r = 12;
-			if (attackDir == 0) yt = (y + r + yo) >> 4;
-			if (attackDir == 1) yt = (y - r + yo) >> 4;
-			if (attackDir == 2) xt = (x - r) >> 4;
-			if (attackDir == 3) xt = (x + r) >> 4;
+			if (attackDir == 0) yt = (positionY + r + yo) >> 4;
+			if (attackDir == 1) yt = (positionY - r + yo) >> 4;
+			if (attackDir == 2) xt = (positionX - r) >> 4;
+			if (attackDir == 3) xt = (positionX + r) >> 4;
 
 			if (xt >= 0 && yt >= 0 && xt < level.w && yt < level.h) {
 				level.getTile(xt, yt).hurt(level, xt, yt, this, random.nextInt(3) + 1, attackDir);
@@ -256,8 +256,8 @@ public class Player extends Mob {
 			xt += 4 + ((walkDist >> 3) & 1) * 2;
 		}
 
-		int xo = x - 8;
-		int yo = y - 11;
+		int xo = positionX - 8;
+		int yo = positionY - 11;
 		if (isSwimming()) {
 			yo += 4;
 			int waterColor = Color.get(-1, -1, 115, 335);
@@ -314,8 +314,8 @@ public class Player extends Mob {
 
 		if (activeItem instanceof FurnitureItem) {
 			Furniture furniture = ((FurnitureItem) activeItem).furniture;
-			furniture.x = x;
-			furniture.y = yo;
+			furniture.positionX = positionX;
+			furniture.positionY = yo;
 			furniture.render(screen);
 
 		}
@@ -335,8 +335,8 @@ public class Player extends Mob {
 			int x = random.nextInt(level.w);
 			int y = random.nextInt(level.h);
 			if (level.getTile(x, y) == Tile.grass) {
-				this.x = x * 16 + 8;
-				this.y = y * 16 + 8;
+				this.positionX = x * 16 + 8;
+				this.positionY = y * 16 + 8;
 				return true;
 			}
 		}
@@ -378,7 +378,7 @@ public class Player extends Mob {
 		if (hurtTime > 0 || invulnerableTime > 0) return;
 
 		Sound.playerHurt.play();
-		level.add(new TextParticle("" + damage, x, y, Color.get(-1, 504, 504, 504)));
+		level.add(new TextParticle("" + damage, positionX, positionY, Color.get(-1, 504, 504, 504)));
 		health -= damage;
 		if (attackDir == 0) yKnockback = +6;
 		if (attackDir == 1) yKnockback = -6;

@@ -12,8 +12,8 @@ public class Zombie extends Mob {
 
 	public Zombie(int lvl) {
 		this.lvl = lvl;
-		x = random.nextInt(64 * 16);
-		y = random.nextInt(64 * 16);
+		positionX = random.nextInt(64 * 16);
+		positionY = random.nextInt(64 * 16);
 		health = maxHealth = lvl * lvl * 10;
 
 	}
@@ -22,8 +22,8 @@ public class Zombie extends Mob {
 		super.tick();
 
 		if (level.player != null && randomWalkTime == 0) {
-			int xd = level.player.x - x;
-			int yd = level.player.y - y;
+			int xd = level.player.positionX - positionX;
+			int yd = level.player.positionY - positionY;
 			if (xd * xd + yd * yd < 50 * 50) {
 				xa = 0;
 				ya = 0;
@@ -63,8 +63,8 @@ public class Zombie extends Mob {
 			xt += 4 + ((walkDist >> 3) & 1) * 2;
 		}
 
-		int xo = x - 8;
-		int yo = y - 11;
+		int xo = positionX - 8;
+		int yo = positionY - 11;
 
 		int col = Color.get(-1, 10, 252, 050);
 		if (lvl == 2) col = Color.get(-1, 100, 522, 050);
@@ -91,7 +91,7 @@ public class Zombie extends Mob {
 
 		int count = random.nextInt(2) + 1;
 		for (int i = 0; i < count; i++) {
-			level.add(new ItemEntity(new ResourceItem(Resource.cloth), x + random.nextInt(11) - 5, y + random.nextInt(11) - 5));
+			level.add(new ItemEntity(new ResourceItem(Resource.cloth), positionX + random.nextInt(11) - 5, positionY + random.nextInt(11) - 5));
 		}
 
 		if (level.player != null) {

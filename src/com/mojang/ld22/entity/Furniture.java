@@ -13,8 +13,8 @@ public class Furniture extends Entity {
 
 	public Furniture(String name) {
 		this.name = name;
-		xr = 3;
-		yr = 3;
+		positionXRelative = 3;
+		positionYRelative = 3;
 	}
 
 	public void tick() {
@@ -35,10 +35,10 @@ public class Furniture extends Entity {
 	}
 
 	public void render(Screen screen) {
-		screen.render(x - 8, y - 8 - 4, sprite * 2 + 8 * 32, col, 0);
-		screen.render(x - 0, y - 8 - 4, sprite * 2 + 8 * 32 + 1, col, 0);
-		screen.render(x - 8, y - 0 - 4, sprite * 2 + 8 * 32 + 32, col, 0);
-		screen.render(x - 0, y - 0 - 4, sprite * 2 + 8 * 32 + 33, col, 0);
+		screen.render(positionX - 8, positionY - 8 - 4, sprite * 2 + 8 * 32, col, 0);
+		screen.render(positionX - 0, positionY - 8 - 4, sprite * 2 + 8 * 32 + 1, col, 0);
+		screen.render(positionX - 8, positionY - 0 - 4, sprite * 2 + 8 * 32 + 32, col, 0);
+		screen.render(positionX - 0, positionY - 0 - 4, sprite * 2 + 8 * 32 + 33, col, 0);
 	}
 
 	public boolean blocks(Entity e) {

@@ -17,14 +17,14 @@ public class Mob extends Entity {
 	public int tickTime = 0;
 
 	public Mob() {
-		x = y = 8;
-		xr = 4;
-		yr = 3;
+		positionX = positionY = 8;
+		positionXRelative = 4;
+		positionYRelative = 3;
 	}
 
 	public void tick() {
 		tickTime++;
-		if (level.getTile(x >> 4, y >> 4) == Tile.lava) {
+		if (level.getTile(positionX >> 4, positionY >> 4) == Tile.lava) {
 			hurt(this, 4, dir ^ 1);
 		}
 
@@ -70,7 +70,7 @@ public class Mob extends Entity {
 	}
 
 	protected boolean isSwimming() {
-		Tile tile = level.getTile(x >> 4, y >> 4);
+		Tile tile = level.getTile(positionX >> 4, positionY >> 4);
 		return tile == Tile.water || tile == Tile.lava;
 	}
 
@@ -90,7 +90,7 @@ public class Mob extends Entity {
 	public void heal(int heal) {
 		if (hurtTime > 0) return;
 
-		level.add(new TextParticle("" + heal, x, y, Color.get(-1, 50, 50, 50)));
+		level.add(new TextParticle("" + heal, positionX, positionY, Color.get(-1, 50, 50, 50)));
 		health += heal;
 		if (health > maxHealth) health = maxHealth;
 	}
@@ -99,13 +99,13 @@ public class Mob extends Entity {
 		if (hurtTime > 0) return;
 
 		if (level.player != null) {
-			int xd = level.player.x - x;
-			int yd = level.player.y - y;
+			int xd = level.player.positionX - positionX;
+			int yd = level.player.positionY - positionY;
 			if (xd * xd + yd * yd < 80 * 80) {
 				Sound.monsterHurt.play();
 			}
 		}
-		level.add(new TextParticle("" + damage, x, y, Color.get(-1, 500, 500, 500)));
+		level.add(new TextParticle("" + damage, positionX, positionY, Color.get(-1, 500, 500, 500)));
 		health -= damage;
 		if (attackDir == 0) yKnockback = +6;
 		if (attackDir == 1) yKnockback = -6;
@@ -121,8 +121,8 @@ public class Mob extends Entity {
 		int yy = y * 16 + 8;
 
 		if (level.player != null) {
-			int xd = level.player.x - xx;
-			int yd = level.player.y - yy;
+			int xd = level.player.positionX - xx;
+			int yd = level.player.positionY - yy;
 			if (xd * xd + yd * yd < 80 * 80) return false;
 		}
 
@@ -130,8 +130,8 @@ public class Mob extends Entity {
 		if (level.getEntities(xx - r, yy - r, xx + r, yy + r).size() > 0) return false;
 
 		if (level.getTile(x, y).mayPass(level, x, y, this)) {
-			this.x = xx;
-			this.y = yy;
+			this.positionX = xx;
+			this.positionY = yy;
 			return true;
 		}
 

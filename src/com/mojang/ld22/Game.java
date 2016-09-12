@@ -172,13 +172,13 @@ public class Game extends Canvas implements Runnable {
 		if (!hasFocus()) {
 			input.releaseAll();
 		} else {
-			if (!player.removed && !hasWon) gameTime++;
+			if (!player.isRemoved && !hasWon) gameTime++;
 
 			input.tick();
 			if (menu != null) {
 				menu.tick();
 			} else {
-				if (player.removed) {
+				if (player.isRemoved) {
 					playerDeadTime++;
 					if (playerDeadTime > 60) {
 						setMenu(new DeadMenu());
@@ -204,8 +204,8 @@ public class Game extends Canvas implements Runnable {
 		level.remove(player);
 		currentLevel += dir;
 		level = levels[currentLevel];
-		player.x = (player.x >> 4) * 16 + 8;
-		player.y = (player.y >> 4) * 16 + 8;
+		player.positionX = (player.positionX >> 4) * 16 + 8;
+		player.positionY = (player.positionY >> 4) * 16 + 8;
 		level.add(player);
 
 	}
@@ -218,8 +218,8 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 
-		int xScroll = player.x - screen.w / 2;
-		int yScroll = player.y - (screen.h - 8) / 2;
+		int xScroll = player.positionX - screen.w / 2;
+		int yScroll = player.positionY - (screen.h - 8) / 2;
 		if (xScroll < 16) xScroll = 16;
 		if (yScroll < 16) yScroll = 16;
 		if (xScroll > level.w * 16 - screen.w - 16) xScroll = level.w * 16 - screen.w - 16;
