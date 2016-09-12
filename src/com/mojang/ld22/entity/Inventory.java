@@ -17,11 +17,11 @@ public class Inventory {
 	public void add(int slot, Item item) {
 		if (item instanceof ResourceItem) {
 			ResourceItem toTake = (ResourceItem) item;
-			ResourceItem has = findResource(toTake.resource);
-			if (has == null) {
+			ResourceItem hasItem = findResource(toTake.resource);
+			if (hasItem == null) {
 				items.add(slot, toTake);
 			} else {
-				has.count += toTake.count;
+				hasItem.count += toTake.count;
 			}
 		} else {
 			items.add(slot, item);
@@ -31,38 +31,55 @@ public class Inventory {
 	private ResourceItem findResource(Resource resource) {
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i) instanceof ResourceItem) {
-				ResourceItem has = (ResourceItem) items.get(i);
-				if (has.resource == resource) return has;
+				ResourceItem hasItem = (ResourceItem) items.get(i);
+				
+				if (hasItem.resource == resource)
+					return hasItem;
 			}
 		}
 		return null;
 	}
 
-	public boolean hasResources(Resource r, int count) {
-		ResourceItem ri = findResource(r);
-		if (ri == null) return false;
-		return ri.count >= count;
+	public boolean hasResources(Resource resource, int count) {
+		ResourceItem resourceItem = findResource(resource);
+		
+		if (resourceItem == null)
+			return false;
+		
+		return resourceItem.count >= count;
 	}
 
-	public boolean removeResource(Resource r, int count) {
-		ResourceItem ri = findResource(r);
-		if (ri == null) return false;
-		if (ri.count < count) return false;
-		ri.count -= count;
-		if (ri.count <= 0) items.remove(ri);
+	public boolean removeResource(Resource resource, int count) {
+		ResourceItem resourceItem = findResource(resource);
+		
+		if (resourceItem == null)
+			return false;
+		
+		if (resourceItem.count < count)
+			return false;
+		
+		resourceItem.count -= count;
+		
+		if (resourceItem.count <= 0)
+			items.remove(resourceItem);
+		
 		return true;
 	}
 
-	public int count(Item item) {
+	public int countItems(Item item) {
 		if (item instanceof ResourceItem) {
-			ResourceItem ri = findResource(((ResourceItem)item).resource);
-			if (ri!=null) return ri.count;
+			ResourceItem resourceItem = findResource(((ResourceItem)item).resource);
+			
+			if (resourceItem!=null)
+				return resourceItem.count;
 		} else {
-			int count = 0;
+			int countItems = 0;
+			
 			for (int i=0; i<items.size(); i++) {
-				if (items.get(i).matches(item)) count++;
+				if (items.get(i).matches(item))
+					countItems++;
 			}
-			return count;
+			return countItems;
 		}
 		return 0;
 	}
