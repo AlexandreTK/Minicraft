@@ -188,7 +188,7 @@ public class Game extends Canvas implements Runnable {
 		if (!hasFocus()) {
 			input.releaseAllKeys();
 		} else {
-			if (!player.removed && !hasWon) {
+			if (!player.isRemoved && !hasWon) {
 				gameTime++;
 			} else {
 				// Do nothing
@@ -247,8 +247,8 @@ public class Game extends Canvas implements Runnable {
 			// Do nothing
 		}
 
-		int xScroll = player.x - screen.w / 2;
-		int yScroll = player.y - (screen.h - 8) / 2;
+		int xScroll = player.positionX - screen.w / 2;
+		int yScroll = player.positionY - (screen.h - 8) / 2;
 		if (xScroll < 16) {
 			xScroll = 16;
 		} else {
@@ -259,13 +259,13 @@ public class Game extends Canvas implements Runnable {
 		} else {
 			// Do nothing
 		}
-		if (xScroll > level.w * 16 - screen.w - 16) {
-			xScroll = level.w * 16 - screen.w - 16;
+		if (xScroll > level.width * 16 - screen.w - 16) {
+			xScroll = level.width * 16 - screen.w - 16;
 		} else {
 			// Do nothing
 		}
-		if (yScroll > level.h * 16 - screen.h - 16) {
-			yScroll = level.h * 16 - screen.h - 16;
+		if (yScroll > level.height * 16 - screen.h - 16) {
+			yScroll = level.height * 16 - screen.h - 16;
 		} else {
 			// Do nothing
 		}

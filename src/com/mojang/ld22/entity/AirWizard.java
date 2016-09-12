@@ -7,7 +7,8 @@ import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.sound.Sound;
 
 public class AirWizard extends Mob {
-	private int xa, ya;
+	private int positionXAbsolute;
+	private int positionYAbsolute;
 	private int randomWalkTime = 0;
 	private int attackDelay = 0;
 	private int attackTime = 0;
@@ -25,14 +26,20 @@ public class AirWizard extends Mob {
 		if (attackDelay > 0) {
 			direction = (attackDelay - 45) / 4 % 4;
 			direction = (direction * 2 % 4) + (direction / 2);
+			
 			if (attackDelay < 45) {
 				direction = 0;
 			}
+			
 			attackDelay--;
+			
 			if (attackDelay == 0) {
 				attackType = 0;
-				if (health < 1000) attackType = 1;
-				if (health < 200) attackType = 2;
+				if (health < 1000)
+					attackType = 1;
+				
+				if (health < 200)
+					attackType = 2;
 				attackTime = 60 * 2;
 			}
 			return;
@@ -40,44 +47,66 @@ public class AirWizard extends Mob {
 
 		if (attackTime > 0) {
 			attackTime--;
-			double dir = attackTime * 0.25 * (attackTime % 2 * 2 - 1);
+			
+			double direction = attackTime * 0.25 * (attackTime % 2 * 2 - 1);
 			double speed = (0.7) + attackType * 0.2;
-			level.add(new Spark(this, Math.cos(dir) * speed, Math.sin(dir) * speed));
+			
+			level.add(new Spark(this, Math.cos(direction) * speed, Math.sin(direction) * speed));
 			return;
 		}
 
 		if (level.player != null && randomWalkTime == 0) {
-			int xd = level.player.positionX - positionX;
-			int yd = level.player.positionY - positionY;
-			if (xd * xd + yd * yd < 32 * 32) {
-				xa = 0;
-				ya = 0;
-				if (xd < 0) xa = +1;
-				if (xd > 0) xa = -1;
-				if (yd < 0) ya = +1;
-				if (yd > 0) ya = -1;
-			} else if (xd * xd + yd * yd > 80 * 80) {
-				xa = 0;
-				ya = 0;
-				if (xd < 0) xa = -1;
-				if (xd > 0) xa = +1;
-				if (yd < 0) ya = -1;
-				if (yd > 0) ya = +1;
+			int positionXWalked = level.player.positionX - positionX;
+			int positionYWalked = level.player.positionY - positionY;
+			
+			if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 32 * 32) {
+				positionXAbsolute = 0;
+				positionYAbsolute = 0;
+				
+				if (positionXWalked < 0)
+					positionXAbsolute = +1;
+				
+				if (positionXWalked > 0)
+					positionXAbsolute = -1;
+				
+				if (positionYWalked < 0)
+					positionYAbsolute = +1;
+				
+				if (positionYWalked > 0)
+					positionYAbsolute = -1;
+			
+			} else if (positionXWalked * positionXWalked + positionYWalked * positionYWalked > 80 * 80) {
+				positionXAbsolute = 0;
+				positionYAbsolute = 0;
+				
+				if (positionXWalked < 0)
+					positionXAbsolute = -1;
+				
+				if (positionXWalked > 0)
+					positionXAbsolute = +1;
+				
+				if (positionYWalked < 0)
+					positionYAbsolute = -1;
+				
+				if (positionYWalked > 0)
+					positionYAbsolute = +1;
 			}
 		}
 
 		int speed = (tickTime % 4) == 0 ? 0 : 1;
-		if (!move(xa * speed, ya * speed) || random.nextInt(100) == 0) {
+		
+		if (!move(positionXAbsolute * speed, positionYAbsolute * speed) || random.nextInt(100) == 0) {
 			randomWalkTime = 30;
-			xa = (random.nextInt(3) - 1);
-			ya = (random.nextInt(3) - 1);
+			positionXAbsolute = (random.nextInt(3) - 1);
+			positionYAbsolute = (random.nextInt(3) - 1);
 		}
+		
 		if (randomWalkTime > 0) {
 			randomWalkTime--;
 			if (level.player != null && randomWalkTime == 0) {
-				int xd = level.player.positionX - positionX;
-				int yd = level.player.positionY - positionY;
-				if (random.nextInt(4) == 0 && xd * xd + yd * yd < 50 * 50) {
+				int positionXWalked = level.player.positionX - positionX;
+				int positionYWalked = level.player.positionY - positionY;
+				if (random.nextInt(4) == 0 && positionXWalked * positionXWalked + positionYWalked * positionYWalked < 50 * 50) {
 					if (attackDelay == 0 && attackTime == 0) {
 						attackDelay = 60 * 2;
 					}
@@ -86,8 +115,8 @@ public class AirWizard extends Mob {
 		}
 	}
 
-	protected void doHurt(int damage, int attackDir) {
-		super.doHurt(damage, attackDir);
+	protected void doHurt(int damage, int attackDirection) {
+		super.doHurt(damage, attackDirection);
 		if (attackDelay == 0 && attackTime == 0) {
 			attackDelay = 60 * 2;
 		}
@@ -113,31 +142,32 @@ public class AirWizard extends Mob {
 			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
 		}
 
-		int xo = positionX - 8;
-		int yo = positionY - 11;
+		int positionX0 = positionX - 8;
+		int positionY0 = positionY - 11;
 
-		int col1 = Color.get(-1, 100, 500, 555);
-		int col2 = Color.get(-1, 100, 500, 532);
+		int color1 = Color.get(-1, 100, 500, 555);
+		int color2 = Color.get(-1, 100, 500, 532);
+		
 		if (health < 200) {
 			if (tickTime / 3 % 2 == 0) {
-				col1 = Color.get(-1, 500, 100, 555);
-				col2 = Color.get(-1, 500, 100, 532);
+				color1 = Color.get(-1, 500, 100, 555);
+				color2 = Color.get(-1, 500, 100, 532);
 			}
 		} else if (health < 1000) {
 			if (tickTime / 5 % 4 == 0) {
-				col1 = Color.get(-1, 500, 100, 555);
-				col2 = Color.get(-1, 500, 100, 532);
+				color1 = Color.get(-1, 500, 100, 555);
+				color2 = Color.get(-1, 500, 100, 532);
 			}
 		}
 		if (hurtTime > 0) {
-			col1 = Color.get(-1, 555, 555, 555);
-			col2 = Color.get(-1, 555, 555, 555);
+			color1 = Color.get(-1, 555, 555, 555);
+			color2 = Color.get(-1, 555, 555, 555);
 		}
 
-		screen.render(xo + 8 * flip1, yo + 0, xt + yt * 32, col1, flip1);
-		screen.render(xo + 8 - 8 * flip1, yo + 0, xt + 1 + yt * 32, col1, flip1);
-		screen.render(xo + 8 * flip2, yo + 8, xt + (yt + 1) * 32, col2, flip2);
-		screen.render(xo + 8 - 8 * flip2, yo + 8, xt + 1 + (yt + 1) * 32, col2, flip2);
+		screen.render(positionX0 + 8 * flip1, positionY0 + 0, xt + yt * 32, color1, flip1);
+		screen.render(positionX0 + 8 - 8 * flip1, positionY0 + 0, xt + 1 + yt * 32, color1, flip1);
+		screen.render(positionX0 + 8 * flip2, positionY0 + 8, xt + (yt + 1) * 32, color2, flip2);
+		screen.render(positionX0 + 8 - 8 * flip2, positionY0 + 8, xt + 1 + (yt + 1) * 32, color2, flip2);
 	}
 
 	protected void touchedBy(Entity entity) {
@@ -148,10 +178,12 @@ public class AirWizard extends Mob {
 
 	protected void die() {
 		super.die();
+		
 		if (level.player != null) {
 			level.player.score += 1000;
 			level.player.gameWon();
 		}
+		
 		Sound.bossdeath.play();
 	}
 
