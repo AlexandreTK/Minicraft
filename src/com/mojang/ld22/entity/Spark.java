@@ -7,39 +7,43 @@ import com.mojang.ld22.gfx.Screen;
 
 public class Spark extends Entity {
 	private int lifeTime;
-	public double xa, ya;
+	public double positionXAbsolute, positionYAbsolute;
 	public double xx, yy;
 	private int time;
 	private AirWizard owner;
 
-	public Spark(AirWizard owner, double xa, double ya) {
+	public Spark(AirWizard owner, double positionXAbsolute, double positionYAbsolute) {
 		this.owner = owner;
 		xx = this.positionX = owner.positionX;
 		yy = this.positionY = owner.positionY;
 		positionXRelative = 0;
 		positionYRelative = 0;
 
-		this.xa = xa;
-		this.ya = ya;
+		this.positionXAbsolute = positionXAbsolute;
+		this.positionYAbsolute = positionYAbsolute;
 
 		lifeTime = 60 * 10 + random.nextInt(30);
 	}
 
 	public void tick() {
 		time++;
+		
 		if (time >= lifeTime) {
 			remove();
 			return;
 		}
-		xx += xa;
-		yy += ya;
+		
+		xx += positionXAbsolute;
+		yy += positionYAbsolute;
 		positionX = (int) xx;
 		positionY = (int) yy;
+		
 		List<Entity> toHit = level.getEntities(positionX, positionY, positionX, positionY);
+		
 		for (int i = 0; i < toHit.size(); i++) {
-			Entity e = toHit.get(i);
-			if (e instanceof Mob && !(e instanceof AirWizard)) {
-				e.hurt(owner, 1, ((Mob) e).direction ^ 1);
+			Entity entity = toHit.get(i);
+			if (entity instanceof Mob && !(entity instanceof AirWizard)) {
+				entity.hurt(owner, 1, ((Mob) entity).direction ^ 1);
 			}
 		}
 	}
@@ -50,7 +54,8 @@ public class Spark extends Entity {
 
 	public void render(Screen screen) {
 		if (time >= lifeTime - 6 * 20) {
-			if (time / 6 % 2 == 0) return;
+			if (time / 6 % 2 == 0)
+				return;
 		}
 
 		int xt = 8;

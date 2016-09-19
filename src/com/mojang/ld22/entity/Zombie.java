@@ -6,15 +6,15 @@ import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
 
 public class Zombie extends Mob {
-	private int xa, ya;
+	private int positionXAbsolute, positionYAbsolute;
 	private int lvl;
 	private int randomWalkTime = 0;
 
-	public Zombie(int lvl) {
-		this.lvl = lvl;
+	public Zombie(int level) {
+		this.lvl = level;
 		positionX = random.nextInt(64 * 16);
 		positionY = random.nextInt(64 * 16);
-		health = maxHealth = lvl * lvl * 10;
+		health = maxHealth = level * level * 10;
 
 	}
 
@@ -22,25 +22,37 @@ public class Zombie extends Mob {
 		super.tick();
 
 		if (level.player != null && randomWalkTime == 0) {
-			int xd = level.player.positionX - positionX;
-			int yd = level.player.positionY - positionY;
-			if (xd * xd + yd * yd < 50 * 50) {
-				xa = 0;
-				ya = 0;
-				if (xd < 0) xa = -1;
-				if (xd > 0) xa = +1;
-				if (yd < 0) ya = -1;
-				if (yd > 0) ya = +1;
+			int positionXWalked = level.player.positionX - positionX;
+			int positionYWalked = level.player.positionY - positionY;
+			
+			if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 50 * 50) {
+				positionXAbsolute = 0;
+				positionYAbsolute = 0;
+				
+				if (positionXWalked < 0)
+					positionXAbsolute = -1;
+				
+				if (positionXWalked > 0)
+					positionXAbsolute = +1;
+				
+				if (positionYWalked < 0)
+					positionYAbsolute = -1;
+				
+				if (positionYWalked > 0)
+					positionYAbsolute = +1;
 			}
 		}
 
 		int speed = tickTime & 1;
-		if (!move(xa * speed, ya * speed) || random.nextInt(200) == 0) {
+		
+		if (!move(positionXAbsolute * speed, positionYAbsolute * speed) || random.nextInt(200) == 0) {
 			randomWalkTime = 60;
-			xa = (random.nextInt(3) - 1) * random.nextInt(2);
-			ya = (random.nextInt(3) - 1) * random.nextInt(2);
+			positionXAbsolute = (random.nextInt(3) - 1) * random.nextInt(2);
+			positionYAbsolute = (random.nextInt(3) - 1) * random.nextInt(2);
 		}
-		if (randomWalkTime > 0) randomWalkTime--;
+		
+		if (randomWalkTime > 0)
+			randomWalkTime--;
 	}
 
 	public void render(Screen screen) {
@@ -57,9 +69,11 @@ public class Zombie extends Mob {
 
 			flip1 = 0;
 			flip2 = ((walkedDistancy >> 4) & 1);
+			
 			if (direction == 2) {
 				flip1 = 1;
 			}
+			
 			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
 		}
 
@@ -90,6 +104,7 @@ public class Zombie extends Mob {
 		super.die();
 
 		int count = random.nextInt(2) + 1;
+		
 		for (int i = 0; i < count; i++) {
 			level.add(new ItemEntity(new ResourceItem(Resource.cloth), positionX + random.nextInt(11) - 5, positionY + random.nextInt(11) - 5));
 		}

@@ -7,11 +7,13 @@ import com.mojang.ld22.sound.Sound;
 
 public class ItemEntity extends Entity {
 	private int lifeTime;
-	protected int walkDist = 0;
-	protected int dir = 0;
+	protected int walkedDistancy = 0;
+	protected int direction = 0;
 	public int hurtTime = 0;
-	protected int xKnockback, yKnockback;
-	public double xa, ya, za;
+	protected int positionXKnockback, positionYKnockback;
+	public double positionXAbsolute;
+	public double positionYAbsolute;
+	public double positionZAbsolute;
 	public double xx, yy, zz;
 	public Item item;
 	private int time = 0;
@@ -24,9 +26,9 @@ public class ItemEntity extends Entity {
 		positionYRelative = 3;
 
 		zz = 2;
-		xa = random.nextGaussian() * 0.3;
-		ya = random.nextGaussian() * 0.2;
-		za = random.nextFloat() * 0.7 + 1;
+		positionXAbsolute = random.nextGaussian() * 0.3;
+		positionYAbsolute = random.nextGaussian() * 0.2;
+		positionZAbsolute = random.nextFloat() * 0.7 + 1;
 
 		lifeTime = 60 * 10 + random.nextInt(60);
 	}
@@ -37,16 +39,16 @@ public class ItemEntity extends Entity {
 			remove();
 			return;
 		}
-		xx += xa;
-		yy += ya;
-		zz += za;
+		xx += positionXAbsolute;
+		yy += positionYAbsolute;
+		zz += positionZAbsolute;
 		if (zz < 0) {
 			zz = 0;
-			za *= -0.5;
-			xa *= 0.6;
-			ya *= 0.6;
+			positionZAbsolute *= -0.5;
+			positionXAbsolute *= 0.6;
+			positionYAbsolute *= 0.6;
 		}
-		za -= 0.15;
+		positionZAbsolute -= 0.15;
 		int ox = positionX;
 		int oy = positionY;
 		int nx = (int) xx;

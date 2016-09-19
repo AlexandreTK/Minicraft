@@ -5,6 +5,7 @@ import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.screen.CraftingMenu;
 
 public class Workbench extends Furniture {
+	
 	public Workbench() {
 		super("Workbench");
 		color = Color.get(-1, 100, 321, 431);
