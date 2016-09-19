@@ -247,8 +247,8 @@ public class Game extends Canvas implements Runnable {
 			// Do nothing
 		}
 
-		int xScroll = player.positionX - screen.w / 2;
-		int yScroll = player.positionY - (screen.h - 8) / 2;
+		int xScroll = player.positionX - screen.width / 2;
+		int yScroll = player.positionY - (screen.height - 8) / 2;
 		if (xScroll < 16) {
 			xScroll = 16;
 		} else {
@@ -259,13 +259,13 @@ public class Game extends Canvas implements Runnable {
 		} else {
 			// Do nothing
 		}
-		if (xScroll > level.width * 16 - screen.w - 16) {
-			xScroll = level.width * 16 - screen.w - 16;
+		if (xScroll > level.width * 16 - screen.width - 16) {
+			xScroll = level.width * 16 - screen.width - 16;
 		} else {
 			// Do nothing
 		}
-		if (yScroll > level.height * 16 - screen.h - 16) {
-			yScroll = level.height * 16 - screen.h - 16;
+		if (yScroll > level.height * 16 - screen.height - 16) {
+			yScroll = level.height * 16 - screen.height - 16;
 		} else {
 			// Do nothing
 		}
@@ -298,9 +298,9 @@ public class Game extends Canvas implements Runnable {
 			// Do nothing
 		}
 
-		for (int y = 0; y < screen.h; y++) {
-			for (int x = 0; x < screen.w; x++) {
-				int cc = screen.pixels[x + y * screen.w];
+		for (int y = 0; y < screen.height; y++) {
+			for (int x = 0; x < screen.width; x++) {
+				int cc = screen.pixels[x + y * screen.width];
 				if (cc < 255) {
 					pixels[x + y * WIDTH] = colors[cc];
 				} else {
@@ -324,32 +324,32 @@ public class Game extends Canvas implements Runnable {
 	private void renderGui() {
 		for (int y = 0; y < 2; y++) {
 			for (int x = 0; x < 20; x++) {
-				screen.render(x * 8, screen.h - 16 + y * 8, 0 + 12 * 32, Color.get(000, 000, 000, 000), 0);
+				screen.render(x * 8, screen.height - 16 + y * 8, 0 + 12 * 32, Color.get(000, 000, 000, 000), 0);
 			}
 		}
 
 		for (int i = 0; i < 10; i++) {
 			if (i < player.health) {
-				screen.render(i * 8, screen.h - 16, 0 + 12 * 32, Color.get(000, 200, 500, 533), 0);
+				screen.render(i * 8, screen.height - 16, 0 + 12 * 32, Color.get(000, 200, 500, 533), 0);
 			} else {
-				screen.render(i * 8, screen.h - 16, 0 + 12 * 32, Color.get(000, 100, 000, 000), 0);
+				screen.render(i * 8, screen.height - 16, 0 + 12 * 32, Color.get(000, 100, 000, 000), 0);
 			}
 			if (player.staminaRechargeDelay > 0) {
 				if (player.staminaRechargeDelay / 4 % 2 == 0) {
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 555, 000, 000), 0);
+					screen.render(i * 8, screen.height - 8, 1 + 12 * 32, Color.get(000, 555, 000, 000), 0);
 				} else {
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
+					screen.render(i * 8, screen.height - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
 				}
 			} else {
 				if (i < player.stamina) {
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 220, 550, 553), 0);
+					screen.render(i * 8, screen.height - 8, 1 + 12 * 32, Color.get(000, 220, 550, 553), 0);
 				} else {
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
+					screen.render(i * 8, screen.height - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
 				}
 			}
 		}
 		if (player.activeItem != null) {
-			player.activeItem.renderInventory(screen, 10 * 8, screen.h - 16);
+			player.activeItem.renderInventory(screen, 10 * 8, screen.height - 16);
 		} else {
 			// Do nothing
 		}

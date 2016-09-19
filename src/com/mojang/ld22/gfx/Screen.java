@@ -12,15 +12,15 @@ public class Screen {
 	public static final int BIT_MIRROR_X = 0x01;
 	public static final int BIT_MIRROR_Y = 0x02;
 
-	public final int w, h;
+	public final int width, height;
 	public int[] pixels;
 
 	private SpriteSheet sheet;
 
 	public Screen(int w, int h, SpriteSheet sheet) {
 		this.sheet = sheet;
-		this.w = w;
-		this.h = h;
+		this.width = w;
+		this.height = h;
 
 		pixels = new int[w * h];
 
@@ -65,13 +65,13 @@ public class Screen {
 			} else {
 				// Do nothing
 			}
-			if (y + yp < 0 || y + yp >= h) { 
+			if (y + yp < 0 || y + yp >= height) { 
 				continue;
 			} else {
 				// Do nothing
 			}
 			for (int x = 0; x < 8; x++) {
-				if (x + xp < 0 || x + xp >= w) { 
+				if (x + xp < 0 || x + xp >= width) { 
 					continue;
 				} else {
 					// Do nothing
@@ -85,7 +85,7 @@ public class Screen {
 				}
 				int col = (colors >> (sheet.pixels[xs + ys * sheet.width + toffs] * 8)) & 255;
 				if (col < 255) {
-					pixels[(x + xp) + (y + yp) * w] = col;
+					pixels[(x + xp) + (y + yp) * width] = col;
 				} else {
 					// Do nothing
 				}
@@ -103,8 +103,8 @@ public class Screen {
 	public void overlay(Screen screen2, int xa, int ya) {
 		int[] oPixels = screen2.pixels;
 		int i = 0;
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
 				if (oPixels[i] / 10 <= dither[((x + xa) & 3) + ((y + ya) & 3) * 4]) {
 					pixels[i] = 0;
 				} else {
@@ -134,13 +134,13 @@ public class Screen {
 		} else {
 			// Do nothing
 		}
-		if (x1 > w) {
-			x1 = w;
+		if (x1 > width) {
+			x1 = width;
 		} else {
 			// Do nothing
 		}
-		if (y1 > h) {
-			y1 = h;
+		if (y1 > height) {
+			y1 = height;
 		} else {
 			// Do nothing
 		}
@@ -154,8 +154,8 @@ public class Screen {
 				// System.out.println(dist);
 				if (dist <= r * r) {
 					int br = 255 - dist * 255 / (r * r);
-					if (pixels[xx + yy * w] < br) {
-						pixels[xx + yy * w] = br;
+					if (pixels[xx + yy * width] < br) {
+						pixels[xx + yy * width] = br;
 					} else {
 						// Do nothing
 					}
