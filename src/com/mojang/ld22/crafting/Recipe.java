@@ -14,7 +14,7 @@ import com.mojang.ld22.screen.ListItem;
 
 public abstract class Recipe implements ListItem {
 	public List<Item> costs = new ArrayList<Item>();
-	public boolean canCraft = false;
+	
 	public Item resultTemplate;
 
 	public Recipe(Item resultTemplate) {
@@ -26,12 +26,14 @@ public abstract class Recipe implements ListItem {
 		return this;
 	}
 
+	public boolean canCraft = false;
+	
 	public void checkCanCraft(Player player) {
 		for (int i = 0; i < costs.size(); i++) {
 			Item item = costs.get(i);
 			if (item instanceof ResourceItem) {
-				ResourceItem ri = (ResourceItem) item;
-				if (!player.inventory.hasResources(ri.resource, ri.count)) {
+				ResourceItem resourceItem = (ResourceItem) item;
+				if (!player.inventory.hasResources(resourceItem.resource, resourceItem.count)) {
 					canCraft = false;
 					return;
 				}
@@ -40,10 +42,10 @@ public abstract class Recipe implements ListItem {
 		canCraft = true;
 	}
 
-	public void renderInventory(Screen screen, int x, int y) {
-		screen.render(x, y, resultTemplate.getSprite(), resultTemplate.getColor(), 0);
+	public void renderInventory(Screen screen, int sizeX, int sizeY) {
+		screen.render(sizeX, sizeY, resultTemplate.getSprite(), resultTemplate.getColor(), 0);
 		int textColor = canCraft ? Color.get(-1, 555, 555, 555) : Color.get(-1, 222, 222, 222);
-		Font.draw(resultTemplate.getName(), screen, x + 8, y, textColor);
+		Font.draw(resultTemplate.getName(), screen, sizeX + 8, sizeY, textColor);
 	}
 
 	public abstract void craft(Player player);
@@ -52,8 +54,8 @@ public abstract class Recipe implements ListItem {
 		for (int i = 0; i < costs.size(); i++) {
 			Item item = costs.get(i);
 			if (item instanceof ResourceItem) {
-				ResourceItem ri = (ResourceItem) item;
-				player.inventory.removeResource(ri.resource, ri.count);
+				ResourceItem resourceItem = (ResourceItem) item;
+				player.inventory.removeResource(resourceItem.resource, resourceItem.count);
 			}
 		}
 	}
