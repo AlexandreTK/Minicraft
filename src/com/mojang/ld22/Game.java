@@ -121,7 +121,8 @@ public class Game extends Canvas implements Runnable {
 					int r1 = ((rr + mid * 1) / 2) * 230 / 255 + 10;
 					int g1 = ((gg + mid * 1) / 2) * 230 / 255 + 10;
 					int b1 = ((bb + mid * 1) / 2) * 230 / 255 + 10;
-					colors[pp++] = r1 << 16 | g1 << 8 | b1;
+					pp++;
+					colors[pp] = r1 << 16 | g1 << 8 | b1;
 
 				}
 			}
@@ -213,7 +214,8 @@ public class Game extends Canvas implements Runnable {
 					}
 				}
 				if (wonTimer > 0) {
-					if (--wonTimer == 0) {
+					--wonTimer;
+					if (wonTimer == 0) {
 						setMenu(new WonMenu());
 					} else {
 						// Do nothing
@@ -231,8 +233,9 @@ public class Game extends Canvas implements Runnable {
 		level.remove(player);
 		currentLevel += dir;
 		level = levels[currentLevel];
-		player.positionX = (player.positionX >> 4) * 16 + 8;
-		player.positionY = (player.positionY >> 4) * 16 + 8;
+		int modifyPosition = 16 + 8;
+		player.positionX = (player.positionX >> 4) * modifyPosition;
+		player.positionY = (player.positionY >> 4) * modifyPosition;
 		level.add(player);
 
 	}
@@ -249,6 +252,7 @@ public class Game extends Canvas implements Runnable {
 
 		int xScroll = player.positionX - screen.width / 2;
 		int yScroll = player.positionY - (screen.height - 8) / 2;
+		
 		if (xScroll < 16) {
 			xScroll = 16;
 		} else {
@@ -259,13 +263,15 @@ public class Game extends Canvas implements Runnable {
 		} else {
 			// Do nothing
 		}
-		if (xScroll > level.width * 16 - screen.width - 16) {
-			xScroll = level.width * 16 - screen.width - 16;
+		int testCondition = level.width * 16 - screen.width - 16;
+		
+		if (xScroll > testCondition) {
+			xScroll = testCondition;
 		} else {
 			// Do nothing
 		}
-		if (yScroll > level.height * 16 - screen.height - 16) {
-			yScroll = level.height * 16 - screen.height - 16;
+		if (yScroll > testCondition) {
+			yScroll = testCondition;
 		} else {
 			// Do nothing
 		}
@@ -273,7 +279,9 @@ public class Game extends Canvas implements Runnable {
 			int col = Color.get(20, 20, 121, 121);
 			for (int y = 0; y < 14; y++)
 				for (int x = 0; x < 24; x++) {
-					screen.render(x * 8 - ((xScroll / 4) & 7), y * 8 - ((yScroll / 4) & 7), 0, col, 0);
+					int positionX = x * 8 - ((xScroll/4) & 7);
+					int positionY = y * 8 - ((yScroll/4) & 7);
+					screen.render(positionX, positionY, 0, col, 0);
 				}
 		} else {
 			// Do nothing
@@ -300,9 +308,11 @@ public class Game extends Canvas implements Runnable {
 
 		for (int y = 0; y < screen.height; y++) {
 			for (int x = 0; x < screen.width; x++) {
-				int cc = screen.pixels[x + y * screen.width];
+				int screenPixelsPosition = x + y * screen.width;
+				int cc = screen.pixels[screenPixelsPosition];
 				if (cc < 255) {
-					pixels[x + y * WIDTH] = colors[cc];
+					int width= x + y * WIDTH;
+					pixels[width] = colors[cc];
 				} else {
 					// Do nothing
 				}
@@ -324,27 +334,54 @@ public class Game extends Canvas implements Runnable {
 	private void renderGui() {
 		for (int y = 0; y < 2; y++) {
 			for (int x = 0; x < 20; x++) {
-				screen.render(x * 8, screen.height - 16 + y * 8, 0 + 12 * 32, Color.get(000, 000, 000, 000), 0);
+				int xPosition = x * 8;
+				int yPosition = screen.height - 16 + y * 8;
+				int tile = 0 + 12 * 32;
+				screen.render(xPosition, yPosition, tile, Color.get(000, 000, 000, 000), 0);
 			}
 		}
 
 		for (int i = 0; i < 10; i++) {
 			if (i < player.health) {
-				screen.render(i * 8, screen.height - 16, 0 + 12 * 32, Color.get(000, 200, 500, 533), 0);
+				int positionX = i * 8;
+				int positionY = screen.height - 16;
+				int tile = 0 + 12 * 32;
+				
+				screen.render(positionX, positionY, tile, Color.get(000, 200, 500, 533), 0);
 			} else {
-				screen.render(i * 8, screen.height - 16, 0 + 12 * 32, Color.get(000, 100, 000, 000), 0);
+				int positionX = i * 8;
+				int positionY = screen.height - 16;
+				int tile = 0 + 12 * 32;
+				
+				screen.render(positionX, positionY, tile, Color.get(000, 100, 000, 000), 0);
 			}
 			if (player.staminaRechargeDelay > 0) {
 				if (player.staminaRechargeDelay / 4 % 2 == 0) {
-					screen.render(i * 8, screen.height - 8, 1 + 12 * 32, Color.get(000, 555, 000, 000), 0);
+					int positionX = i * 8;
+					int positionY = screen.height - 8;
+					int tile = 1 + 12 * 32;
+					
+					screen.render(positionX, positionY, tile, Color.get(000, 555, 000, 000), 0);
 				} else {
-					screen.render(i * 8, screen.height - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
+					int positionX = i * 8;
+					int positionY = screen.height - 8;
+					int tile = 1 + 12 * 32;
+					
+					screen.render(positionX, positionY, tile, Color.get(000, 110, 000, 000), 0);
 				}
 			} else {
 				if (i < player.stamina) {
-					screen.render(i * 8, screen.height - 8, 1 + 12 * 32, Color.get(000, 220, 550, 553), 0);
+					int positionX = i * 8;
+					int positionY = screen.height - 8;
+					int tile = 1 + 12 * 32;
+					
+					screen.render(positionX, positionY, tile, Color.get(000, 220, 550, 553), 0);
 				} else {
-					screen.render(i * 8, screen.height - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
+					int positionX = i * 8;
+					int positionY = screen.height - 8;
+					int tile = 1 + 12 * 32;
+					
+					screen.render(positionX, positionY, tile, Color.get(000, 110, 000, 000), 0);
 				}
 			}
 		}
@@ -367,7 +404,7 @@ public class Game extends Canvas implements Runnable {
 		int yy = (HEIGHT - 8) / 2;
 		int w = msg.length();
 		int h = 1;
-
+		
 		screen.render(xx - 8, yy - 8, 0 + 13 * 32, Color.get(-1, 1, 5, 445), 0);
 		screen.render(xx + w * 8, yy - 8, 0 + 13 * 32, Color.get(-1, 1, 5, 445), 1);
 		screen.render(xx - 8, yy + 8, 0 + 13 * 32, Color.get(-1, 1, 5, 445), 2);
