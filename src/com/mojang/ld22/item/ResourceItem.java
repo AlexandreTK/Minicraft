@@ -36,10 +36,15 @@ public class ResourceItem extends Item {
 
 	public void renderInventory(Screen screen, int x, int y) {
 		screen.render(x, y, resource.sprite, resource.color, 0);
-		Font.draw(resource.name, screen, x + 32, y, Color.get(-1, 555, 555, 555));
+		int positionX = x + 32;
+		Font.draw(resource.name, screen, positionX, y, Color.get(-1, 555, 555, 555));
 		int cc = count;
-		if (cc > 999) cc = 999;
-		Font.draw("" + cc, screen, x + 8, y, Color.get(-1, 444, 444, 444));
+		
+		if (cc > 999)
+			cc = 999;
+		positionX = x + 8;
+		String msg = "" + cc;
+		Font.draw(msg, screen, positionX, y, Color.get(-1, 444, 444, 444));
 	}
 
 	public String getName() {
