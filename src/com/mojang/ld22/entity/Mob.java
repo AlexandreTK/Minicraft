@@ -27,9 +27,15 @@ public class Mob extends Entity {
 		if (level.getTile(positionX >> 4, positionY >> 4) == Tile.lava) {
 			hurt(this, 4, direction ^ 1);
 		}
+		else {
+			// nothing to do
+		}
 
 		if (health <= 0) {
 			die();
+		}
+		else {
+			// nothing to do
 		}
 		if (hurtTime > 0) hurtTime--;
 	}
@@ -44,42 +50,50 @@ public class Mob extends Entity {
 			if (swimTimer++ % 2 == 0)
 				return true;
 		}
+		else {
+			// nothing to do
+		}
 		
 		if (positionXKnockback < 0) {
 			move2(-1, 0);
 			positionXKnockback++;
 		}
-		if (positionXKnockback > 0) {
+		else {
 			move2(1, 0);
 			positionXKnockback--;
 		}
+		
 		
 		if (positionYKnockback < 0) {
 			move2(0, -1);
 			positionYKnockback++;
 		}
 		
-		if (positionYKnockback > 0) {
+		else {
 			move2(0, 1);
 			positionYKnockback--;
 		}
+		
+		
 		
 		if (hurtTime > 0)
 			return true;
 		
 		if (positionXAbsolute != 0 || positionYAbsolute != 0) {
 			walkedDistancy++;
-			if (positionXAbsolute < 0)
+			if (positionXAbsolute < 0){
 				direction = 2;
-			
-			if (positionXAbsolute > 0)
+			}
+			else {
 				direction = 3;
+			}
 			
-			if (positionYAbsolute < 0)
+			if (positionYAbsolute < 0){
 				direction = 1;
-			
-			if (positionYAbsolute > 0)
+			}
+			else{
 				direction = 0;
+			}
 		}
 		return super.move(positionXAbsolute, positionYAbsolute);
 	}
@@ -115,9 +129,7 @@ public class Mob extends Entity {
 
 	protected void doHurt(int damage, int attackDirection) {
 		
-		if (hurtTime > 0)
-			return;
-
+		
 		if (level.player != null) {
 			int positionXWalked = level.player.positionX - positionX;
 			int positionYWalked = level.player.positionY - positionY;
@@ -125,21 +137,34 @@ public class Mob extends Entity {
 			if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 80 * 80) {
 				Sound.monsterHurt.play();
 			}
+			else{
+				//nothing to do
+			}
+		}
+		else{
+			//nothing to do
+		
 		}
 		level.add(new TextParticle("" + damage, positionX, positionY, Color.get(-1, 500, 500, 500)));
 		health -= damage;
 		
-		if (attackDirection == 0)
+		
+		switch(attackDirection){
+		case 0:
 			positionYKnockback = +6;
-		
-		if (attackDirection == 1)
+			break;
+		case 1:
 			positionYKnockback = -6;
-		
-		if (attackDirection == 2)
+			break;
+		case 2:
 			positionXKnockback = -6;
-		
-		if (attackDirection == 3)
+			break;
+			
+		case 3:
 			positionXKnockback = +6;
+			break;
+		
+		}
 		hurtTime = 10;
 	}
 
@@ -155,6 +180,9 @@ public class Mob extends Entity {
 			
 			if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 80 * 80)
 				return false;
+		}
+		else{
+			//nothing to do
 		}
 
 		int radius = level.monsterDensity * 16;
