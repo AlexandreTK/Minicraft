@@ -40,8 +40,14 @@ public class TextParticle extends Entity {
 			ya *= 0.6;
 		}
 		za -= 0.15;
+		try{
 		positionX = (int) xx;
 		positionY = (int) yy;
+		}catch(ArithmeticException erroArithmetic){
+			System.out.println("erro in TextParticle");
+			
+		}
+		
 	}
 
 	public void render(Screen screen) {
