@@ -34,12 +34,12 @@ public class Slime extends Mob {
 						if (positionXWalked < 0){
 							positionXAbsolute = -1;}
 						
-						else{
+						if (positionXWalked > 0){
 							positionXAbsolute = +1;}
 						
 						if (positionYWalked < 0){
 							positionYAbsolute = -1;}
-						else{
+						if (positionYWalked > 0){
 							positionYAbsolute = +1;}
 					}else{
 						//nothing to do

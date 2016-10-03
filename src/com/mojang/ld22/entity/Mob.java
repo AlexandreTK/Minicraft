@@ -58,7 +58,7 @@ public class Mob extends Entity {
 			move2(-1, 0);
 			positionXKnockback++;
 		}
-		else {
+		if (positionXKnockback > 0) {
 			move2(1, 0);
 			positionXKnockback--;
 		}
@@ -69,7 +69,7 @@ public class Mob extends Entity {
 			positionYKnockback++;
 		}
 		
-		else {
+		if (positionYKnockback > 0) {
 			move2(0, 1);
 			positionYKnockback--;
 		}
@@ -84,14 +84,14 @@ public class Mob extends Entity {
 			if (positionXAbsolute < 0){
 				direction = 2;
 			}
-			else {
+			if (positionXAbsolute > 0) {
 				direction = 3;
 			}
 			
 			if (positionYAbsolute < 0){
 				direction = 1;
 			}
-			else{
+			if (positionYAbsolute > 0){
 				direction = 0;
 			}
 		}
@@ -129,6 +129,8 @@ public class Mob extends Entity {
 
 	protected void doHurt(int damage, int attackDirection) {
 		
+		if (hurtTime > 0)
+			 	return;
 		
 		if (level.player != null) {
 			int positionXWalked = level.player.positionX - positionX;

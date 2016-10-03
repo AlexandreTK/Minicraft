@@ -33,7 +33,7 @@ public class Zombie extends Mob {
 					positionXAbsolute = -1;
 				}
 
-				else {
+				if (positionXWalked > 0) {
 					positionXAbsolute = +1;
 				}
 
@@ -41,7 +41,7 @@ public class Zombie extends Mob {
 					positionYAbsolute = -1;
 				}
 
-				else {
+				if (positionYWalked > 0) {
 					positionYAbsolute = +1;
 				}
 			} else {
