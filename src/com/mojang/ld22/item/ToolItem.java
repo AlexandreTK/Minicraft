@@ -46,7 +46,9 @@ public class ToolItem extends Item {
 
 	public void renderInventory(Screen screen, int x, int y) {
 		screen.render(x, y, getSprite(), getColor(), 0);
-		Font.draw(getName(), screen, x + 8, y, Color.get(-1, 555, 555, 555));
+		int positionX = x + 8;
+		
+		Font.draw(getName(), screen, positionX, y, Color.get(-1, 555, 555, 555));
 	}
 
 	public String getName() {
@@ -62,10 +64,13 @@ public class ToolItem extends Item {
 
 	public int getAttackDamageBonus(Entity e) {
 		if (type == ToolType.axe) {
-			return (level + 1) * 2 + random.nextInt(4);
+			int attackDamageBonus = (level + 1) * 2 + random.nextInt(4);
+			return attackDamageBonus;
 		}
+		
 		if (type == ToolType.sword) {
-			return (level + 1) * 3 + random.nextInt(2 + level * level * 2);
+			int attackDamageBonus = (level + 1) * 3 + random.nextInt(2 + level * level * 2);
+			return attackDamageBonus;
 		}
 		return 1;
 	}
@@ -73,8 +78,13 @@ public class ToolItem extends Item {
 	public boolean matches(Item item) {
 		if (item instanceof ToolItem) {
 			ToolItem other = (ToolItem) item;
-			if (other.type != type) return false;
-			if (other.level != level) return false;
+			
+			if (other.type != type)
+				return false;
+			
+			if (other.level != level)
+				return false;
+			
 			return true;
 		}
 		return false;
