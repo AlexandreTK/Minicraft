@@ -31,29 +31,38 @@ public class Slime extends Mob {
 					int positionYWalked = level.player.positionY - positionY;
 					
 					if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 50 * 50) {
-						if (positionXWalked < 0)
-							positionXAbsolute = -1;
+						if (positionXWalked < 0){
+							positionXAbsolute = -1;}
 						
-						if (positionXWalked > 0)
-							positionXAbsolute = +1;
+						else{
+							positionXAbsolute = +1;}
 						
-						if (positionYWalked < 0)
-							positionYAbsolute = -1;
-						
-						if (positionYWalked > 0)
-							positionYAbsolute = +1;
+						if (positionYWalked < 0){
+							positionYAbsolute = -1;}
+						else{
+							positionYAbsolute = +1;}
+					}else{
+						//nothing to do
 					}
 
+				}else{
+					//nothing to do
 				}
 
 				if (positionXAbsolute != 0 || positionYAbsolute != 0) jumpTime = 10;
+			}else{
+				//nothing to do
 			}
+		}else{
+			//nothing to do
 		}
 
 		jumpTime--;
 		
 		if (jumpTime == 0) {
 			positionXAbsolute = positionYAbsolute = 0;
+		}else{
+			//nothing to do
 		}
 	}
 
@@ -67,6 +76,8 @@ public class Slime extends Mob {
 
 		if (level.player != null) {
 			level.player.score += 25*lvl;
+		}else{
+			//nothing to do
 		}
 		
 	}
@@ -81,21 +92,28 @@ public class Slime extends Mob {
 		if (jumpTime > 0) {
 			xt += 2;
 			yo -= 4;
+		}else{
+			//nothing to do
 		}
 
 		int col = Color.get(-1, 10, 252, 555);
-		
-		if (lvl == 2)
+		switch(lvl){
+		case 2:
 			col = Color.get(-1, 100, 522, 555);
-		
-		if (lvl == 3)
+			break;
+		case 3:
 			col = Color.get(-1, 111, 444, 555);
-		
-		if (lvl == 4)
+			break;
+		case 4:
 			col = Color.get(-1, 000, 111, 224);
+			break;
+		}
+				
 
 		if (hurtTime > 0) {
 			col = Color.get(-1, 555, 555, 555);
+		}else{
+			//nothing to do
 		}
 
 		screen.render(xo + 0, yo + 0, xt + yt * 32, col, 0);
@@ -107,6 +125,8 @@ public class Slime extends Mob {
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player) {
 			entity.hurt(this, lvl, direction);
+		}else{
+			//nothing to do
 		}
 	}
 }
