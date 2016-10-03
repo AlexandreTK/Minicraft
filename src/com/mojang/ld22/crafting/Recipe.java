@@ -43,8 +43,15 @@ public abstract class Recipe implements ListItem {
 	}
 
 	public void renderInventory(Screen screen, int sizeX, int sizeY) {
+		int whiteRgbScaleColor = 555;
+		int grayRgbScaleColor = 222;
 		screen.render(sizeX, sizeY, resultTemplate.getSprite(), resultTemplate.getColor(), 0);
-		int textColor = canCraft ? Color.get(-1, 555, 555, 555) : Color.get(-1, 222, 222, 222);
+		int textColor;
+		if (canCraft){
+			textColor = Color.get(-1, whiteRgbScaleColor, whiteRgbScaleColor, whiteRgbScaleColor);
+		}else {
+			textColor = Color.get(-1, grayRgbScaleColor, grayRgbScaleColor, grayRgbScaleColor);
+		}
 		Font.draw(resultTemplate.getName(), screen, sizeX + 8, sizeY, textColor);
 	}
 
