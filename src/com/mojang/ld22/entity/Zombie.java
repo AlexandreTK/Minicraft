@@ -24,33 +24,43 @@ public class Zombie extends Mob {
 		if (level.player != null && randomWalkTime == 0) {
 			int positionXWalked = level.player.positionX - positionX;
 			int positionYWalked = level.player.positionY - positionY;
-			
+
 			if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 50 * 50) {
 				positionXAbsolute = 0;
 				positionYAbsolute = 0;
-				
-				if (positionXWalked < 0)
+
+				if (positionXWalked < 0) {
 					positionXAbsolute = -1;
-				
-				if (positionXWalked > 0)
+				}
+
+				else {
 					positionXAbsolute = +1;
-				
-				if (positionYWalked < 0)
+				}
+
+				if (positionYWalked < 0) {
 					positionYAbsolute = -1;
-				
-				if (positionYWalked > 0)
+				}
+
+				else {
 					positionYAbsolute = +1;
+				}
+			} else {
+				// nothing to do
 			}
+		} else {
+			// nothing to do
 		}
 
 		int speed = tickTime & 1;
-		
+
 		if (!move(positionXAbsolute * speed, positionYAbsolute * speed) || random.nextInt(200) == 0) {
 			randomWalkTime = 60;
 			positionXAbsolute = (random.nextInt(3) - 1) * random.nextInt(2);
 			positionYAbsolute = (random.nextInt(3) - 1) * random.nextInt(2);
+		} else {
+			// nothing to do
 		}
-		
+
 		if (randomWalkTime > 0)
 			randomWalkTime--;
 	}
@@ -64,28 +74,44 @@ public class Zombie extends Mob {
 
 		if (direction == 1) {
 			xt += 2;
+		} else {
+			// nothing to do
 		}
 		if (direction > 1) {
 
 			flip1 = 0;
 			flip2 = ((walkedDistancy >> 4) & 1);
-			
+
 			if (direction == 2) {
 				flip1 = 1;
 			}
-			
+
 			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
+		} else {
+			// nothing to do
 		}
 
 		int xo = positionX - 8;
 		int yo = positionY - 11;
 
 		int col = Color.get(-1, 10, 252, 050);
-		if (lvl == 2) col = Color.get(-1, 100, 522, 050);
-		if (lvl == 3) col = Color.get(-1, 111, 444, 050);
-		if (lvl == 4) col = Color.get(-1, 000, 111, 020);
+
+		switch (lvl) {
+		case 2:
+			col = Color.get(-1, 100, 522, 050);
+			break;
+		case 3:
+			col = Color.get(-1, 111, 444, 050);
+			break;
+		case 4:
+			col = Color.get(-1, 000, 111, 020);
+			break;
+		}
+
 		if (hurtTime > 0) {
 			col = Color.get(-1, 555, 555, 555);
+		} else {
+			// nothing to do
 		}
 
 		screen.render(xo + 8 * flip1, yo + 0, xt + yt * 32, col, flip1);
@@ -97,6 +123,8 @@ public class Zombie extends Mob {
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player) {
 			entity.hurt(this, lvl + 1, direction);
+		} else {
+			// nothing to do
 		}
 	}
 
@@ -104,13 +132,16 @@ public class Zombie extends Mob {
 		super.die();
 
 		int count = random.nextInt(2) + 1;
-		
+
 		for (int i = 0; i < count; i++) {
-			level.add(new ItemEntity(new ResourceItem(Resource.cloth), positionX + random.nextInt(11) - 5, positionY + random.nextInt(11) - 5));
+			level.add(new ItemEntity(new ResourceItem(Resource.cloth), positionX + random.nextInt(11) - 5,
+					positionY + random.nextInt(11) - 5));
 		}
 
 		if (level.player != null) {
 			level.player.score += 50 * lvl;
+		} else {
+			// nothing to do
 		}
 
 	}
