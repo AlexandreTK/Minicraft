@@ -32,9 +32,11 @@ public class Inventory {
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i) instanceof ResourceItem) {
 				ResourceItem hasItem = (ResourceItem) items.get(i);
-				
+
 				if (hasItem.resource == resource)
 					return hasItem;
+			} else {
+				// nothing to do
 			}
 		}
 		return null;
@@ -42,40 +44,40 @@ public class Inventory {
 
 	public boolean hasResources(Resource resource, int count) {
 		ResourceItem resourceItem = findResource(resource);
-		
+
 		if (resourceItem == null)
 			return false;
-		
+
 		return resourceItem.count >= count;
 	}
 
 	public boolean removeResource(Resource resource, int count) {
 		ResourceItem resourceItem = findResource(resource);
-		
+
 		if (resourceItem == null)
 			return false;
-		
+
 		if (resourceItem.count < count)
 			return false;
-		
+
 		resourceItem.count -= count;
-		
+
 		if (resourceItem.count <= 0)
 			items.remove(resourceItem);
-		
+
 		return true;
 	}
 
 	public int countItems(Item item) {
 		if (item instanceof ResourceItem) {
-			ResourceItem resourceItem = findResource(((ResourceItem)item).resource);
-			
-			if (resourceItem!=null)
+			ResourceItem resourceItem = findResource(((ResourceItem) item).resource);
+
+			if (resourceItem != null)
 				return resourceItem.count;
 		} else {
 			int countItems = 0;
-			
-			for (int i=0; i<items.size(); i++) {
+
+			for (int i = 0; i < items.size(); i++) {
 				if (items.get(i).matches(item))
 					countItems++;
 			}
