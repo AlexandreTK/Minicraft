@@ -39,6 +39,9 @@ public class ItemEntity extends Entity {
 			remove();
 			return;
 		}
+		else {
+			// nothing to do
+		}
 		xx += positionXAbsolute;
 		yy += positionYAbsolute;
 		zz += positionZAbsolute;
@@ -47,6 +50,9 @@ public class ItemEntity extends Entity {
 			positionZAbsolute *= -0.5;
 			positionXAbsolute *= 0.6;
 			positionYAbsolute *= 0.6;
+		}
+		else {
+			// nothing to do
 		}
 		positionZAbsolute -= 0.15;
 		int ox = positionX;
@@ -71,6 +77,9 @@ public class ItemEntity extends Entity {
 	public void render(Screen screen) {
 		if (time >= lifeTime - 6 * 20) {
 			if (time / 6 % 2 == 0) return;
+		}
+		else {
+			// nothing to do
 		}
 		screen.render(positionX - 4, positionY - 4, item.getSprite(), Color.get(-1, 0, 0, 0), 0);
 		screen.render(positionX - 4, positionY - 4 - (int) (zz), item.getSprite(), item.getColor(), 0);

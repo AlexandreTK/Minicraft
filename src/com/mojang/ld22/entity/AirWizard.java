@@ -2,8 +2,6 @@ package com.mojang.ld22.entity;
 
 import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
-import com.mojang.ld22.item.ResourceItem;
-import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.sound.Sound;
 
 public class AirWizard extends Mob {
@@ -26,92 +24,117 @@ public class AirWizard extends Mob {
 		if (attackDelay > 0) {
 			direction = (attackDelay - 45) / 4 % 4;
 			direction = (direction * 2 % 4) + (direction / 2);
-			
+
 			if (attackDelay < 45) {
 				direction = 0;
+			} else {
+				// nothing to do
 			}
-			
+
 			attackDelay--;
-			
+
 			if (attackDelay == 0) {
 				attackType = 0;
 				if (health < 1000)
 					attackType = 1;
-				
+
 				if (health < 200)
 					attackType = 2;
 				attackTime = 60 * 2;
+			} else {
+				// nothing to do
 			}
-			return;
+
+		} else {
+			// nothing to do
 		}
 
 		if (attackTime > 0) {
 			attackTime--;
-			
+
 			double direction = attackTime * 0.25 * (attackTime % 2 * 2 - 1);
 			double speed = (0.7) + attackType * 0.2;
-			
+
 			level.add(new Spark(this, Math.cos(direction) * speed, Math.sin(direction) * speed));
-			return;
+
+		} else {
+			// nothing to do
 		}
 
 		if (level.player != null && randomWalkTime == 0) {
 			int positionXWalked = level.player.positionX - positionX;
 			int positionYWalked = level.player.positionY - positionY;
-			
+
 			if (positionXWalked * positionXWalked + positionYWalked * positionYWalked < 32 * 32) {
 				positionXAbsolute = 0;
 				positionYAbsolute = 0;
-				
-				if (positionXWalked < 0)
+
+				if (positionXWalked < 0) {
 					positionXAbsolute = +1;
-				
-				if (positionXWalked > 0)
+				} else {
 					positionXAbsolute = -1;
-				
-				if (positionYWalked < 0)
+
+				}
+				if (positionYWalked < 0) {
 					positionYAbsolute = +1;
-				
-				if (positionYWalked > 0)
+				} else {
 					positionYAbsolute = -1;
-			
+				}
+
 			} else if (positionXWalked * positionXWalked + positionYWalked * positionYWalked > 80 * 80) {
 				positionXAbsolute = 0;
 				positionYAbsolute = 0;
-				
-				if (positionXWalked < 0)
+
+				if (positionXWalked < 0) {
 					positionXAbsolute = -1;
-				
-				if (positionXWalked > 0)
+				} else {
 					positionXAbsolute = +1;
-				
-				if (positionYWalked < 0)
+				}
+
+				if (positionYWalked < 0) {
 					positionYAbsolute = -1;
-				
-				if (positionYWalked > 0)
+				}
+
+				else {
 					positionYAbsolute = +1;
+				}
+			} else {
+				// nothing to do
 			}
+		} else {
+			// nothing to do
 		}
 
 		int speed = (tickTime % 4) == 0 ? 0 : 1;
-		
+
 		if (!move(positionXAbsolute * speed, positionYAbsolute * speed) || random.nextInt(100) == 0) {
 			randomWalkTime = 30;
 			positionXAbsolute = (random.nextInt(3) - 1);
 			positionYAbsolute = (random.nextInt(3) - 1);
+		} else {
+			// nothing to do
 		}
-		
+
 		if (randomWalkTime > 0) {
 			randomWalkTime--;
 			if (level.player != null && randomWalkTime == 0) {
 				int positionXWalked = level.player.positionX - positionX;
 				int positionYWalked = level.player.positionY - positionY;
-				if (random.nextInt(4) == 0 && positionXWalked * positionXWalked + positionYWalked * positionYWalked < 50 * 50) {
+				if (random.nextInt(4) == 0
+						&& positionXWalked * positionXWalked + positionYWalked * positionYWalked < 50 * 50) {
 					if (attackDelay == 0 && attackTime == 0) {
 						attackDelay = 60 * 2;
+					} else {
+						// nothing to do
 					}
+				} else {
+					// nothing to do
 				}
+			} else {
+				// nothing to do
 			}
+		} else {
+			// nothing to do
 		}
 	}
 
@@ -119,6 +142,8 @@ public class AirWizard extends Mob {
 		super.doHurt(damage, attackDirection);
 		if (attackDelay == 0 && attackTime == 0) {
 			attackDelay = 60 * 2;
+		} else {
+			// nothing to do
 		}
 	}
 
@@ -131,6 +156,8 @@ public class AirWizard extends Mob {
 
 		if (direction == 1) {
 			xt += 2;
+		} else {
+			// nothing to do
 		}
 		if (direction > 1) {
 
@@ -140,6 +167,8 @@ public class AirWizard extends Mob {
 				flip1 = 1;
 			}
 			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
+		} else {
+			// nothing to do
 		}
 
 		int positionX0 = positionX - 8;
@@ -147,21 +176,29 @@ public class AirWizard extends Mob {
 
 		int color1 = Color.get(-1, 100, 500, 555);
 		int color2 = Color.get(-1, 100, 500, 532);
-		
+
 		if (health < 200) {
 			if (tickTime / 3 % 2 == 0) {
 				color1 = Color.get(-1, 500, 100, 555);
 				color2 = Color.get(-1, 500, 100, 532);
+			} else {
+				// nothing to do
 			}
 		} else if (health < 1000) {
 			if (tickTime / 5 % 4 == 0) {
 				color1 = Color.get(-1, 500, 100, 555);
 				color2 = Color.get(-1, 500, 100, 532);
+			} else {
+				// nothing to do
 			}
+		} else {
+			// nothing to do
 		}
 		if (hurtTime > 0) {
 			color1 = Color.get(-1, 555, 555, 555);
 			color2 = Color.get(-1, 555, 555, 555);
+		} else {
+			// nothing to do
 		}
 
 		screen.render(positionX0 + 8 * flip1, positionY0 + 0, xt + yt * 32, color1, flip1);
@@ -173,17 +210,21 @@ public class AirWizard extends Mob {
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player) {
 			entity.hurt(this, 3, direction);
+		} else {
+			// nothing to do
 		}
 	}
 
 	protected void die() {
 		super.die();
-		
+
 		if (level.player != null) {
 			level.player.score += 1000;
 			level.player.gameWon();
+		} else {
+			// nothing to do
 		}
-		
+
 		Sound.bossdeath.play();
 	}
 

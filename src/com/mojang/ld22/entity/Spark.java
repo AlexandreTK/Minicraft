@@ -31,6 +31,8 @@ public class Spark extends Entity {
 		if (time >= lifeTime) {
 			remove();
 			return;
+		}else{
+			//nothing to do
 		}
 		
 		xx += positionXAbsolute;
@@ -44,6 +46,8 @@ public class Spark extends Entity {
 			Entity entity = toHit.get(i);
 			if (entity instanceof Mob && !(entity instanceof AirWizard)) {
 				entity.hurt(owner, 1, ((Mob) entity).direction ^ 1);
+			}else{
+				//nothing to do
 			}
 		}
 	}
@@ -56,6 +60,8 @@ public class Spark extends Entity {
 		if (time >= lifeTime - 6 * 20) {
 			if (time / 6 % 2 == 0)
 				return;
+		}else{
+			//nothing to do
 		}
 
 		int xt = 8;

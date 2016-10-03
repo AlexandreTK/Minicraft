@@ -25,22 +25,28 @@ public class Furniture extends Entity {
 				shouldTake.inventory.add(0, shouldTake.activeItem);
 				shouldTake.activeItem = new FurnitureItem(this);
 			}
+			else {
+				// nothing to do
+			}
 			
 			shouldTake = null;
 		}
 		
-		if (pushDirection == 0)
+		switch(pushDirection){
+		case 0:
 			move(0, +1);
-		
-		if (pushDirection == 1)
+			break;
+		case 1:
 			move(0, -1);
-		
-		if (pushDirection == 2)
+			break;
+		case 2:
 			move(-1, 0);
-		
-		if (pushDirection == 3)
+			break;
+		case 3:
 			move(+1, 0);
-		
+			break;
+		}
+			
 		pushDirection = -1;
 		
 		if (pushTime > 0)
@@ -62,6 +68,9 @@ public class Furniture extends Entity {
 		if (entity instanceof Player && pushTime == 0) {
 			pushDirection = ((Player) entity).direction;
 			pushTime = 10;
+		}
+		else {
+			// nothing to do
 		}
 	}
 

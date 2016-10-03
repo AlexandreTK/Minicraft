@@ -64,7 +64,13 @@ public class Entity {
 				int positionYWalked = positionY >> 4;
 				level.getTile(positionXWalked, positionYWalked).steppedOn(level, positionXWalked, positionYWalked, this);
 			}
+			else {
+				// nothing to do
+			}
 			return !isStopped;
+		}
+		else {
+			// nothing to do
 		}
 		return true;
 	}
@@ -99,6 +105,9 @@ public class Entity {
 					isBlocked = true;
 					return false;
 				}
+				else {
+					// nothing to do
+				}
 			}
 		if (isBlocked) return false;
 
@@ -130,6 +139,9 @@ public class Entity {
 
 			if (entity.blocks(this)) {
 				return false;
+			}
+			else {
+				// nothing to do
 			}
 		}
 
