@@ -8,13 +8,14 @@ public class FoodResource extends Resource {
 	private int heal;
 	private int staminaCost;
 
-	public FoodResource(String name, int sprite, int color, int heal, int staminaCost) {
-		super(name, sprite, color);
+	public FoodResource(String name, int sprite, int colorFood, int heal, int staminaCost) {
+		super(name, sprite, colorFood);
 		this.heal = heal;
 		this.staminaCost = staminaCost;
 	}
 
-	public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
+	public boolean interactOn(Tile tile, Level level, int positionXWalked, int positionYWalked, Player player,
+			int attackDirection) {
 		if (player.health < player.maxHealth && player.payStamina(staminaCost)) {
 			player.heal(heal);
 			return true;
