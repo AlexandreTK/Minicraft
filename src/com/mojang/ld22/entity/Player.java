@@ -56,6 +56,8 @@ public class Player extends Mob {
 				changeLevel((onTile == Tile.stairsUp) ? 1 : -1);
 				onStairDelay = 10;
 				return;
+			}else{
+				//nothing to do
 			}
 			onStairDelay = 10;
 		} else {
@@ -64,10 +66,14 @@ public class Player extends Mob {
 
 		if (stamina <= 0 && staminaRechargeDelay == 0 && staminaRecharge == 0) {
 			staminaRechargeDelay = 40;
+		}else{
+			//nothing to do
 		}
 
 		if (staminaRechargeDelay > 0) {
 			staminaRechargeDelay--;
+		}else{
+			//nothing to do
 		}
 
 		if (staminaRechargeDelay == 0) {
@@ -79,6 +85,8 @@ public class Player extends Mob {
 				staminaRecharge -= 10;
 				if (stamina < maxStamina) stamina++;
 			}
+		}else{
+			//nothing to do
 		}
 
 		int xa = 0;
@@ -93,10 +101,14 @@ public class Player extends Mob {
 			} else {
 				hurt(this, 1, direction ^ 1);
 			}
+		}else{
+			//nothing to do
 		}
 
 		if (staminaRechargeDelay % 2 == 0) {
 			move(xa, ya);
+		}else{
+			//nothing to do
 		}
 
 		if (input.attack.wasKeyClicked()) {
@@ -111,6 +123,8 @@ public class Player extends Mob {
 		if (input.menu.wasKeyClicked()) {
 			if (!use()) {
 				game.setMenu(new InventoryMenu(this));
+			}else{
+				//nothing to do
 			}
 		}
 		if (attackTime > 0) attackTime--;
@@ -134,6 +148,8 @@ public class Player extends Mob {
 
 		if (xt >= 0 && yt >= 0 && xt < level.width && yt < level.height) {
 			if (level.getTile(xt, yt).use(level, xt, yt, this, attackDir)) return true;
+		}else{
+			//nothing to do
 		}
 
 		return false;
@@ -169,10 +185,14 @@ public class Player extends Mob {
 				} else {
 					if (level.getTile(xt, yt).interact(level, xt, yt, this, activeItem, attackDir)) {
 						done = true;
+					}else{
+						//nothing to do
 					}
 				}
 				if (activeItem.isDepleted()) {
 					activeItem = null;
+				}else{
+					//nothing to do
 				}
 			}
 		}
@@ -198,6 +218,8 @@ public class Player extends Mob {
 
 			if (xt >= 0 && yt >= 0 && xt < level.width && yt < level.height) {
 				level.getTile(xt, yt).hurt(level, xt, yt, this, random.nextInt(3) + 1, attackDir);
+			}else{
+				//nothing to do
 			}
 		}
 
@@ -233,6 +255,8 @@ public class Player extends Mob {
 		int dmg = random.nextInt(3) + 1;
 		if (attackItem != null) {
 			dmg += attackItem.getAttackDamageBonus(e);
+		}else{
+			//nothing to do
 		}
 		return dmg;
 	}
@@ -263,54 +287,82 @@ public class Player extends Mob {
 			int waterColor = Color.get(-1, -1, 115, 335);
 			if (tickTime / 8 % 2 == 0) {
 				waterColor = Color.get(-1, 335, 5, 115);
+			}else{
+				//nothing to do
 			}
 			screen.render(xo + 0, yo + 3, 5 + 13 * 32, waterColor, 0);
 			screen.render(xo + 8, yo + 3, 5 + 13 * 32, waterColor, 1);
+		}else{
+			//nothing to do
+		}
+		if (attackTime> 0){
+			switch(attackDir){
+			case 0:
+				screen.render(xo + 0, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
+				screen.render(xo + 8, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
+				if (attackItem != null) {
+					attackItem.renderIcon(screen, xo + 4, yo + 8 + 4);
+				}else{
+					//nothing to do
+				}
+				
+				break;
+			case 1:
+				screen.render(xo + 0, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
+				screen.render(xo + 8, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
+				if (attackItem != null) {
+					attackItem.renderIcon(screen, xo + 4, yo - 4);
+				}else{
+					//nothing to do
+				}
+				
+				break;
+			case 2:
+				screen.render(xo - 4, yo, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
+				screen.render(xo - 4, yo + 8, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
+				if (attackItem != null) {
+					attackItem.renderIcon(screen, xo - 4, yo + 4);
+				}else{
+					//nothing to do
+				}
+				
+				break;
+			case 3:
+				screen.render(xo + 8 + 4, yo, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
+				screen.render(xo + 8 + 4, yo + 8, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
+				if (attackItem != null) {
+					attackItem.renderIcon(screen, xo + 8 + 4, yo + 4);
+				}else{
+					//nothing to do
+				}
+				break;
+			}
+		}else{
+			//nothing to do
 		}
 
-		if (attackTime > 0 && attackDir == 1) {
-			screen.render(xo + 0, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
-			screen.render(xo + 8, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
-			if (attackItem != null) {
-				attackItem.renderIcon(screen, xo + 4, yo - 4);
-			}
-		}
+		
 		int col = Color.get(-1, 100, 220, 532);
 		if (hurtTime > 0) {
 			col = Color.get(-1, 555, 555, 555);
+		}else{
+			//nothing to do
 		}
 
 		if (activeItem instanceof FurnitureItem) {
 			yt += 2;
+		}else{
+			//nothing to do
 		}
 		screen.render(xo + 8 * flip1, yo + 0, xt + yt * 32, col, flip1);
 		screen.render(xo + 8 - 8 * flip1, yo + 0, xt + 1 + yt * 32, col, flip1);
 		if (!isSwimming()) {
 			screen.render(xo + 8 * flip2, yo + 8, xt + (yt + 1) * 32, col, flip2);
 			screen.render(xo + 8 - 8 * flip2, yo + 8, xt + 1 + (yt + 1) * 32, col, flip2);
+		}else{
+			//nothing to do
 		}
 
-		if (attackTime > 0 && attackDir == 2) {
-			screen.render(xo - 4, yo, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
-			screen.render(xo - 4, yo + 8, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
-			if (attackItem != null) {
-				attackItem.renderIcon(screen, xo - 4, yo + 4);
-			}
-		}
-		if (attackTime > 0 && attackDir == 3) {
-			screen.render(xo + 8 + 4, yo, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
-			screen.render(xo + 8 + 4, yo + 8, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
-			if (attackItem != null) {
-				attackItem.renderIcon(screen, xo + 8 + 4, yo + 4);
-			}
-		}
-		if (attackTime > 0 && attackDir == 0) {
-			screen.render(xo + 0, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
-			screen.render(xo + 8, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
-			if (attackItem != null) {
-				attackItem.renderIcon(screen, xo + 4, yo + 8 + 4);
-			}
-		}
 
 		if (activeItem instanceof FurnitureItem) {
 			Furniture furniture = ((FurnitureItem) activeItem).furniture;
@@ -318,6 +370,8 @@ public class Player extends Mob {
 			furniture.positionY = yo;
 			furniture.render(screen);
 
+		}else{
+			//nothing to do
 		}
 	}
 
@@ -338,6 +392,8 @@ public class Player extends Mob {
 				this.positionX = x * 16 + 8;
 				this.positionY = y * 16 + 8;
 				return true;
+			}else{
+				//nothing to do
 			}
 		}
 	}
@@ -371,6 +427,8 @@ public class Player extends Mob {
 	protected void touchedBy(Entity entity) {
 		if (!(entity instanceof Player)) {
 			entity.touchedBy(this);
+		}else{
+			//nothing to do
 		}
 	}
 
@@ -380,10 +438,21 @@ public class Player extends Mob {
 		Sound.playerHurt.play();
 		level.add(new TextParticle("" + damage, positionX, positionY, Color.get(-1, 504, 504, 504)));
 		health -= damage;
-		if (attackDir == 0) positionYKnockback = +6;
-		if (attackDir == 1) positionYKnockback = -6;
-		if (attackDir == 2) positionXKnockback = -6;
-		if (attackDir == 3) positionXKnockback = +6;
+		switch(attackDir){
+		case 0:
+			positionYKnockback = +6;
+			break;
+		case 1:
+			positionYKnockback = -6;
+			break;
+		case 2:
+			positionXKnockback = -6;
+			break;
+		case 3:
+			positionXKnockback = +6;
+			break;
+		}
+		
 		hurtTime = 10;
 		invulnerableTime = 30;
 	}
