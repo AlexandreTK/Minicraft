@@ -44,8 +44,14 @@ public class CloudCactusTile extends Tile {
 				if (player.payStamina(6 - tool.level)) {
 					hurt(level, xt, yt, 1);
 					return true;
+				} else{
+					//nothing to do
 				}
+			} else {
+				//player don't have the pickaxe
 			}
+		} else {
+			//no toolItem on object
 		}
 		return false;
 	}
@@ -60,11 +66,15 @@ public class CloudCactusTile extends Tile {
 			} else {
 				level.setData(x, y, damage);
 			}
+		} else{
+			//nothing to do.
 		}
 	}
 
 	public void bumpedInto(Level level, int x, int y, Entity entity) {
-		if (entity instanceof AirWizard) return;
+		if (entity instanceof AirWizard){
+			return;
+		}
 		entity.hurt(this, x, y, 3);
 	}
 }
