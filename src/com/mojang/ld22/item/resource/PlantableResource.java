@@ -21,9 +21,10 @@ public class PlantableResource extends Resource {
 		this.targetTile = targetTile;
 	}
 
-	public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
+	public boolean interactOn(Tile tile, Level level, int positionXWalked, int positionYWalked, Player player,
+			int attackDirection) {
 		if (sourceTiles.contains(tile)) {
-			level.setTile(xt, yt, targetTile, 0);
+			level.setTile(positionXWalked, positionYWalked, targetTile, 0);
 			return true;
 		}
 		return false;
