@@ -13,6 +13,7 @@ public class DeadMenu extends Menu {
 	public void tick() {
 		if (inputDelay > 0)
 			inputDelay--;
+		
 		else if (input.attack.wasKeyClicked() || input.menu.wasKeyClicked()) {
 			game.setMenu(new TitleMenu());
 		}
@@ -20,7 +21,10 @@ public class DeadMenu extends Menu {
 
 	public void render(Screen screen) {
 		Font.renderFrame(screen, "", 1, 3, 18, 9);
-		Font.draw("You died! Aww!", screen, 2 * 8, 4 * 8, Color.get(-1, 555, 555, 555));
+		int positionX = 2 * 8;
+		int positionY = 4 * 8;
+		
+		Font.draw("You died! Aww!", screen, positionX, positionY, Color.get(-1, 555, 555, 555));
 
 		int seconds = game.gameTime / 60;
 		int minutes = seconds / 60;
@@ -30,10 +34,19 @@ public class DeadMenu extends Menu {
 
 		String timeString = "";
 		if (hours > 0) {
-			timeString = hours + "h" + (minutes < 10 ? "0" : "") + minutes + "m";
+			if(minutes < 10){
+				timeString = hours + "h" + "0" + minutes + "m";
+			}else{
+				timeString = hours + "h" + "" + minutes + "m";
+			}
 		} else {
-			timeString = minutes + "m " + (seconds < 10 ? "0" : "") + seconds + "s";
+			if(seconds < 10){
+				timeString = minutes + "m " + "0" + seconds + "s";
+			}else{
+				timeString = minutes + "m " + "" + seconds + "s";
+			}
 		}
+		
 		Font.draw("Time:", screen, 2 * 8, 5 * 8, Color.get(-1, 555, 555, 555));
 		Font.draw(timeString, screen, (2 + 5) * 8, 5 * 8, Color.get(-1, 550, 550, 550));
 		Font.draw("Score:", screen, 2 * 8, 6 * 8, Color.get(-1, 555, 555, 555));
