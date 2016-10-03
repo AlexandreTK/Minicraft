@@ -13,6 +13,8 @@ public class LevelGen {
 	private static final Random random = new Random();
 	public double[] values;
 	private int w, h;
+	private final static int MAX_TILES = 100;
+	private final static int STAIRS_MAX_TAIL = 2;
 
 	public LevelGen(int w, int h, int featureSize) {
 		this.w = w;
@@ -72,20 +74,27 @@ public class LevelGen {
 	}
 
 	public static byte[][] createAndValidateTopMap(int w, int h) {
-		int attempt = 0;
 		do {
+			int attempt = 0;
+			
 			byte[][] result = createTopMap(w, h);
-
-			int[] count = new int[256];
-
+			int[] tileCount = new int[256];
+			int getTile;
+			
 			for (int i = 0; i < w * h; i++) {
-				count[result[0][i] & 0xff]++;
+				getTile = result[0][i];
+				tileCount[getTile & 0xff]++;
 			}
-			if (count[Tile.rock.id & 0xff] < 100) continue;
-			if (count[Tile.sand.id & 0xff] < 100) continue;
-			if (count[Tile.grass.id & 0xff] < 100) continue;
-			if (count[Tile.tree.id & 0xff] < 100) continue;
-			if (count[Tile.stairsDown.id & 0xff] < 2) continue;
+			if (tileCount[Tile.rock.id & 0xff] < MAX_TILES) 
+				continue;
+			if (tileCount[Tile.sand.id & 0xff] < MAX_TILES) 
+				continue;
+			if (tileCount[Tile.grass.id & 0xff] < MAX_TILES) 
+				continue;
+			if (tileCount[Tile.tree.id & 0xff] < MAX_TILES) 
+				continue;
+			if (tileCount[Tile.stairsDown.id & 0xff] < STAIRS_MAX_TAIL) 
+				continue;
 
 			return result;
 
@@ -97,15 +106,19 @@ public class LevelGen {
 		do {
 			byte[][] result = createUndergroundMap(w, h, depth);
 
-			int[] count = new int[256];
+			int[] tileCount = new int[256];
 
 			for (int i = 0; i < w * h; i++) {
-				count[result[0][i] & 0xff]++;
+				tileCount[result[0][i] & 0xff]++;
 			}
-			if (count[Tile.rock.id & 0xff] < 100) continue;
-			if (count[Tile.dirt.id & 0xff] < 100) continue;
-			if (count[(Tile.ironOre.id & 0xff) + depth - 1] < 20) continue;
-			if (depth < 3) if (count[Tile.stairsDown.id & 0xff] < 2) continue;
+			if (tileCount[Tile.rock.id & 0xff] < MAX_TILES) 
+				continue;
+			if (tileCount[Tile.dirt.id & 0xff] < MAX_TILES) 
+				continue;
+			if (tileCount[(Tile.ironOre.id & 0xff) + depth - 1] < 20) 
+				continue;
+			if (depth < 3) if (tileCount[Tile.stairsDown.id & 0xff] < STAIRS_MAX_TAIL) 
+				continue;
 
 			return result;
 
@@ -117,13 +130,13 @@ public class LevelGen {
 		do {
 			byte[][] result = createSkyMap(w, h);
 
-			int[] count = new int[256];
+			int[] tileCount = new int[256];
 
 			for (int i = 0; i < w * h; i++) {
-				count[result[0][i] & 0xff]++;
+				tileCount[result[0][i] & 0xff]++;
 			}
-			if (count[Tile.cloud.id & 0xff] < 2000) continue;
-			if (count[Tile.stairsDown.id & 0xff] < 2) continue;
+			if (tileCount[Tile.cloud.id & 0xff] < 2000) continue;
+			if (tileCount[Tile.stairsDown.id & 0xff] < 2) continue;
 
 			return result;
 
