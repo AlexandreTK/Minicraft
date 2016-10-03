@@ -14,12 +14,19 @@ public class TitleMenu extends Menu {
 	}
 
 	public void tick() {
-		if (input.up.wasKeyClicked()) selected--;
-		if (input.down.wasKeyClicked()) selected++;
+		if (input.up.wasKeyClicked())
+			selected--;
+		
+		if (input.down.wasKeyClicked())
+			selected++;
 
 		int len = options.length;
-		if (selected < 0) selected += len;
-		if (selected >= len) selected -= len;
+		
+		if (selected < 0)
+			selected += len;
+		
+		if (selected >= len)
+			selected -= len;
 
 		if (input.attack.wasKeyClicked() || input.menu.wasKeyClicked()) {
 			if (selected == 0) {
@@ -27,8 +34,12 @@ public class TitleMenu extends Menu {
 				game.resetGame();
 				game.setMenu(null);
 			}
-			if (selected == 1) game.setMenu(new InstructionsMenu(this));
-			if (selected == 2) game.setMenu(new AboutMenu(this));
+			
+			if (selected == 1)
+				game.setMenu(new InstructionsMenu(this));
+			
+			if (selected == 2)
+				game.setMenu(new AboutMenu(this));
 		}
 	}
 
@@ -40,6 +51,7 @@ public class TitleMenu extends Menu {
 		int titleColor = Color.get(0, 010, 131, 551);
 		int xo = (screen.width - w * 8) / 2;
 		int yo = 24;
+		
 		for (int y = 0; y < h; y++) {
 			for (int x = 0; x < w; x++) {
 				screen.render(xo + x * 8, yo + y * 8, x + (y + 6) * 32, titleColor, 0);
@@ -49,10 +61,12 @@ public class TitleMenu extends Menu {
 		for (int i = 0; i < 3; i++) {
 			String msg = options[i];
 			int col = Color.get(0, 222, 222, 222);
+			
 			if (i == selected) {
 				msg = "> " + msg + " <";
 				col = Color.get(0, 555, 555, 555);
 			}
+			
 			Font.draw(msg, screen, (screen.width - msg.length() * 8) / 2, (8 + i) * 8, col);
 		}
 

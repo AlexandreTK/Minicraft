@@ -44,8 +44,10 @@ public class Menu {
 
 		if (renderCursor) {
 			int yy = selected + 1 - io + yo;
-			Font.draw(">", screen, (xo + 0) * 8, yy * 8, Color.get(5, 555, 555, 555));
-			Font.draw("<", screen, (xo + w) * 8, yy * 8, Color.get(5, 555, 555, 555));
+			int positionY = yy * 8;
+			int color =  Color.get(5, 555, 555, 555);
+			Font.draw(">", screen, (xo + 0) * 8, positionY, color);
+			Font.draw("<", screen, (xo + w) * 8, positionY, color);
 		}
 	}
 }
