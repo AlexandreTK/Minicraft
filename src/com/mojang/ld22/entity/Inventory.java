@@ -17,11 +17,11 @@ public class Inventory {
 	public void add(int slot, Item item) {
 		if (item instanceof ResourceItem) {
 			ResourceItem toTake = (ResourceItem) item;
-			ResourceItem hasItem = findResource(toTake.resource);
+			ResourceItem hasItem = findResource(toTake.getResource());
 			if (hasItem == null) {
 				items.add(slot, toTake);
 			} else {
-				hasItem.count += toTake.count;
+				hasItem.plusSetCount(toTake.getCount());
 			}
 		} else {
 			items.add(slot, item);
@@ -33,7 +33,7 @@ public class Inventory {
 			if (items.get(i) instanceof ResourceItem) {
 				ResourceItem hasItem = (ResourceItem) items.get(i);
 
-				if (hasItem.resource == resource)
+				if (hasItem.getResource() == resource)
 					return hasItem;
 			} else {
 				// nothing to do
@@ -48,7 +48,7 @@ public class Inventory {
 		if (resourceItem == null)
 			return false;
 
-		return resourceItem.count >= count;
+		return resourceItem.getCount() >= count;
 	}
 
 	public boolean removeResource(Resource resource, int count) {
@@ -57,12 +57,12 @@ public class Inventory {
 		if (resourceItem == null)
 			return false;
 
-		if (resourceItem.count < count)
+		if (resourceItem.getCount() < count)
 			return false;
 
-		resourceItem.count -= count;
+		resourceItem.lessSetCount(count);
 
-		if (resourceItem.count <= 0)
+		if (resourceItem.getCount() <= 0)
 			items.remove(resourceItem);
 
 		return true;
@@ -70,10 +70,10 @@ public class Inventory {
 
 	public int countItems(Item item) {
 		if (item instanceof ResourceItem) {
-			ResourceItem resourceItem = findResource(((ResourceItem) item).resource);
+			ResourceItem resourceItem = findResource(((ResourceItem) item).getResource());
 
 			if (resourceItem != null)
-				return resourceItem.count;
+				return resourceItem.getCount();
 		} else {
 			int countItems = 0;
 

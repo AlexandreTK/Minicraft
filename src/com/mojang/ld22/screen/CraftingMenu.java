@@ -103,7 +103,7 @@ public class CraftingMenu extends Menu {
 				int requiredAmt = 1;
 				
 				if (item instanceof ResourceItem) {
-					requiredAmt = ((ResourceItem) item).count;
+					requiredAmt = ((ResourceItem) item).getCount();
 				}
 				int has = player.inventory.countItems(item);
 				
