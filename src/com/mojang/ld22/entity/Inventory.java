@@ -16,12 +16,12 @@ public class Inventory {
 
 	public void add(int slot, Item item) {
 		if (item instanceof ResourceItem) {
-			ResourceItem toTake = (ResourceItem) item;
-			ResourceItem hasItem = findResource(toTake.getResource());
+			ResourceItem toTake = (ResourceItem) item; //available items
+			ResourceItem hasItem = findResource(toTake.getResource()); //items on player inventory
 			if (hasItem == null) {
 				items.add(slot, toTake);
 			} else {
-				hasItem.plusSetCount(toTake.getCount());
+				hasItem.plusSetCount(toTake.getCount()); 
 			}
 		} else {
 			items.add(slot, item);
@@ -60,7 +60,7 @@ public class Inventory {
 		if (resourceItem.getCount() < count)
 			return false;
 
-		resourceItem.lessSetCount(count);
+		resourceItem.lessSetCount(count); // 
 
 		if (resourceItem.getCount() <= 0)
 			items.remove(resourceItem);
@@ -68,12 +68,12 @@ public class Inventory {
 		return true;
 	}
 
-	public int countItems(Item item) {
+	public int countItems(Item item) { 
 		if (item instanceof ResourceItem) {
 			ResourceItem resourceItem = findResource(((ResourceItem) item).getResource());
 
 			if (resourceItem != null)
-				return resourceItem.getCount();
+				return resourceItem.getCount();//item counter on inventory
 		} else {
 			int countItems = 0;
 
