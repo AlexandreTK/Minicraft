@@ -10,8 +10,8 @@ import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
 public class FurnitureItem extends Item {
-	public Furniture furniture;
-	public boolean placed = false;
+	private Furniture furniture;
+	private boolean placed = false;
 
 	public FurnitureItem(Furniture furniture) {
 		this.furniture = furniture;
