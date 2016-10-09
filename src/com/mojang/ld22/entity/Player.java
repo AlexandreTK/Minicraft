@@ -365,7 +365,7 @@ public class Player extends Mob {
 
 
 		if (activeItem instanceof FurnitureItem) {
-			Furniture furniture = ((FurnitureItem) activeItem).furniture;
+			Furniture furniture = ((FurnitureItem) activeItem).getFurniture();
 			furniture.positionX = positionX;
 			furniture.positionY = yo;
 			furniture.render(screen);
@@ -412,7 +412,7 @@ public class Player extends Mob {
 		int r = 2;
 		if (activeItem != null) {
 			if (activeItem instanceof FurnitureItem) {
-				int rr = ((FurnitureItem) activeItem).furniture.getLightRadius();
+				int rr = ((FurnitureItem) activeItem).getFurniture().getLightRadius();
 				if (rr > r) r = rr;
 			}
 		}

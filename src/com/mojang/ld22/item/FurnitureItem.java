@@ -59,4 +59,20 @@ public class FurnitureItem extends Item {
 	public String getName() {
 		return furniture.name;
 	}
+
+	public Furniture getFurniture() {
+		return furniture;
+	}
+
+	public void setFurniture(Furniture furniture) {
+		this.furniture = furniture;
+	}
+
+	public boolean isPlaced() {
+		return placed;
+	}
+
+	public void setPlaced(boolean placed) {
+		this.placed = placed;
+	}
 }
