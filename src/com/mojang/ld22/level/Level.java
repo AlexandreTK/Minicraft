@@ -245,7 +245,7 @@ public class Level {
 		entities.add(entity);
 		entity.init(this);
 
-		insertEntity(entity.positionX >> 4, entity.positionY >> 4, entity);
+		insertEntity(entity.positionX >> 4, entity.positionY >> 4, entity); // insert a player on this position
 	}
 
 	public void remove(Entity entity) {
@@ -288,9 +288,9 @@ public class Level {
 			int level = random.nextInt(maxLevel - minLevel + 1) + minLevel;
 			
 			if (random.nextInt(2) == 0)
-				mob = new Slime(level);
+				mob = new Slime(level); //spawning slimes randomly
 			else
-				mob = new Zombie(level);
+				mob = new Zombie(level); //spawning zombies randomly
 
 			if (mob.findStartPos(this)) {
 				this.add(mob);
