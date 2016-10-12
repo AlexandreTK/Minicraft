@@ -408,8 +408,8 @@ public class Player extends Mob {
 		game.scheduleLevelChange(dir);
 	}
 
-	public int getLightRadius() {
-		int r = 2;
+	public int getLightRadius() { //this method put light only on the player radius
+		int r = 2; // default radius if have a lantern
 		if (activeItem != null) {
 			if (activeItem instanceof FurnitureItem) {
 				int rr = ((FurnitureItem) activeItem).getFurniture().getLightRadius();
