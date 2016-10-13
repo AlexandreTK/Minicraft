@@ -32,6 +32,7 @@ import com.mojang.ld22.screen.LevelTransitionMenu;
 import com.mojang.ld22.screen.Menu;
 import com.mojang.ld22.screen.TitleMenu;
 import com.mojang.ld22.screen.WonMenu;
+import com.mojang.ld22.TestLog;
 
 public class Game extends Canvas implements Runnable {
 	// java uses serialVersionUID as an identifier of the class version
@@ -63,7 +64,7 @@ public class Game extends Canvas implements Runnable {
 	public Player player;
 	
 	private final int maxPlayerDeadTime = 60;
-	
+	TestLog logger = new TestLog();
 	
 	public Menu menu;
 	private int playerDeadTime;
@@ -433,6 +434,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void scheduleLevelChange(int dir) {
+		
 		pendingLevelChange = dir;
 	}
 
@@ -441,7 +443,7 @@ public class Game extends Canvas implements Runnable {
 		game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-
+		TestLog logger = new TestLog();
 		JFrame frame = new JFrame(Game.NAME);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
@@ -451,7 +453,11 @@ public class Game extends Canvas implements Runnable {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
+
+	    logger.logger.info("Game starting...");
+	    
 		game.start();
+		
 	}
 
 	public void won() {
