@@ -70,15 +70,20 @@ public class TreeTile extends Tile {
 		hurt(level, x, y, dmg);
 	}
 
+	private boolean useAxe(Level level, int xt, int yt, Player player, Item item){
+		ToolItem tool = (ToolItem) item;
+		if (tool.type == ToolType.axe) {
+			if (player.payStamina(4 - tool.level)) {
+				hurt(level, xt, yt, random.nextInt(10) + (tool.level) * 5 + 10);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
 		if (item instanceof ToolItem) {
-			ToolItem tool = (ToolItem) item;
-			if (tool.type == ToolType.axe) {
-				if (player.payStamina(4 - tool.level)) {
-					hurt(level, xt, yt, random.nextInt(10) + (tool.level) * 5 + 10);
-					return true;
-				}
-			}
+			useAxe(level, xt, yt, player, item);
 		}
 		return false;
 	}

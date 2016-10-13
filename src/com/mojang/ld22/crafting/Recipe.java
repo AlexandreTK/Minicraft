@@ -33,7 +33,7 @@ public abstract class Recipe implements ListItem {
 			Item item = costs.get(i);
 			if (item instanceof ResourceItem) {
 				ResourceItem resourceItem = (ResourceItem) item;
-				if (!player.inventory.hasResources(resourceItem.resource, resourceItem.count)) {
+				if (!player.inventory.hasResources(resourceItem.getResource(), resourceItem.getCount())) {
 					canCraft = false;
 					return;
 				}
@@ -62,7 +62,7 @@ public abstract class Recipe implements ListItem {
 			Item item = costs.get(i);
 			if (item instanceof ResourceItem) {
 				ResourceItem resourceItem = (ResourceItem) item;
-				player.inventory.removeResource(resourceItem.resource, resourceItem.count);
+				player.inventory.removeResource(resourceItem.getResource(), resourceItem.getCount());
 			}
 		}
 	}

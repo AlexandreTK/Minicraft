@@ -10,8 +10,30 @@ import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
 public class ResourceItem extends Item {
-	public Resource resource;
-	public int count = 1;
+	private Resource resource;
+	private int count = 1;
+
+	public Resource getResource() {
+		return resource;
+	}
+
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public void lessSetCount(int count) {
+		this.count -= count;
+	}
+	public void plusSetCount(int count) {
+		this.count += count;
+	}
 
 	public ResourceItem(Resource resource) {
 		this.resource = resource;

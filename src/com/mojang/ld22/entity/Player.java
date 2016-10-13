@@ -365,7 +365,7 @@ public class Player extends Mob {
 
 
 		if (activeItem instanceof FurnitureItem) {
-			Furniture furniture = ((FurnitureItem) activeItem).furniture;
+			Furniture furniture = ((FurnitureItem) activeItem).getFurniture();
 			furniture.positionX = positionX;
 			furniture.positionY = yo;
 			furniture.render(screen);
@@ -408,11 +408,11 @@ public class Player extends Mob {
 		game.scheduleLevelChange(dir);
 	}
 
-	public int getLightRadius() {
-		int r = 2;
+	public int getLightRadius() { //this method put light only on the player radius
+		int r = 2; // default radius if have a lantern
 		if (activeItem != null) {
 			if (activeItem instanceof FurnitureItem) {
-				int rr = ((FurnitureItem) activeItem).furniture.getLightRadius();
+				int rr = ((FurnitureItem) activeItem).getFurniture().getLightRadius();
 				if (rr > r) r = rr;
 			}
 		}
