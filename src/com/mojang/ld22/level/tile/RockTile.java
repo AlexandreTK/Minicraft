@@ -1,3 +1,5 @@
+// Objective: take care of rock structure and your use.
+
 package com.mojang.ld22.level.tile;
 
 import com.mojang.ld22.entity.Entity;
