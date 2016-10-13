@@ -48,16 +48,23 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private Screen lightScreen;
 	private InputHandler input = new InputHandler(this);
-
+ 
+	private final int aSecond = 1000;
 	private int[] colors = new int[256];
 	private int tickCount = 0;
 	public int gameTime = 0;
 
+	private  final int maxLevel = 5;
+	
+	
 	private Level level;
 	private Level[] levels = new Level[5];
 	private int currentLevel = 3;
 	public Player player;
-
+	
+	private final int maxPlayerDeadTime = 60;
+	
+	
 	public Menu menu;
 	private int playerDeadTime;
 	private int pendingLevelChange;
@@ -103,7 +110,7 @@ public class Game extends Canvas implements Runnable {
 
 		level.add(player);
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < maxLevel; i++) {
 			levels[i].trySpawn(5000);
 		}
 	}
@@ -173,8 +180,8 @@ public class Game extends Canvas implements Runnable {
 				// Do nothing
 			}
 
-			if (System.currentTimeMillis() - lastTimer1 > 1000) {
-				lastTimer1 += 1000;
+			if (System.currentTimeMillis() - lastTimer1 > aSecond) {
+				lastTimer1 += aSecond;
 				System.out.println(ticks + " ticks, " + frames + " fps");
 				frames = 0;
 				ticks = 0;
@@ -200,7 +207,7 @@ public class Game extends Canvas implements Runnable {
 			} else {
 				if (player.isRemoved) {
 					playerDeadTime++;
-					if (playerDeadTime > 60) {
+					if (playerDeadTime > maxPlayerDeadTime) {
 						setMenu(new DeadMenu());
 					} else {
 						// Do nothing
