@@ -17,7 +17,7 @@ import com.mojang.ld22.level.Level;
 
 public class OreTile extends Tile {
 	private Resource toDrop;
-	private int color;
+	private int color = 0;
 
 	public OreTile(int id, Resource toDrop) {
 		super(id);
