@@ -29,7 +29,11 @@ public class FarmTile extends Tile {
 				if (player.payStamina(4 - tool.level)) {
 					level.setTile(xt, yt, Tile.dirt, 0);
 					return true;
+				}else {
+					//nothing to do
 				}
+			}else {
+				//don't have a shovel	
 			}
 		}
 		return false;
@@ -37,12 +41,24 @@ public class FarmTile extends Tile {
 
 	public void tick(Level level, int xt, int yt) {
 		int age = level.getData(xt, yt);
-		if (age < 5) level.setData(xt, yt, age + 1);
+		if (age < 5){ 
+			level.setData(xt, yt, age + 1);
+		}else {
+			//nothing to do
+		}
 	}
 
 	public void steppedOn(Level level, int xt, int yt, Entity entity) {
-		if (random.nextInt(60) != 0) return;
-		if (level.getData(xt, yt) < 5) return;
+		if (random.nextInt(60) != 0){
+			return;
+		}else {
+			//nothing to do
+		}
+		if (level.getData(xt, yt) < 5){
+			return;
+		}else {
+			//nothing to do
+		}
 		level.setTile(xt, yt, Tile.dirt, 0);
 	}
 }
