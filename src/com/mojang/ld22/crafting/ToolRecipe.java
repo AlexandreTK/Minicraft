@@ -15,6 +15,7 @@ public class ToolRecipe extends Recipe {
 	}
 
 	public void craft(Player player) {
+		assert(player != null): "parameter player is null";
 		player.inventory.add(0, new ToolItem(toolType, toolLevel));
 	}
 }
