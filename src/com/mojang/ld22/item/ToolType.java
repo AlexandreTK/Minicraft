@@ -8,7 +8,7 @@ public class ToolType {
 	public static ToolType axe = new ToolType("Axe", 4);
 
 	public final String name;
-	public final int sprite;
+	public int sprite = 0;
 
 	private ToolType(String name, int sprite) {
 		this.name = name;
