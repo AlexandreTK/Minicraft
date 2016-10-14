@@ -20,11 +20,11 @@ public class GameApplet extends Applet {
 		add(game, BorderLayout.CENTER);
 	}
 
-	public void startApplet() {
+	public void startApplet() {// Start  The game
 		game.start();
 	}
 
-	public void stopApplet() {
+	public void stopApplet() {// Stop the Game
 		game.stop();
 	}
 }
