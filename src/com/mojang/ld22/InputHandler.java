@@ -87,75 +87,75 @@ public class InputHandler implements KeyListener {
 	private void toggle(KeyEvent keyEvent, boolean pressed) {
 		switch( keyEvent.getKeyCode() ) {
 		
-			case KeyEvent.VK_NUMPAD8:
+			case KeyEvent.VK_NUMPAD8://define number 8 in AlphaNumeric as UP
 				up.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_NUMPAD2:
+			case KeyEvent.VK_NUMPAD2://define number 2 in AlphaNumeric as Down
 				down.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_NUMPAD4:
+			case KeyEvent.VK_NUMPAD4://define number 4 in AlphaNumeric as left
 				left.toggleKey(pressed);
 				break;	
 				
-			case KeyEvent.VK_NUMPAD6:
+			case KeyEvent.VK_NUMPAD6://define number 6 in AlphaNumeric as right
 				right.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_W:
+			case KeyEvent.VK_W://define W as UP
 				up.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_S:
+			case KeyEvent.VK_S:// define S as down
 				down.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_A:
+			case KeyEvent.VK_A:// define A as left
 				left.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_D:
+			case KeyEvent.VK_D://define D as right
 				right.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_UP:
+			case KeyEvent.VK_UP://define 'up' as up
 				up.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_DOWN:
+			case KeyEvent.VK_DOWN://define 'down' as down
 				down.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_LEFT:
+			case KeyEvent.VK_LEFT://define 	'left' as left
 				left.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_RIGHT:
+			case KeyEvent.VK_RIGHT:// define right as right
 				right.toggleKey(pressed);
 				break;
 				
-			case KeyEvent.VK_TAB:
+			case KeyEvent.VK_TAB://define 'tab' to open menu
 				menu.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_ALT:
+			case KeyEvent.VK_ALT://define 'alt' to open menu
 				menu.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_ALT_GRAPH:
+			case KeyEvent.VK_ALT_GRAPH://define 'altGR' to open menu
 				menu.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_SPACE:
+			case KeyEvent.VK_SPACE:// define  'space' as attack
 				attack.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_CONTROL:
+			case KeyEvent.VK_CONTROL:// define  'control' as attack
 				attack.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_NUMPAD0:
+			case KeyEvent.VK_NUMPAD0:// define  '0' as attack
 				attack.toggleKey(pressed);
 				break;		
 				
@@ -163,15 +163,15 @@ public class InputHandler implements KeyListener {
 				attack.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_ENTER:
+			case KeyEvent.VK_ENTER://define 'enter' to open menu
 				menu.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_X:
+			case KeyEvent.VK_X:// define'x' to open  menu
 				menu.toggleKey(pressed);
 				break;		
 				
-			case KeyEvent.VK_C:
+			case KeyEvent.VK_C:// define  'c' as attack
 				attack.toggleKey(pressed);
 				break;		
 				
