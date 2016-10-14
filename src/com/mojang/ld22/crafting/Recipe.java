@@ -22,6 +22,7 @@ public abstract class Recipe implements ListItem {
 	}
 
 	public Recipe addCost(Resource resource, int count) {
+		assert(resource != null): "parameter resource is null";
 		costs.add(new ResourceItem(resource, count));
 		return this;
 	}
@@ -29,6 +30,7 @@ public abstract class Recipe implements ListItem {
 	public boolean canCraft = false;
 	
 	public void checkCanCraft(Player player) {
+		assert(player != null): "parameter player is null";
 		for (int i = 0; i < costs.size(); i++) {
 			Item item = costs.get(i);
 			if (item instanceof ResourceItem) {
@@ -43,6 +45,7 @@ public abstract class Recipe implements ListItem {
 	}
 
 	public void renderInventory(Screen screen, int sizeX, int sizeY) {
+		assert(screen != null): "parameter screen is null";
 		int whiteScaleColor = 555;
 		int grayScaleColor = 222;
 		screen.render(sizeX, sizeY, resultTemplate.getSprite(), resultTemplate.getColor(), 0);
