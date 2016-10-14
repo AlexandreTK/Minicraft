@@ -60,6 +60,8 @@ public class GrassTile extends Tile {
 
 		if (level.getTile(xn, yn) == Tile.dirt) {
 			level.setTile(xn, yn, this, 0);
+		}else {
+			//nothing to do
 		}
 	}
 
@@ -73,8 +75,14 @@ public class GrassTile extends Tile {
 					if (random.nextInt(5) == 0) {
 						level.add(new ItemEntity(new ResourceItem(Resource.seeds), xt * 16 + random.nextInt(10) + 3, yt * 16 + random.nextInt(10) + 3));
 						return true;
+					}else {
+						
 					}
+				}else {
+					//don't have stamina
 				}
+			}else {
+				//player don't have a shovel
 			}
 			if (tool.type == ToolType.hoe) {
 				if (player.payStamina(4 - tool.level)) {
@@ -82,10 +90,16 @@ public class GrassTile extends Tile {
 					if (random.nextInt(5) == 0) {
 						level.add(new ItemEntity(new ResourceItem(Resource.seeds), xt * 16 + random.nextInt(10) + 3, yt * 16 + random.nextInt(10) + 3));
 						return true;
+					}else {
+						//nothing to do
 					}
 					level.setTile(xt, yt, Tile.farmland, 0);
 					return true;
+				}else {
+					//nothing to do. Player don't have a level
 				}
+			}else {
+				//nothing to do
 			}
 		}
 		return false;
