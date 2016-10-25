@@ -136,6 +136,7 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < maxLevel; i++) {
 			levels[i].trySpawn(5000);
 		}
+		
 	}
 
 
@@ -238,6 +239,8 @@ public class Game extends Canvas implements Runnable {
 		player.positionX = (player.positionX >> 4) * modifyPosition;
 		player.positionY = (player.positionY >> 4) * modifyPosition;
 		level.add(player);
+		
+		TestLog.logger.info("level changed...");
 
 	}
 
