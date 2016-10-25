@@ -14,14 +14,6 @@ public class Sound {
 
 	private AudioClip clip;
 
-	private Sound(String name) {
-		try {
-			clip = Applet.newAudioClip(Sound.class.getResource(name));
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void play() {
 		try {
 			new Thread() {
@@ -33,4 +25,13 @@ public class Sound {
 			e.printStackTrace();
 		}
 	}
+	
+	private Sound(String name) {
+		try {
+			clip = Applet.newAudioClip(Sound.class.getResource(name));
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+
 }
