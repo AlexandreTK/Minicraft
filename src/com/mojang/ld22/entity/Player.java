@@ -24,14 +24,14 @@ public class Player extends Mob {
 	private int attackTime, attackDir;
 
 	public Game game;
-	public Inventory inventory = new Inventory();
+	public Inventory inventory = new Inventory(); //load inventory for player
 	public Item attackItem;
-	public Item activeItem;
+	public Item activeItem; //item in the hand of the player
 	public int stamina;
-	public int staminaRecharge;
+	public int staminaRecharge; //time to reload the stamina
 	public int staminaRechargeDelay;
-	public int score;
-	public int maxStamina = 10;
+	public int score; 
+	public int maxStamina; //max energy of the player
 	private int onStairDelay;
 	public int invulnerableTime = 0;
 
