@@ -14,10 +14,13 @@ public class GameApplet extends Applet {
 	private static final long serialVersionUID = 1L;
 
 	private Game game = new Game();
+	TestLog logger = new TestLog();
 
 	public void initApplet() {
 		setLayout(new BorderLayout());
 		add(game, BorderLayout.CENTER);
+		TestLog logger = new TestLog();
+		logger.logger.info("init applet...");
 	}
 
 	public void startApplet() {// Start  The game
