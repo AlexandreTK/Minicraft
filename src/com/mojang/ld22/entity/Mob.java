@@ -187,7 +187,7 @@ public class Mob extends Entity {
 			//nothing to do
 		}
 
-		int radius = level.monsterDensity * 16;
+		int radius = (int)level.monsterDensity * 16;
 		
 		if (level.getEntities(positionXX - radius,
 							  positionYY - radius,

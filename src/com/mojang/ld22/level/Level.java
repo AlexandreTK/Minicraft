@@ -32,7 +32,7 @@ public class Level {
 	public int dirtColor = 322;
 	public int sandColor = 550;
 	private int depth;
-	public int monsterDensity = 8;
+	public byte monsterDensity = 8;
 
 	public List<Entity> entities = new ArrayList<Entity>();
 	
