@@ -36,18 +36,6 @@ public class Level {
 
 	public List<Entity> entities = new ArrayList<Entity>();
 	
-	private Comparator<Entity> spriteSorter = new Comparator<Entity>() {
-		public int compare(Entity firstEntity, Entity secondEntity) {
-			if (secondEntity.positionY < firstEntity.positionY)
-				return +1;
-			
-			if (secondEntity.positionY > firstEntity.positionY)
-				return -1;
-			
-			return 0;
-		}
-
-	};
 
 	@SuppressWarnings("unchecked")
 	public Level(int width, int height, int level, Level parentLevel) {
@@ -199,17 +187,6 @@ public class Level {
 		screen.setOffset(0, 0);
 	}
 
-	// private void renderLight(Screen screen, int x, int y, int r) {
-	// screen.renderLight(x, y, r);
-	// }
-
-	private void sortAndRender(Screen screen, List<Entity> list) {
-		Collections.sort(list, spriteSorter);
-		
-		for (int i = 0; i < list.size(); i++) {
-			list.get(i).render(screen);
-		}
-	}
 
 	public Tile getTile(int positionX, int positionY) {
 		if (positionX < 0 || positionY < 0 || positionX >= width || positionY >= height)
@@ -259,19 +236,6 @@ public class Level {
 		removeEntity(xto, yto, entity);
 	}
 
-	private void insertEntity(int positionX, int positionY, Entity entity) {
-		if (positionX < 0 || positionY < 0 || positionX >= width || positionY >= height)
-			return;
-		
-		entitiesInTiles[positionX + positionY * width].add(entity);
-	}
-
-	private void removeEntity(int positionX, int positionY, Entity entity) {
-		if (positionX < 0 || positionY < 0 || positionX >= width || positionY >= height)
-			return;
-		
-		entitiesInTiles[positionX + positionY * width].remove(entity);
-	}
 
 	public void trySpawn(int count) {
 		for (int i = 0; i < count; i++) {
@@ -357,5 +321,42 @@ public class Level {
 			}
 		}
 		return result;
+	}
+	
+	// private void renderLight(Screen screen, int x, int y, int r) {
+	// screen.renderLight(x, y, r);
+	// }
+	
+	private void sortAndRender(Screen screen, List<Entity> list) {
+		Collections.sort(list, spriteSorter);
+		
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).render(screen);
+		}
+	}
+	private Comparator<Entity> spriteSorter = new Comparator<Entity>() {
+		public int compare(Entity firstEntity, Entity secondEntity) {
+			if (secondEntity.positionY < firstEntity.positionY)
+				return +1;
+			
+			if (secondEntity.positionY > firstEntity.positionY)
+				return -1;
+			
+			return 0;
+		}
+		
+	};
+	private void insertEntity(int positionX, int positionY, Entity entity) {
+		if (positionX < 0 || positionY < 0 || positionX >= width || positionY >= height)
+			return;
+		
+		entitiesInTiles[positionX + positionY * width].add(entity);
+	}
+	
+	private void removeEntity(int positionX, int positionY, Entity entity) {
+		if (positionX < 0 || positionY < 0 || positionX >= width || positionY >= height)
+			return;
+		
+		entitiesInTiles[positionX + positionY * width].remove(entity);
 	}
 }
