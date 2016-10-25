@@ -72,6 +72,28 @@ public class Game extends Canvas implements Runnable {
 	private int wonTimer = 0;
 	public boolean hasWon = false;
 
+	public static void main(String[] args) {
+		Game game = new Game();
+		game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		TestLog logger = new TestLog();
+		JFrame frame = new JFrame(Game.NAME);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new BorderLayout());
+		frame.add(game, BorderLayout.CENTER);
+		frame.pack();
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		
+		
+		logger.logger.info("Game starting...");
+		
+		game.start();
+		
+	}
+	
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 		if (menu != null) {
@@ -116,35 +138,6 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-	private void init() {
-		int pp = 0;
-		for (int r = 0; r < 6; r++) {
-			for (int g = 0; g < 6; g++) {
-				for (int b = 0; b < 6; b++) {
-					int rr = (r * 255 / 5);
-					int gg = (g * 255 / 5);
-					int bb = (b * 255 / 5);
-					int mid = (rr * 30 + gg * 59 + bb * 11) / 100;
-
-					int r1 = ((rr + mid * 1) / 2) * 230 / 255 + 10;
-					int g1 = ((gg + mid * 1) / 2) * 230 / 255 + 10;
-					int b1 = ((bb + mid * 1) / 2) * 230 / 255 + 10;
-					pp++;
-					colors[pp] = r1 << 16 | g1 << 8 | b1;
-
-				}
-			}
-		}
-		try {
-			screen = new Screen(WIDTH, HEIGHT, new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
-			lightScreen = new Screen(WIDTH, HEIGHT, new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		resetGame();
-		setMenu(new TitleMenu());
-	}
 
 	public void run() {
 		long lastTime = System.nanoTime();
@@ -338,6 +331,16 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
+	public void scheduleLevelChange(int dir) {
+		
+		pendingLevelChange = dir;
+	}
+	
+	
+	public void won() {
+		wonTimer = 60 * 3;
+		hasWon = true;
+	}
 
 	private void renderGui() {
 		for (int y = 0; y < 2; y++) {
@@ -406,6 +409,36 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
+
+	private void init() {
+		int pp = 0;
+		for (int r = 0; r < 6; r++) {
+			for (int g = 0; g < 6; g++) {
+				for (int b = 0; b < 6; b++) {
+					int rr = (r * 255 / 5);
+					int gg = (g * 255 / 5);
+					int bb = (b * 255 / 5);
+					int mid = (rr * 30 + gg * 59 + bb * 11) / 100;
+					
+					int r1 = ((rr + mid * 1) / 2) * 230 / 255 + 10;
+					int g1 = ((gg + mid * 1) / 2) * 230 / 255 + 10;
+					int b1 = ((bb + mid * 1) / 2) * 230 / 255 + 10;
+					pp++;
+					colors[pp] = r1 << 16 | g1 << 8 | b1;
+					
+				}
+			}
+		}
+		try {
+			screen = new Screen(WIDTH, HEIGHT, new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
+			lightScreen = new Screen(WIDTH, HEIGHT, new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		resetGame();
+		setMenu(new TitleMenu());
+	}
 	private void renderFocusNagger() {
 		String msg = "Click to focus!";
 		int xx = (WIDTH - msg.length() * 8) / 2;
@@ -425,43 +458,11 @@ public class Game extends Canvas implements Runnable {
 			screen.render(xx - 8, yy + y * 8, 2 + 13 * 32, Color.get(-1, 1, 5, 445), 0);
 			screen.render(xx + w * 8, yy + y * 8, 2 + 13 * 32, Color.get(-1, 1, 5, 445), 1);
 		}
-
+		
 		if ((tickCount / 20) % 2 == 0) {
 			Font.draw(msg, screen, xx, yy, Color.get(5, 333, 333, 333));
 		} else {
 			Font.draw(msg, screen, xx, yy, Color.get(5, 555, 555, 555));
 		}
-	}
-
-	public void scheduleLevelChange(int dir) {
-		
-		pendingLevelChange = dir;
-	}
-
-	public static void main(String[] args) {
-		Game game = new Game();
-		game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		TestLog logger = new TestLog();
-		JFrame frame = new JFrame(Game.NAME);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new BorderLayout());
-		frame.add(game, BorderLayout.CENTER);
-		frame.pack();
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-
-
-	    logger.logger.info("Game starting...");
-	    
-		game.start();
-		
-	}
-
-	public void won() {
-		wonTimer = 60 * 3;
-		hasWon = true;
 	}
 }
