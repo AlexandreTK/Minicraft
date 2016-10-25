@@ -31,7 +31,7 @@ public class Player extends Mob {
 	public int staminaRecharge; //time to reload the stamina
 	public int staminaRechargeDelay;
 	public int score; 
-	public int maxStamina; //max energy of the player
+	public int maxStamina = 10; //max energy of the player
 	private int onStairDelay;
 	public int invulnerableTime = 0;
 
