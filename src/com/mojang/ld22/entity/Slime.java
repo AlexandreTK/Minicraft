@@ -6,8 +6,8 @@ import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
 
 public class Slime extends Mob {
-	private int positionXAbsolute, positionYAbsolute;
-	private int jumpTime = 0;
+	private int positionXAbsolute, positionYAbsolute; //moment position of slime
+	private int jumpTime = 0; //delay of slime move
 	private int lvl;
 
 	public Slime(int lvl) {
