@@ -12,9 +12,8 @@ import java.awt.BorderLayout;
 public class GameApplet extends Applet {
 	// java uses serialVersionUID as an identifier of the class version
 	private static final long serialVersionUID = 1L;
-
 	private Game game = new Game();
-	TestLog logger = new TestLog();
+	public TestLog logger = new TestLog();
 
 	public void initApplet() {
 		setLayout(new BorderLayout());
