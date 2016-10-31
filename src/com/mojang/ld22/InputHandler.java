@@ -12,6 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputHandler implements KeyListener {
+	
+	public List<Key> keys = new ArrayList<Key>();
+	public Key up = new Key();
+	public Key down = new Key();
+	public Key left = new Key();
+	public Key right = new Key();
+	public Key attack = new Key();
+	public Key menu = new Key();
+	
 	public class Key {
 		private int presses, absorbs;
 		private boolean keyIsDown, keyWasClicked;
@@ -51,15 +60,6 @@ public class InputHandler implements KeyListener {
 		}
 	}
 
-	public List<Key> keys = new ArrayList<Key>();
-
-	public Key up = new Key();
-	public Key down = new Key();
-	public Key left = new Key();
-	public Key right = new Key();
-	public Key attack = new Key();
-	public Key menu = new Key();
-
 	public void releaseAllKeys() {
 		for (int i = 0; i < keys.size(); i++) {
 			keys.get(i).keyIsDown = false;
@@ -84,6 +84,9 @@ public class InputHandler implements KeyListener {
 		toggle(keyEvent, false);
 	}
 
+	public void keyTyped(KeyEvent ke) {
+	}
+	
 	private void toggle(KeyEvent keyEvent, boolean pressed) {
 		switch( keyEvent.getKeyCode() ) {
 		
@@ -178,6 +181,4 @@ public class InputHandler implements KeyListener {
 		}
 	}
 
-	public void keyTyped(KeyEvent ke) {
-	}
 }
