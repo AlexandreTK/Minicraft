@@ -229,9 +229,10 @@ public class Game extends Canvas implements Runnable {
 		level.remove(player);
 		currentLevel += dir;
 		level = levels[currentLevel];
-		int modifyPosition = 16 + 8;
-		player.positionX = (player.positionX >> 4) * modifyPosition;
-		player.positionY = (player.positionY >> 4) * modifyPosition;
+		final int modifyPositionX = ((player.positionX >> 4) * 16) + 8;
+		final int modifyPositionY = ((player.positionY >> 4) * 16) + 8;
+		player.positionX = modifyPositionX;
+		player.positionY = modifyPositionY;
 		level.add(player);
 		
 		TestLog.logger.info("level changed...");
@@ -420,9 +421,9 @@ public class Game extends Canvas implements Runnable {
 					int r1 = ((rr + mid * 1) / 2) * 230 / 255 + 10;
 					int g1 = ((gg + mid * 1) / 2) * 230 / 255 + 10;
 					int b1 = ((bb + mid * 1) / 2) * 230 / 255 + 10;
-					pp++;
-					colors[pp] = r1 << 16 | g1 << 8 | b1;
 					
+					colors[pp] = r1 << 16 | g1 << 8 | b1;
+					pp++;
 				}
 			}
 		}
