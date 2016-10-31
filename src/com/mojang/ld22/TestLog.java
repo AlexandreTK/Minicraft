@@ -5,7 +5,7 @@ import java.io.*;
 
 public class TestLog {
 
-public static Logger logger;
+	public static Logger logger;
 
 	static {
 	    try {
