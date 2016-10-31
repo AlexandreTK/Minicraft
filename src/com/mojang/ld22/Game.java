@@ -36,41 +36,36 @@ import com.mojang.ld22.TestLog;
 
 public class Game extends Canvas implements Runnable {
 	// java uses serialVersionUID as an identifier of the class version
-	private static final long serialVersionUID = 1L;
-	private Random random = new Random();
 	public static final String NAME = "Minicraft";
 	public static final int HEIGHT = 120;
 	public static final int WIDTH = 160;
+	public int gameTime = 0;
+	public Player player;
+	public TestLog logger = new TestLog();
+	public Menu menu;
+	public boolean hasWon = false;
+	
+	private static final long serialVersionUID = 1L;
+	private Random random = new Random();
 	private static final int SCALE = 3;
-
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	private boolean running = false;
 	private Screen screen;
 	private Screen lightScreen;
 	private InputHandler input = new InputHandler(this);
- 
 	private final int aSecond = 1000;
 	private int[] colors = new int[256];
 	private int tickCount = 0;
-	public int gameTime = 0;
-
 	private  final int maxLevel = 5;
-	
-	
 	private Level level;
 	private Level[] levels = new Level[5];
 	private int currentLevel = 3;
-	public Player player;
-	
 	private final int maxPlayerDeadTime = 60;
-	TestLog logger = new TestLog();
-	
-	public Menu menu;
 	private int playerDeadTime;
 	private int pendingLevelChange;
 	private int wonTimer = 0;
-	public boolean hasWon = false;
+	
 
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -138,7 +133,6 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 	}
-
 
 	public void run() {
 		long lastTime = System.nanoTime();
@@ -334,6 +328,7 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
+	
 	public void scheduleLevelChange(int dir) {
 		
 		pendingLevelChange = dir;
@@ -412,7 +407,6 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-
 	private void init() {
 		int pp = 0;
 		for (int r = 0; r < 6; r++) {
@@ -442,6 +436,7 @@ public class Game extends Canvas implements Runnable {
 		resetGame();
 		setMenu(new TitleMenu());
 	}
+
 	private void renderFocusNagger() {
 		String msg = "Click to focus!";
 		int xx = (WIDTH - msg.length() * 8) / 2;
