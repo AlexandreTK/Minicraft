@@ -53,7 +53,14 @@ public class Player extends Mob {
 		Tile onTile = level.getTile(positionX >> 4, positionY >> 4);
 		if (onTile == Tile.stairsDown || onTile == Tile.stairsUp) {
 			if (onStairDelay == 0) {
-				changeLevel((onTile == Tile.stairsUp) ? 1 : -1);
+				
+				int level = 0;
+				if(onTile == Tile.stairsUp) {
+					level = 1;
+				} else {
+					level = -1;
+				}
+				changeLevel(level);
 				onStairDelay = 10;
 				return;
 			}else{
@@ -95,7 +102,8 @@ public class Player extends Mob {
 		if (input.down.isKeyDown()) ya++;
 		if (input.left.isKeyDown()) xa--;
 		if (input.right.isKeyDown()) xa++;
-		if (isSwimming() && tickTime % 60 == 0) {
+		boolean sixtyTicksPassed = tickTime % 60 == 0; // Approximatly 1 seccont
+		if (isSwimming() && sixtyTicksPassed) {
 			if (stamina > 0) {
 				stamina--;
 			} else {
