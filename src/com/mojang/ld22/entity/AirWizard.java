@@ -51,8 +51,9 @@ public class AirWizard extends Mob {
 
 		if (attackTime > 0) {
 			attackTime--;
-
-			double direction = attackTime * 0.25 * (attackTime % 2 * 2 - 1);
+			double direction_angle = attackTime * 0.25;
+			double direction_coordinate = (attackTime % 2 * 2 - 1); // will be +1 or -1
+			double direction = direction_angle * direction_coordinate;
 			double speed = (0.7) + attackType * 0.2;
 
 			level.add(new Spark(this, Math.cos(direction) * speed, Math.sin(direction) * speed));
@@ -107,7 +108,13 @@ public class AirWizard extends Mob {
 			// nothing to do
 		}
 
-		int speed = (tickTime % 4) == 0 ? 0 : 1;
+		int speed = 0;
+		if ((tickTime % 4) == 0) {
+			speed = 0;
+		} else {
+			speed = 1;
+		}
+	
 
 		if (!move(positionXAbsolute * speed, positionYAbsolute * speed) || random.nextInt(100) == 0) {
 			randomWalkTime = 30;
@@ -122,8 +129,8 @@ public class AirWizard extends Mob {
 			if (level.player != null && randomWalkTime == 0) {
 				int positionXWalked = level.player.positionX - positionX;
 				int positionYWalked = level.player.positionY - positionY;
-				if (random.nextInt(4) == 0
-						&& positionXWalked * positionXWalked + positionYWalked * positionYWalked < 50 * 50) {
+				int distanceWalked = positionXWalked * positionXWalked + positionYWalked * positionYWalked;
+				if (random.nextInt(4) == 0 && distanceWalked < 50 * 50) {
 					if (attackDelay == 0 && attackTime == 0) {
 						attackDelay = 60 * 2;
 					} else {
