@@ -129,47 +129,98 @@ public class Slime extends Mob {
 		}
 	}
 
+	/**
+	 * This method is used to control how the game behaves when a Slime is rendered.
+	 * It indicates what visual element should be rendered and at which position.
+	 * It also indicates the Slime Color.
+	 * 
+	 * @param Screen : Object of the type Screen that indicates where the Slime will be
+	 * rendered
+	 * @return none.
+	 */
 	public void render(Screen screen) {
-		int xt = 0;
-		int yt = 18;
+		
+		// This variables indicate which visual element will be rendered in the screen 
+		int elementXPositionSpriteSheet = 0;
+		int elementYPositionSpriteSheet = 18;
 
-		int xo = positionX - 8;
-		int yo = positionY - 11;
+		// This variables indicate the distance from the Player to the element rendered
+		int distFromPlayerX = positionX - 8;
+		int distFromPlayerY = positionY - 11;
 
+		// If the Slime is jumping, do these actions
 		if (jumpTime > 0) {
-			xt += 2;
-			yo -= 4;
+			elementXPositionSpriteSheet += 2; // A different picture of the slim is rendered
+			distFromPlayerY -= 4; // Gets 4 units closer to the player
 		}else{
 			//nothing to do
 		}
-
-		int col = Color.get(-1, 10, 252, 555);
+		
+		int colorAroundEntity = 0;
+		int borderColor = 0;
+		int bodyColor = 0;
+		int eyeColor = 0;
+		int col = 0;
+		// Choose the slime color according to its level.
 		switch(lvl){
+
+		case 1:
+			colorAroundEntity = -1; // -1 => Background color
+			borderColor = 10;		// Border color is dark
+			bodyColor = 252;		// Body color is GREEN
+			eyeColor = 555; 		// Eye color is WHITE
+			col = Color.get(colorAroundEntity, borderColor, bodyColor, eyeColor);
+			break;
+		
 		case 2:
-			col = Color.get(-1, 100, 522, 555);
+			colorAroundEntity = -1; // -1 => Background color
+			borderColor = 100;		// Border color is dark
+			bodyColor = 522;		// Body color is PINK
+			eyeColor = 555; 		// Eye color is WHITE
+			col = Color.get(colorAroundEntity, borderColor, bodyColor, 555);
 			break;
+		
 		case 3:
-			col = Color.get(-1, 111, 444, 555);
+			colorAroundEntity = -1; // -1 => Background color
+			borderColor = 111;		// Border color is GRAY
+			bodyColor = 444;		// Body color is GRAY
+			eyeColor = 555; 		// Eye color is WHITE
+			col = Color.get(colorAroundEntity, bodyColor, bodyColor, eyeColor);
 			break;
+
 		case 4:
-			col = Color.get(-1, 000, 111, 224);
+			colorAroundEntity = -1; // -1 => Background color
+			borderColor = 000;		// Border color is BLACK
+			bodyColor = 111;		// Border color is DARK GRAY
+			eyeColor = 224;			// Border color is PURPLE
+			col = Color.get(colorAroundEntity, borderColor, bodyColor, eyeColor);
 			break;
 		}
 				
-
+		// The slime becomes WHITE if it is damaged
 		if (hurtTime > 0) {
-			col = Color.get(-1, 555, 555, 555);
+			final int background_color = -1;
+			final int white_color = 555;
+			col = Color.get(background_color, white_color, white_color, white_color);
 		}else{
 			//nothing to do
 		}
 
-		screen.render(xo + 0, yo + 0, xt + yt * 32, col, 0);
-		screen.render(xo + 8, yo + 0, xt + 1 + yt * 32, col, 0);
-		screen.render(xo + 0, yo + 8, xt + (yt + 1) * 32, col, 0);
-		screen.render(xo + 8, yo + 8, xt + 1 + (yt + 1) * 32, col, 0);
+		// The slime is rendered in 4 different pieces, top-left, top-right, bottom-left, bottom-down
+		screen.render(distFromPlayerX + 0, distFromPlayerY + 0, elementXPositionSpriteSheet + elementYPositionSpriteSheet * 32, col, 0);
+		screen.render(distFromPlayerX + 8, distFromPlayerY + 0, elementXPositionSpriteSheet + 1 + elementYPositionSpriteSheet * 32, col, 0);
+		screen.render(distFromPlayerX + 0, distFromPlayerY + 8, elementXPositionSpriteSheet + (elementYPositionSpriteSheet + 1) * 32, col, 0);
+		screen.render(distFromPlayerX + 8, distFromPlayerY + 8, elementXPositionSpriteSheet + 1 + (elementYPositionSpriteSheet + 1) * 32, col, 0);
 	}
 
+	/**
+	 * This method is used to control how the game behaves when a Slime touches some other entity.
+	 * 
+	 * @param Entity : Object of the type Entity what was touched by the Slime
+	 * @return none.
+	 */
 	protected void touchedBy(Entity entity) {
+		// Hurts the Player, if it touches the Slime
 		if (entity instanceof Player) {
 			entity.hurt(this, lvl, direction);
 		}else{
