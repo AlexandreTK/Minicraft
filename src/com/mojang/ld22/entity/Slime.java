@@ -4,6 +4,7 @@ import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
+import com.mojang.ld22.TestLog;
 
 /**
  * <h1> Slime </h1>
@@ -19,6 +20,7 @@ public class Slime extends Mob {
 	private int jumpTime = 0; //delay of slime movement
 	private int lvl;
 
+
 	/**
 	 * This is a constructor for the slime.
 	 *
@@ -33,6 +35,7 @@ public class Slime extends Mob {
 		positionX = random.nextInt(64 * 16); // Slime X position will be located between 0 and (64 * 16)
 		positionY = random.nextInt(64 * 16); // Slime Y position will be located between 0 and (64 * 16)
 		health = maxHealth = lvl * lvl * 5; 
+		//TestLog.logger.info("Slime was created.");
 	}
 
 	/**
@@ -56,11 +59,13 @@ public class Slime extends Mob {
 				// Slime movement when it's not following the player
 				positionXAbsolute = (random.nextInt(3) - 1); // Slime will move between -1(away) and 1 unit from the Player
 				positionYAbsolute = (random.nextInt(3) - 1); // Slime will move between -1(away) and 1 unit from the Player
-
+ 
+				//TestLog.logger.info("Slime movement in X: " + positionXAbsolute + ", and movement in Y" + positionYAbsolute);
 				if (level.player != null) {
 					//Distance Walked from the player
 					int positionXWalked = level.player.positionX - positionX;
 					int positionYWalked = level.player.positionY - positionY;
+					
 					
 					// After following the player for 50*50 units, act different
 					int distanceWalked = positionXWalked * positionXWalked + positionYWalked * positionYWalked;
@@ -73,6 +78,7 @@ public class Slime extends Mob {
 							positionYAbsolute = -1;}
 						if (positionYWalked > 0){
 							positionYAbsolute = +1;}
+						TestLog.logger.info("Slime walked more than 50*50 units.");
 					}else{
 						//nothing to do
 					}
@@ -83,6 +89,7 @@ public class Slime extends Mob {
 
 				if (positionXAbsolute != 0 || positionYAbsolute != 0) {
 					jumpTime = 10;
+					
 				}
 			}else{
 				//nothing to do
@@ -127,6 +134,7 @@ public class Slime extends Mob {
 		}else{
 			//nothing to do
 		}
+		TestLog.logger.info("Slime died...");
 	}
 
 	/**
@@ -196,7 +204,6 @@ public class Slime extends Mob {
 			col = Color.get(colorAroundEntity, borderColor, bodyColor, eyeColor);
 			break;
 		}
-				
 		// The slime becomes WHITE if it is damaged
 		if (hurtTime > 0) {
 			final int background_color = -1;
@@ -211,6 +218,7 @@ public class Slime extends Mob {
 		screen.render(distFromPlayerX + 8, distFromPlayerY + 0, elementXPositionSpriteSheet + 1 + elementYPositionSpriteSheet * 32, col, 0);
 		screen.render(distFromPlayerX + 0, distFromPlayerY + 8, elementXPositionSpriteSheet + (elementYPositionSpriteSheet + 1) * 32, col, 0);
 		screen.render(distFromPlayerX + 8, distFromPlayerY + 8, elementXPositionSpriteSheet + 1 + (elementYPositionSpriteSheet + 1) * 32, col, 0);
+		TestLog.logger.info("Slime with level: " + level + ", and color " + col + " rendered");
 	}
 
 	/**
@@ -223,8 +231,10 @@ public class Slime extends Mob {
 		// Hurts the Player, if it touches the Slime
 		if (entity instanceof Player) {
 			entity.hurt(this, lvl, direction);
+			TestLog.logger.info("Player was hurt by the Slime...");
 		}else{
 			//nothing to do
 		}
+		TestLog.logger.info("Slime was touched.");
 	}
 }
