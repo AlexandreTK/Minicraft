@@ -1,3 +1,9 @@
+/*********************************************************  
+* File: ResourceItem.java 
+* Purpose: ResourceItem class implementation, that is 
+* items are collected as resource.
+* ********************************************************/  
+
 package com.mojang.ld22.item;
 
 import com.mojang.ld22.entity.ItemEntity;

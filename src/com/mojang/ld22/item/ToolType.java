@@ -1,3 +1,9 @@
+/*********************************************************  
+* File: ToolType.java 
+* Purpose: Tool Type class implementation, that is the type
+* of tools that can be acquired by the player.
+* ********************************************************/  
+
 package com.mojang.ld22.item;
 
 public class ToolType {

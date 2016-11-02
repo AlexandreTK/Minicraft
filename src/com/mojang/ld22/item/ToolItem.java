@@ -1,3 +1,9 @@
+/*********************************************************  
+* File: ToolItem.java 
+* Purpose: ToolItem class implementation, that is 
+* items can be used as a tool by the player
+* ********************************************************/  
+
 package com.mojang.ld22.item;
 
 import java.util.Random;
