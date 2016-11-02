@@ -1,3 +1,8 @@
+/*********************************************************  
+* File: Slime.java 
+* Purpose: Slime class implementation 
+* ********************************************************/  
+
 package com.mojang.ld22.entity;
 
 import com.mojang.ld22.gfx.Color;

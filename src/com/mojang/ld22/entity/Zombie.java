@@ -1,4 +1,7 @@
-// File: Zombie.java
+/*********************************************************  
+* File: Zombie.java 
+* Purpose: Zombie class implementation 
+* ********************************************************/  
 
 package com.mojang.ld22.entity;
 
