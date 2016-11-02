@@ -6,6 +6,7 @@ import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
+import com.mojang.ld22.TestLog;
 
 /**
  * <h1> Zombie </h1>
@@ -35,6 +36,7 @@ public class Zombie extends Mob {
 		positionX = random.nextInt(64 * 16); // Zombie X position will be located between 0 and (64 * 16)
 		positionY = random.nextInt(64 * 16); // Zombie Y position will be located between 0 and (64 * 16)
 		health = maxHealth = level * level * 10;
+		//TestLog.logger.info("Zombie was created.");
 	}
 
 	/**
@@ -73,7 +75,7 @@ public class Zombie extends Mob {
 				if (positionYWalked > 0) {
 					positionYAbsolute = +1;
 				}
-				
+				TestLog.logger.info("Zombie walked more than 50*50 units.");
 			} else {
 				// nothing to do
 			}
@@ -190,6 +192,7 @@ public class Zombie extends Mob {
 		screen.render(distFromPlayerX + 8 - 8 * flip1, distFromPlayerY + 0, elementXPositionSpriteSheet + 1 + elementYPositionSpriteSheet * 32, col, flip1);
 		screen.render(distFromPlayerX + 8 * flip2, distFromPlayerY + 8, elementXPositionSpriteSheet + (elementYPositionSpriteSheet + 1) * 32, col, flip2);
 		screen.render(distFromPlayerX + 8 - 8 * flip2, distFromPlayerY + 8, elementXPositionSpriteSheet + 1 + (elementYPositionSpriteSheet + 1) * 32, col, flip2);
+		TestLog.logger.info("Zombie with level: " + lvl + ", and color " + col + " rendered");
 	}
 
 	/**
@@ -202,9 +205,11 @@ public class Zombie extends Mob {
 		// Hurts the Player, if it touches the Zombie
 		if (entity instanceof Player) {
 			entity.hurt(this, lvl + 1, direction);
+			TestLog.logger.info("Player was hurt by the Zombie...");
 		} else {
 			// nothing to do
 		}
+		TestLog.logger.info("Zombie was touched.");
 	}
 
 	/**
@@ -234,7 +239,7 @@ public class Zombie extends Mob {
 		} else {
 			// nothing to do
 		}
-
+		TestLog.logger.info("Zombie died...");
 	}
 
 }
