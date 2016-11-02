@@ -1,3 +1,9 @@
+/*********************************************************  
+* File: Item.java 
+* Purpose: FurnitureItem class implementation, that is 
+* items that cannot be attacked.
+* ********************************************************/  
+
 package com.mojang.ld22.item;
 
 import com.mojang.ld22.entity.Furniture;

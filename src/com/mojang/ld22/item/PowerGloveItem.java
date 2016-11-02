@@ -1,3 +1,8 @@
+/*********************************************************  
+* File: PowerGloveItem.java 
+* Purpose: Power Glove class implementation 
+* ********************************************************/  
+
 package com.mojang.ld22.item;
 
 import com.mojang.ld22.entity.Entity;

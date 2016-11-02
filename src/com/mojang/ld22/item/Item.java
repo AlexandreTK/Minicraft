@@ -1,3 +1,8 @@
+/*********************************************************  
+* File: Item.java 
+* Purpose: Item class implementation 
+* ********************************************************/  
+
 package com.mojang.ld22.item;
 
 import com.mojang.ld22.entity.Entity;
