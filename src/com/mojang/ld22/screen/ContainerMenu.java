@@ -6,11 +6,11 @@ import com.mojang.ld22.gfx.Font;
 import com.mojang.ld22.gfx.Screen;
 
 public class ContainerMenu extends Menu {
-	private Player player;
-	private Inventory container;
+	private Player player = null;
+	private Inventory container = null;
 	private int selected = 0;
-	private String title;
-	private int oSelected;
+	private String title = "";
+	private int oSelected = 0;
 	private int window = 0;
 
 	public ContainerMenu(Player player, String title, Inventory container) {
@@ -38,8 +38,8 @@ public class ContainerMenu extends Menu {
 			oSelected = tmp;
 		}
 
-		Inventory i;
-		Inventory i2;
+		Inventory i = null;
+		Inventory i2 = null;
 		
 		if(window == 1){
 			i = player.inventory;

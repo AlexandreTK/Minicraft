@@ -5,7 +5,7 @@ import com.mojang.ld22.gfx.Font;
 import com.mojang.ld22.gfx.Screen;
 
 public class AboutMenu extends Menu {
-	private Menu parent;
+	private Menu parent = null;
 
 	public AboutMenu(Menu parent) {
 		this.parent = parent;

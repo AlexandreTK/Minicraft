@@ -30,7 +30,7 @@ public class ToolItem extends Item {
 			Color.get(-1, 100, 321, 055),//
 	};
 
-	public ToolType type;
+	public ToolType type = null;
 	public int level = 0;
 
 	public ToolItem(ToolType type, int level) {
