@@ -40,9 +40,9 @@ public class Game extends Canvas implements Runnable {
 	public static final int HEIGHT = 120;
 	public static final int WIDTH = 160;
 	public int gameTime = 0;
-	public Player player;
+	public Player player = null;
 	public TestLog logger = new TestLog();
-	public Menu menu;
+	public Menu menu = null;
 	public boolean hasWon = false;
 	
 	private static final long serialVersionUID = 1L;
@@ -51,19 +51,19 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	private boolean running = false;
-	private Screen screen;
-	private Screen lightScreen;
+	private Screen screen = null;
+	private Screen lightScreen = null;
 	private InputHandler input = new InputHandler(this);
 	private final int aSecond = 1000;
 	private int[] colors = new int[256];
 	private int tickCount = 0;
 	private  final int maxLevel = 5;
-	private Level level;
+	private Level level = null;
 	private Level[] levels = new Level[5];
 	private int currentLevel = 3;
 	private final int maxPlayerDeadTime = 60;
-	private int playerDeadTime;
-	private int pendingLevelChange;
+	private int playerDeadTime = 0;
+	private int pendingLevelChange = 0;
 	private int wonTimer = 0;
 	
 
