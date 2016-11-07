@@ -51,10 +51,10 @@ public class AirWizard extends Mob {
 
 		if (attackTime > 0) {
 			attackTime--;
-			double direction_angle = attackTime * 0.25;
-			double direction_coordinate = (attackTime % 2 * 2 - 1); // will be +1 or -1
-			double direction = direction_angle * direction_coordinate;
-			double speed = (0.7) + attackType * 0.2;
+			double direction_angle = (double)attackTime * 0.25;
+			double direction_coordinate = (double)(attackTime % 2 * 2 - 1); // will be +1 or -1
+			double direction = (double)direction_angle * direction_coordinate;
+			double speed = (double)(0.7) + attackType * 0.2;
 
 			level.add(new Spark(this, Math.cos(direction) * speed, Math.sin(direction) * speed));
 
