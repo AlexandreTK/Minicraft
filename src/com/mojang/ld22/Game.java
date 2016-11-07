@@ -83,7 +83,7 @@ public class Game extends Canvas implements Runnable {
 		frame.setVisible(true);
 		
 		
-		logger.logger.info("Game starting...");
+		TestLog.logger.info("Game starting...");
 		
 		game.start();
 		

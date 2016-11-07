@@ -19,7 +19,7 @@ public class GameApplet extends Applet {
 		setLayout(new BorderLayout());
 		add(game, BorderLayout.CENTER);
 		TestLog logger = new TestLog();
-		logger.logger.info("init applet...");
+		TestLog.logger.info("init applet...");
 	}
 
 	public void startApplet() {// Start  The game

@@ -18,7 +18,7 @@
     <mkdir dir="${build.dir}/classes"/>
     <javac srcdir="${src.dir}" destdir="${build.dir}/classes"
            optimize="on" debug="on" deprecation="on" includeantruntime="no">
-      <compilerarg value="-Xlint"/>
+      <compilerarg value="-Xlint:all"/>
     </javac>
     <copy todir="${build.dir}/classes">
       <fileset dir="${res.dir}"/>
