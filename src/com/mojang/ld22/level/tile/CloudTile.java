@@ -41,7 +41,7 @@ public class CloudTile extends Tile {
 				screen.render(xAux, yAux, 7 + 0 * 32, transitionColor, 3);
 		} else
 				
-			screen.render(xAux, yAux, (l ? 6 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
+			screen.render(xAux, yAux, lReturn(l) + uReturn(u) * 32, transitionColor, 3);
 		
 
 		if (!u && !r) {
@@ -50,7 +50,7 @@ public class CloudTile extends Tile {
 			else
 				screen.render(xAux + 8, yAux, 8 + 0 * 32, transitionColor, 3);
 		} else
-			screen.render(xAux + 8, yAux, (r ? 4 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
+			screen.render(xAux + 8, yAux,rReturn(r) + uReturn(u) * 32, transitionColor, 3);
 
 		if (!d && !l) {
 			if (!dl)
@@ -58,15 +58,49 @@ public class CloudTile extends Tile {
 			else
 				screen.render(xAux, yAux+ 8, 7 + 1 * 32, transitionColor, 3);
 		} else
-			screen.render(xAux, yAux+ 8, (l ? 6 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
+			screen.render(xAux, yAux+ 8, lReturn(l) + dReturn(d) * 32, transitionColor, 3);
 		if (!d && !r) {
 			if (!dr)
 				screen.render(xAux + 8 , yAux+ 8, 19, col, 0);
 			else
 				screen.render(xAux + 8, yAux+ 8, 8 + 1 * 32, transitionColor, 3);
 		} else
-			screen.render(xAux + 8, yAux+ 8, (r ? 4 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
+			screen.render(xAux + 8, yAux+ 8,rReturn(r) + dReturn(d) * 32, transitionColor, 3);
+	} 
+	public int lReturn(boolean l){
+		if (l = true){
+			return 6;
+		}
+		else {
+			return 5;
+		}
 	}
+	public int uReturn(boolean u){
+		if (u = true){
+			return 2;
+		}
+		else {
+			return 1;
+		}
+	}
+	public int rReturn(boolean r){
+		if (r = true){
+			return 4;
+		}
+		else {
+			return 5;
+		}
+	}
+	public int dReturn(boolean d){
+		if (d = true){
+			return 0;
+		}
+		else {
+			return 1;
+		}
+	}
+	
+	
 
 	public boolean mayPass(Level level, int x, int y, Entity e) {
 		return true;
