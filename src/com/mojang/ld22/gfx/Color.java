@@ -8,15 +8,17 @@ public class Color {
 	}
 
 	public static int get(int d) {
+		int red = d / 100 % 10;
+		int green = d / 10 % 10;
+		int blue = d % 10;
+		int colorMixture = red * 36 + green * 6 + blue;
+		
 		if (d < 0) {
 			return 255;
 		} else {
 			// Do nothing
 		}
-		int red = d / 100 % 10;
-		int green = d / 10 % 10;
-		int blue = d % 10;
-		int colorMixture = red * 36 + green * 6 + blue;
+		
 		return colorMixture;
 	}
 
