@@ -51,15 +51,11 @@ public class Screen {
 	public void render(int xp, int yp, int tile, int colors, int bits) {
 		xp -= xOffset;
 		yp -= yOffset;
-		boolean mirrorX = (bits & BIT_MIRROR_X) > 0;
-		boolean mirrorY = (bits & BIT_MIRROR_Y) > 0;
 
-		int xTile = tile % 32;
-		int yTile = tile / 32;
-		int toffs = xTile * 8 + yTile * 8 * sheet.width;
 
 		for (int y = 0; y < 8; y++) {
 			int ys = y;
+			boolean mirrorY = (bits & BIT_MIRROR_Y) > 0;
 			if (mirrorY) {
 				ys = 7 - y;
 			} else {
@@ -78,11 +74,15 @@ public class Screen {
 				}
 
 				int xs = x;
+				boolean mirrorX = (bits & BIT_MIRROR_X) > 0;
 				if (mirrorX) {
 					xs = 7 - x;
 				} else {
 					// Do nothing
 				}
+				int xTile = tile % 32;
+				int yTile = tile / 32;
+				int toffs = xTile * 8 + yTile * 8 * sheet.width;
 				int col = (colors >> (sheet.pixels[xs + ys * sheet.width + toffs] * 8)) & 255;
 				if (col < 255) {
 					pixels[(x + xp) + (y + yp) * width] = col;
@@ -119,26 +119,29 @@ public class Screen {
 	public void renderLight(int x, int y, int r) {
 		x -= xOffset;
 		y -= yOffset;
+		
 		int x0 = x - r;
-		int x1 = x + r;
-		int y0 = y - r;
-		int y1 = y + r;
-
 		if (x0 < 0) {
 			x0 = 0;
 		} else {
 			// Do nothing
 		}
+		
+		int y0 = y - r;
 		if (y0 < 0) {
 			y0 = 0;
 		} else {
 			// Do nothing
 		}
+		
+		int x1 = x + r;
 		if (x1 > width) {
 			x1 = width;
 		} else {
 			// Do nothing
 		}
+		
+		int y1 = y + r;
 		if (y1 > height) {
 			y1 = height;
 		} else {
