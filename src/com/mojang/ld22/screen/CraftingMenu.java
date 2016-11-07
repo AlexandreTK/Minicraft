@@ -15,10 +15,10 @@ import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.sound.Sound;
 
 public class CraftingMenu extends Menu {
-	private Player player;
+	private Player player = null;
 	private int selected = 0;
 
-	private List<Recipe> recipes;
+	private List<Recipe> recipes = null;
 
 	public CraftingMenu(List<Recipe> recipes, Player player) {
 		this.recipes = new ArrayList<Recipe>(recipes);

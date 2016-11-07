@@ -16,7 +16,7 @@ import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
 public class ResourceItem extends Item {
-	private Resource resource;
+	private Resource resource = null;
 	private int count = 1;
 
 	public Resource getResource() {
