@@ -30,37 +30,42 @@ public class CloudTile extends Tile {
 		boolean dl = level.getTile(x - 1, y + 1) == Tile.infiniteFall;
 		boolean ur = level.getTile(x + 1, y - 1) == Tile.infiniteFall;
 		boolean dr = level.getTile(x + 1, y + 1) == Tile.infiniteFall;
+		int xAux, yAux;
+		xAux = x * 16 + 0;
+		yAux = y * 16 + 0;
 
 		if (!u && !l) {
 			if (!ul)
-				screen.render(x * 16 + 0, y * 16 + 0, 17, col, 0);
+				screen.render(xAux, yAux, 17, col, 0);
 			else
-				screen.render(x * 16 + 0, y * 16 + 0, 7 + 0 * 32, transitionColor, 3);
+				screen.render(xAux, yAux, 7 + 0 * 32, transitionColor, 3);
 		} else
-			screen.render(x * 16 + 0, y * 16 + 0, (l ? 6 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
+				
+			screen.render(xAux, yAux, (l ? 6 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
+		
 
 		if (!u && !r) {
 			if (!ur)
-				screen.render(x * 16 + 8, y * 16 + 0, 18, col, 0);
+				screen.render(xAux + 8, yAux, 18, col, 0);
 			else
-				screen.render(x * 16 + 8, y * 16 + 0, 8 + 0 * 32, transitionColor, 3);
+				screen.render(xAux + 8, yAux, 8 + 0 * 32, transitionColor, 3);
 		} else
-			screen.render(x * 16 + 8, y * 16 + 0, (r ? 4 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
+			screen.render(xAux + 8, yAux, (r ? 4 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
 
 		if (!d && !l) {
 			if (!dl)
-				screen.render(x * 16 + 0, y * 16 + 8, 20, col, 0);
+				screen.render(xAux, yAux+ 8, 20, col, 0);
 			else
-				screen.render(x * 16 + 0, y * 16 + 8, 7 + 1 * 32, transitionColor, 3);
+				screen.render(xAux, yAux+ 8, 7 + 1 * 32, transitionColor, 3);
 		} else
-			screen.render(x * 16 + 0, y * 16 + 8, (l ? 6 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
+			screen.render(xAux, yAux+ 8, (l ? 6 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
 		if (!d && !r) {
 			if (!dr)
-				screen.render(x * 16 + 8, y * 16 + 8, 19, col, 0);
+				screen.render(xAux + 8 , yAux+ 8, 19, col, 0);
 			else
-				screen.render(x * 16 + 8, y * 16 + 8, 8 + 1 * 32, transitionColor, 3);
+				screen.render(xAux + 8, yAux+ 8, 8 + 1 * 32, transitionColor, 3);
 		} else
-			screen.render(x * 16 + 8, y * 16 + 8, (r ? 4 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
+			screen.render(xAux + 8, yAux+ 8, (r ? 4 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
 	}
 
 	public boolean mayPass(Level level, int x, int y, Entity e) {
