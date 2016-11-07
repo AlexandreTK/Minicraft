@@ -146,7 +146,7 @@ public class Game extends Canvas implements Runnable {
 
 		while (running) {
 			long now = System.nanoTime();
-			unprocessed += (now - lastTime) / nsPerTick;
+			unprocessed += (double)(now - lastTime) / nsPerTick;
 			lastTime = now;
 			boolean shouldRender = true;
 			while (unprocessed >= 1) {
@@ -158,8 +158,8 @@ public class Game extends Canvas implements Runnable {
 
 			try {
 				Thread.sleep(2);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			} catch (InterruptedException InterruptedException) {
+				InterruptedException.printStackTrace();
 			}
 
 			if (shouldRender) {
@@ -430,8 +430,8 @@ public class Game extends Canvas implements Runnable {
 		try {
 			screen = new Screen(WIDTH, HEIGHT, new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
 			lightScreen = new Screen(WIDTH, HEIGHT, new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/icons.png"))));
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException IOException) {
+			IOException.printStackTrace();
 		}
 		
 		resetGame();
