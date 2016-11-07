@@ -68,8 +68,11 @@ public class ResourceItem extends Item {
 		Font.draw(resource.name, screen, positionX, y, Color.get(-1, 555, 555, 555));
 		int cc = count;
 		
-		if (cc > 999)
+		if (cc <= 999) {
+			// Do nothing
+		} else {
 			cc = 999;
+		}
 		positionX = x + 8;
 		String msg = "" + cc;
 		Font.draw(msg, screen, positionX, y, Color.get(-1, 444, 444, 444));
@@ -86,6 +89,8 @@ public class ResourceItem extends Item {
 		if (resource.interactOn(tile, level, xt, yt, player, attackDir)) {
 			count--;
 			return true;
+		} else {
+			
 		}
 		return false;
 	}
