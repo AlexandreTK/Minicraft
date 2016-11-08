@@ -30,22 +30,92 @@ public class HoleTile extends Tile {
 
 		if (!u && !l) {
 			screen.render(x * 16 + 0, y * 16 + 0, 0, col, 0);
-		} else
-			screen.render(x * 16 + 0, y * 16 + 0, (l ? 14 : 15) + (u ? 0 : 1) * 32, (su || sl) ? transitionColor2 : transitionColor1, 0);
-
+		} else {
+			int spriteSheetPosition = 0;
+			if(l) {
+				spriteSheetPosition+= 14;
+			} else {
+				spriteSheetPosition+= 15;	
+			}
+			if(u) {
+				spriteSheetPosition+= 0;
+			} else {
+				spriteSheetPosition+= 1*32;	
+			}
+			int transitionColor = 0;
+			if(su || sl) {
+				transitionColor = transitionColor2;
+			} else {
+				transitionColor = transitionColor1;
+			}
+			screen.render(x * 16 + 0, y * 16 + 0, spriteSheetPosition, transitionColor, 0);
+		}
 		if (!u && !r) {
 			screen.render(x * 16 + 8, y * 16 + 0, 1, col, 0);
-		} else
-			screen.render(x * 16 + 8, y * 16 + 0, (r ? 16 : 15) + (u ? 0 : 1) * 32, (su || sr) ? transitionColor2 : transitionColor1, 0);
-
+		} else {
+			int spriteSheetPosition = 0;
+			if(r) {
+				spriteSheetPosition+= 16;
+			} else {
+				spriteSheetPosition+= 15;	
+			}
+			if(u) {
+				spriteSheetPosition+= 0;
+			} else {
+				spriteSheetPosition+= 1*32;	
+			}
+			int transitionColor = 0;
+			if(su || sr) {
+				transitionColor = transitionColor2;
+			} else {
+				transitionColor = transitionColor1;
+			}
+			screen.render(x * 16 + 8, y * 16 + 0, spriteSheetPosition, transitionColor, 0);
+		}
 		if (!d && !l) {
 			screen.render(x * 16 + 0, y * 16 + 8, 2, col, 0);
-		} else
-			screen.render(x * 16 + 0, y * 16 + 8, (l ? 14 : 15) + (d ? 2 : 1) * 32, (sd || sl) ? transitionColor2 : transitionColor1, 0);
+		} else {
+			int spriteSheetPosition = 0;
+			if(l) {
+				spriteSheetPosition+= 14;
+			} else {
+				spriteSheetPosition+= 15;	
+			}
+			if(d) {
+				spriteSheetPosition+= 2*32;
+			} else {
+				spriteSheetPosition+= 1*32;	
+			}
+			int transitionColor = 0;
+			if(sd || sl) {
+				transitionColor = transitionColor2;
+			} else {
+				transitionColor = transitionColor1;
+			}
+			screen.render(x * 16 + 0, y * 16 + 8, spriteSheetPosition, transitionColor, 0);
+		}
 		if (!d && !r) {
 			screen.render(x * 16 + 8, y * 16 + 8, 3, col, 0);
-		} else
-			screen.render(x * 16 + 8, y * 16 + 8, (r ? 16 : 15) + (d ? 2 : 1) * 32, (sd || sr) ? transitionColor2 : transitionColor1, 0);
+		} else {
+			int spriteSheetPosition = 0;
+			if(r) {
+				spriteSheetPosition+= 16;
+			} else {
+				spriteSheetPosition+= 15;	
+			}
+			if(d) {
+				spriteSheetPosition+= 2*32;
+			} else {
+				spriteSheetPosition+= 1*32;	
+			}
+			int transitionColor = 0;
+			if(sd || sr) {
+				transitionColor = transitionColor2;
+			} else {
+				transitionColor = transitionColor1;
+			}
+			screen.render(x * 16 + 8, y * 16 + 8, spriteSheetPosition, transitionColor, 0);
+		}
 	}
 
 	public boolean mayPass(Level level, int x, int y, Entity e) {
