@@ -28,6 +28,10 @@ public class DirtTile extends Tile {
 		screen.render(x * 16 + 8, y * 16 + 8, 3, col, 0);
 	}
 
+	/*
+	 * As known, tools can have many categories, this structure analyse if
+	 * the tools as a item and if the tool as a shovel
+	 */
 	private boolean haveShovelorHoe(Item item, Player player, Level level, int xt, int yt){
 		ToolItem tool = (ToolItem) item;
 		if (tool.type == ToolType.shovel) {
@@ -57,8 +61,10 @@ public class DirtTile extends Tile {
 	}
 	
 	
-	
-	
+	/*
+	 * If the player have the item and this item is a shovel
+	 * he can use/interact with this item in the Dirt
+	 */
 	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
 		if (item instanceof ToolItem) {
 			haveShovelorHoe(item, player, level, xt, yt);
