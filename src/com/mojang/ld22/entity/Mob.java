@@ -44,6 +44,10 @@ public class Mob extends Entity {
 		remove();
 	}
 
+	/*
+	 * As known, the players have some types of moviments in certain structures and this
+	 * method deal with each type of moviment
+	 */
 	public boolean move(int positionXAbsolute, int positionYAbsolute) {
 		
 		if (isSwimming()) {

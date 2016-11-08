@@ -14,6 +14,10 @@ public class Inventory {
 		add(items.size(), item);
 	}
 
+	/*
+	 * As known, the game have a lot of itens, and if the item is a 
+	 * resource that can be added in the inventory and used
+	 */
 	public void add(int slot, Item item) {
 		if (item instanceof ResourceItem) {
 			ResourceItem toTake = (ResourceItem) item; //available items
