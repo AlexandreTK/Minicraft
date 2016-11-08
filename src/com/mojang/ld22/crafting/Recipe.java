@@ -29,15 +29,10 @@ public abstract class Recipe implements ListItem {
 
 	public boolean canCraft = false;
 	
-	public void checkCanCraft(Player player) throws Exception {
+	public void checkCanCraft(Player player) {
 		assert(player != null): "parameter player is null";
 		for (int i = 0; i < costs.size(); i++) {
 			Item item = costs.get(i);
-			if(item == null){
-				throw new Exception("Null item");
-			}else {
-				//NOTHINHG TO DO
-			 }
 			if (item instanceof ResourceItem) {
 				ResourceItem resourceItem = (ResourceItem) item;
 				if (!player.inventory.hasResources(resourceItem.getResource(), resourceItem.getCount())) {
@@ -65,14 +60,9 @@ public abstract class Recipe implements ListItem {
 
 	public abstract void craft(Player player);
 
-	public void deductCost(Player player) throws Exception {
+	public void deductCost(Player player) {
 		for (int i = 0; i < costs.size(); i++) {
 			Item item = costs.get(i);
-			if(item == null){
-				throw new Exception("Null item");
-			}else {
-				//NOTHINHG TO DO
-			 }
 			if (item instanceof ResourceItem) {
 				ResourceItem resourceItem = (ResourceItem) item;
 				player.inventory.removeResource(resourceItem.getResource(), resourceItem.getCount());
