@@ -6,10 +6,10 @@ import com.mojang.ld22.item.PowerGloveItem;
 
 public class Furniture extends Entity {
 	private int pushTime = 0;
-	private int pushDirection = -1;
-	public int color;
-	public int sprite;
-	public String name;
+	private int pushDirection =-1;
+	public int color = 0;
+	public int sprite = 0;
+	public String name = null;
 	private Player shouldTake;
 
 	public Furniture(String name) {
