@@ -10,7 +10,7 @@ public class Mob extends Entity {
 	protected int walkedDistancy = 0;
 	protected int direction = 0;
 	public int hurtTime = 0;
-	protected int positionXKnockback, positionYKnockback; // current position of the mobs
+	protected int positionXKnockback = 0, positionYKnockback = 0; // current position of the mobs
 	public int maxHealth = 10;
 	public int health = maxHealth; //at spawn the all the mobs will get the max of helth
 	public int swimTimer = 0; //time allowed in the water
