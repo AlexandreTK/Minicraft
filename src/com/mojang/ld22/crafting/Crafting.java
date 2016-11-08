@@ -74,7 +74,9 @@ public class Crafting {
 			furnaceRecipes.add(new ResourceRecipe(Resource.glass).addCost(Resource.sand, 4).addCost(Resource.coal, 1));
 
 			ovenRecipes.add(new ResourceRecipe(Resource.bread).addCost(Resource.wheat, 4));
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
+			throw new RuntimeException("any recipe null");	
+		} catch (Exception exception) {
 			throw new RuntimeException("Time Exceeeded");
 		}
 	}

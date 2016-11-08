@@ -51,10 +51,10 @@ public class AirWizard extends Mob {
 
 		if (attackTime > 0) {
 			attackTime--;
-			double direction_angle = attackTime * 0.25;
-			double direction_coordinate = (attackTime % 2 * 2 - 1); // will be +1 or -1
-			double direction = direction_angle * direction_coordinate;
-			double speed = (0.7) + attackType * 0.2;
+			double direction_angle = (double)attackTime * 0.25;
+			double direction_coordinate = (double)(attackTime % 2 * 2 - 1); // will be +1 or -1
+			double direction = (double)direction_angle * direction_coordinate;
+			double speed = (double)(0.7) + attackType * 0.2;
 
 			level.add(new Spark(this, Math.cos(direction) * speed, Math.sin(direction) * speed));
 
@@ -160,14 +160,15 @@ public class AirWizard extends Mob {
 		int xt = 8;
 		int yt = 14;
 
-		int flip1 = (walkedDistancy >> 3) & 1;
-		int flip2 = (walkedDistancy >> 3) & 1;
-
 		if (direction == 1) {
 			xt += 2;
 		} else {
 			// nothing to do
 		}
+		
+		int flip1 = (walkedDistancy >> 3) & 1;
+		int flip2 = (walkedDistancy >> 3) & 1;
+		
 		if (direction > 1) {
 
 			flip1 = 0;
@@ -179,9 +180,6 @@ public class AirWizard extends Mob {
 		} else {
 			// nothing to do
 		}
-
-		int positionX0 = positionX - 8;
-		int positionY0 = positionY - 11;
 
 		int color1 = Color.get(-1, 100, 500, 555);
 		int color2 = Color.get(-1, 100, 500, 532);
@@ -210,6 +208,9 @@ public class AirWizard extends Mob {
 			// nothing to do
 		}
 
+		int positionX0 = positionX - 8;
+		int positionY0 = positionY - 11;
+		
 		screen.render(positionX0 + 8 * flip1, positionY0 + 0, xt + yt * 32, color1, flip1);
 		screen.render(positionX0 + 8 - 8 * flip1, positionY0 + 0, xt + 1 + yt * 32, color1, flip1);
 		screen.render(positionX0 + 8 * flip2, positionY0 + 8, xt + (yt + 1) * 32, color2, flip2);

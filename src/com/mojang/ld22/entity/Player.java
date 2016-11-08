@@ -273,12 +273,14 @@ public class Player extends Mob {
 		int xt = 0;
 		int yt = 14;
 
-		int flip1 = (walkedDistancy >> 3) & 1;
-		int flip2 = (walkedDistancy >> 3) & 1;
 
 		if (direction == 1) {
 			xt += 2;
 		}
+		
+		int flip1 = (walkedDistancy >> 3) & 1;
+		int flip2 = (walkedDistancy >> 3) & 1;
+		
 		if (direction > 1) {
 			flip1 = 0;
 			flip2 = ((walkedDistancy >> 4) & 1);

@@ -49,8 +49,8 @@ public class FurnitureItem extends Item {
 
 	public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
 		if (tile.mayPass(level, xt, yt, furniture)) {
-			furniture.positionX = xt * 16 + 8;
-			furniture.positionY = yt * 16 + 8;
+			furniture.positionX = (int)xt * 16 + 8;
+			furniture.positionY = (int)yt * 16 + 8;
 			level.add(furniture);
 			placed = true;
 			return true;

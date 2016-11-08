@@ -80,17 +80,20 @@ public class Entity {
 		if (positionXAbsolute != 0 && positionYAbsolute != 0)
 			throw new IllegalArgumentException("Move2 can only move along one axis at a time!");
 
-		int xto0 = ((positionX) - positionXRelative) >> 4;
-		int yto0 = ((positionY) - positionYRelative) >> 4;
-		int xto1 = ((positionX) + positionXRelative) >> 4;
-		int yto1 = ((positionY) + positionYRelative) >> 4;
+		
+		
+		boolean isBlocked = false;
 
 		int positionXWalked0 = ((positionX + positionXAbsolute) - positionXRelative) >> 4;
 		int positionYWalked0 = ((positionY + positionYAbsolute) - positionYRelative) >> 4;
 		int positionXWalked1 = ((positionX + positionXAbsolute) + positionXRelative) >> 4;
 		int positionYWalked1 = ((positionY + positionYAbsolute) + positionYRelative) >> 4;
 		
-		boolean isBlocked = false;
+		int xto0 = ((positionX) - positionXRelative) >> 4;
+		int yto0 = ((positionY) - positionYRelative) >> 4;
+		int xto1 = ((positionX) + positionXRelative) >> 4;
+		int yto1 = ((positionY) + positionYRelative) >> 4;
+
 		
 		for (int positionYWalked = positionYWalked0; positionYWalked <= positionYWalked1; positionYWalked++)
 			for (int positionXWalked = positionXWalked0; positionXWalked <= positionXWalked1; positionXWalked++) {
@@ -111,10 +114,7 @@ public class Entity {
 			}
 		if (isBlocked) return false;
 
-		List<Entity> wasInside = level.getEntities(positionX - positionXRelative,
-				 								   positionY - positionYRelative,
-				 								   positionX + positionXRelative,
-				 								   positionY + positionYRelative);
+		
 		
 		List<Entity> isInside = level.getEntities(positionX + positionXAbsolute - positionXRelative,
 												  positionY + positionYAbsolute - positionYRelative,
@@ -129,6 +129,11 @@ public class Entity {
 
 			entity.touchedBy(this);
 		}
+		
+		List<Entity> wasInside = level.getEntities(positionX - positionXRelative,
+				   positionY - positionYRelative,
+				   positionX + positionXRelative,
+				   positionY + positionYRelative);
 		
 		isInside.removeAll(wasInside);
 		
