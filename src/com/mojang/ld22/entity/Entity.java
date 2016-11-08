@@ -10,7 +10,7 @@ import com.mojang.ld22.level.tile.Tile;
 
 public class Entity {
 	protected final Random random = new Random();
-	public int positionX, positionY;
+	public int positionX = 0, positionY = 0;
 	public int positionXRelative = 6;
 	public int positionYRelative = 6;
 	public boolean isRemoved;
@@ -84,16 +84,24 @@ public class Entity {
 		
 		boolean isBlocked = false;
 
-		int positionXWalked0 = ((positionX + positionXAbsolute) - positionXRelative) >> 4;
-		int positionYWalked0 = ((positionY + positionYAbsolute) - positionYRelative) >> 4;
-		int positionXWalked1 = ((positionX + positionXAbsolute) + positionXRelative) >> 4;
-		int positionYWalked1 = ((positionY + positionYAbsolute) + positionYRelative) >> 4;
+		int positionXWalked0 = 0;
+		int positionYWalked0 = 0;
+		int positionXWalked1 = 0;
+		int positionYWalked1 = 0;
+		positionXWalked0 = ((positionX + positionXAbsolute) - positionXRelative) >> 4;
+		positionYWalked0 = ((positionY + positionYAbsolute) - positionYRelative) >> 4;
+		positionXWalked1 = ((positionX + positionXAbsolute) + positionXRelative) >> 4;
+		positionYWalked1 = ((positionY + positionYAbsolute) + positionYRelative) >> 4;
 		
-		int xto0 = ((positionX) - positionXRelative) >> 4;
-		int yto0 = ((positionY) - positionYRelative) >> 4;
-		int xto1 = ((positionX) + positionXRelative) >> 4;
-		int yto1 = ((positionY) + positionYRelative) >> 4;
-
+		
+		int xto0 = 0;
+		int yto0 = 0;
+		int xto1 = 0;
+		int yto1 = 0;
+		xto0 = ((positionX) - positionXRelative) >> 4;
+		yto0 = ((positionY) - positionYRelative) >> 4;
+		xto1 = ((positionX) + positionXRelative) >> 4;
+		yto1 = ((positionY) + positionYRelative) >> 4;
 		
 		for (int positionYWalked = positionYWalked0; positionYWalked <= positionYWalked1; positionYWalked++)
 			for (int positionXWalked = positionXWalked0; positionXWalked <= positionXWalked1; positionXWalked++) {
