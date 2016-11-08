@@ -16,8 +16,8 @@ public class TestLog {
 	      logger = Logger.getLogger("TestLog");
 	      logger.addHandler(fh);
 	    }
-	    catch (IOException e) {
-	      e.printStackTrace();
+	    catch (IOException IOException) {
+	      IOException.printStackTrace();
 	    }
 	}
 }

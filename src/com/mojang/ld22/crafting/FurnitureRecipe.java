@@ -15,8 +15,8 @@ public class FurnitureRecipe extends Recipe {
 	public void craft(Player player) {
 		try {
 			player.inventory.add(0, new FurnitureItem(clazz.newInstance()));
-		} catch (Exception erro) {
-			throw new RuntimeException(erro);
+		} catch (Exception NewException) {
+			throw new RuntimeException(NewException);
 		}
 	}
 }
