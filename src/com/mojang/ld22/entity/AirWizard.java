@@ -5,18 +5,19 @@ import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.sound.Sound;
 
 public class AirWizard extends Mob {
-	private int positionXAbsolute = 0;
-	private int positionYAbsolute = 0;
-	private int randomWalkTime = 0;
-	private int attackDelay = 0;
-	private int attackTime = 0;
-	private int attackType = 0;
 
 	public AirWizard() {
 		positionX = random.nextInt(64 * 16);
 		positionY = random.nextInt(64 * 16);
 		health = maxHealth = 2000;
 	}
+
+	private int positionXAbsolute = 0;
+	private int positionYAbsolute = 0;
+	private int randomWalkTime = 0;
+	private int attackDelay = 0;
+	private int attackTime = 0;
+	private int attackType = 0;
 
 	public void tick() {
 		super.tick();
