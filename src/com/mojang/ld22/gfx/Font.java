@@ -1,5 +1,7 @@
 package com.mojang.ld22.gfx;
 
+import com.mojang.ld22.TestLog;
+
 public class Font {
 	private static String chars = "" + //
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ      " + //
@@ -13,7 +15,7 @@ public class Font {
 			if (ix >= 0) {
 				screen.render(x + i * 8, y, ix + 30 * 32, col, 0);
 			} else {
-				//Do nothing
+				// Do nothing
 			}
 		}
 	}
@@ -43,6 +45,7 @@ public class Font {
 		}
 
 		draw(title, screen, x0 * 8 + 8, y0 * 8, Color.get(5, 5, 5, 550));
+		TestLog.logger.info("Renderizing Frane");
 
 	}
 }
