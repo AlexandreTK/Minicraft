@@ -5,12 +5,8 @@ import com.mojang.ld22.item.FurnitureItem;
 import com.mojang.ld22.item.PowerGloveItem;
 
 public class Furniture extends Entity {
-	private int pushTime = 0;
-	private int pushDirection =-1;
-	public int color = 0;
-	public int sprite = 0;
+
 	public String name = null;
-	private Player shouldTake;
 
 	public Furniture(String name) {
 		this.name = name;
@@ -18,21 +14,24 @@ public class Furniture extends Entity {
 		positionYRelative = 3;
 	}
 
+	private Player shouldTake;
+	private int pushDirection = -1;
+	private int pushTime = 0;
+
 	public void tick() {
 		if (shouldTake != null) {
 			if (shouldTake.activeItem instanceof PowerGloveItem) {
 				remove();
 				shouldTake.inventory.add(0, shouldTake.activeItem);
 				shouldTake.activeItem = new FurnitureItem(this);
-			}
-			else {
+			} else {
 				// nothing to do
 			}
-			
+
 			shouldTake = null;
 		}
-		
-		switch(pushDirection){
+
+		switch (pushDirection) {
 		case 0:
 			move(0, +1);
 			break;
@@ -46,12 +45,15 @@ public class Furniture extends Entity {
 			move(+1, 0);
 			break;
 		}
-			
+
 		pushDirection = -1;
-		
+
 		if (pushTime > 0)
 			pushTime--;
 	}
+
+	public int color = 0;
+	public int sprite = 0;
 
 	public void render(Screen screen) {
 		screen.render(positionX - 8, positionY - 8 - 4, sprite * 2 + 8 * 32, color, 0);
@@ -68,8 +70,7 @@ public class Furniture extends Entity {
 		if (entity instanceof Player && pushTime == 0) {
 			pushDirection = ((Player) entity).direction;
 			pushTime = 10;
-		}
-		else {
+		} else {
 			// nothing to do
 		}
 	}
