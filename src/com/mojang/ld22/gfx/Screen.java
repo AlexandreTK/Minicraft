@@ -1,10 +1,15 @@
 package com.mojang.ld22.gfx;
 
+import com.mojang.ld22.TestLog;
+
 public class Screen {
 	/*
-	 * public static final int MAP_WIDTH = 64; // Must be 2^x public static final int MAP_WIDTH_MASK = MAP_WIDTH - 1;
+	 * public static final int MAP_WIDTH = 64; // Must be 2^x public static
+	 * final int MAP_WIDTH_MASK = MAP_WIDTH - 1;
 	 * 
-	 * public int[] tiles = new int[MAP_WIDTH * MAP_WIDTH]; public int[] colors = new int[MAP_WIDTH * MAP_WIDTH]; public int[] databits = new int[MAP_WIDTH * MAP_WIDTH];
+	 * public int[] tiles = new int[MAP_WIDTH * MAP_WIDTH]; public int[] colors
+	 * = new int[MAP_WIDTH * MAP_WIDTH]; public int[] databits = new
+	 * int[MAP_WIDTH * MAP_WIDTH];
 	 */
 	public int xOffset;
 	public int yOffset;
@@ -27,13 +32,19 @@ public class Screen {
 		// Random random = new Random();
 
 		/*
-		 * for (int i = 0; i < MAP_WIDTH * MAP_WIDTH; i++) { colors[i] = Color.get(00, 40, 50, 40); tiles[i] = 0;
+		 * for (int i = 0; i < MAP_WIDTH * MAP_WIDTH; i++) { colors[i] =
+		 * Color.get(00, 40, 50, 40); tiles[i] = 0;
 		 * 
-		 * if (random.nextInt(40) == 0) { tiles[i] = 32; colors[i] = Color.get(111, 40, 222, 333); databits[i] = random.nextInt(2); } else if (random.nextInt(40) == 0) { tiles[i] = 33; colors[i] = Color.get(20, 40, 30, 550); } else { tiles[i] = random.nextInt(4); databits[i] = random.nextInt(4);
+		 * if (random.nextInt(40) == 0) { tiles[i] = 32; colors[i] =
+		 * Color.get(111, 40, 222, 333); databits[i] = random.nextInt(2); } else
+		 * if (random.nextInt(40) == 0) { tiles[i] = 33; colors[i] =
+		 * Color.get(20, 40, 30, 550); } else { tiles[i] = random.nextInt(4);
+		 * databits[i] = random.nextInt(4);
 		 * 
 		 * } }
 		 * 
-		 * Font.setMap("Testing the 0341879123", this, 0, 0, Color.get(0, 555, 555, 555));
+		 * Font.setMap("Testing the 0341879123", this, 0, 0, Color.get(0, 555,
+		 * 555, 555));
 		 */
 	}
 
@@ -43,15 +54,19 @@ public class Screen {
 	}
 
 	/*
-	 * public void renderBackground() { for (int yt = yScroll >> 3; yt <= (yScroll + h) >> 3; yt++) { int yp = yt * 8 - yScroll; for (int xt = xScroll >> 3; xt <= (xScroll + w) >> 3; xt++) { int xp = xt * 8 - xScroll; int ti = (xt & (MAP_WIDTH_MASK)) + (yt & (MAP_WIDTH_MASK)) * MAP_WIDTH; render(xp, yp, tiles[ti], colors[ti], databits[ti]); } }
+	 * public void renderBackground() { for (int yt = yScroll >> 3; yt <=
+	 * (yScroll + h) >> 3; yt++) { int yp = yt * 8 - yScroll; for (int xt =
+	 * xScroll >> 3; xt <= (xScroll + w) >> 3; xt++) { int xp = xt * 8 -
+	 * xScroll; int ti = (xt & (MAP_WIDTH_MASK)) + (yt & (MAP_WIDTH_MASK)) *
+	 * MAP_WIDTH; render(xp, yp, tiles[ti], colors[ti], databits[ti]); } }
 	 * 
-	 * for (int i = 0; i < sprites.size(); i++) { Sprite s = sprites.get(i); render(s.x, s.y, s.img, s.col, s.bits); } sprites.clear(); }
+	 * for (int i = 0; i < sprites.size(); i++) { Sprite s = sprites.get(i);
+	 * render(s.x, s.y, s.img, s.col, s.bits); } sprites.clear(); }
 	 */
 
 	public void render(int xp, int yp, int tile, int colors, int bits) {
 		xp -= xOffset;
 		yp -= yOffset;
-
 
 		for (int y = 0; y < 8; y++) {
 			int ys = y;
@@ -61,13 +76,13 @@ public class Screen {
 			} else {
 				// Do nothing
 			}
-			if (y + yp < 0 || y + yp >= height) { 
+			if (y + yp < 0 || y + yp >= height) {
 				continue;
 			} else {
 				// Do nothing
 			}
 			for (int x = 0; x < 8; x++) {
-				if (x + xp < 0 || x + xp >= width) { 
+				if (x + xp < 0 || x + xp >= width) {
 					continue;
 				} else {
 					// Do nothing
@@ -119,28 +134,28 @@ public class Screen {
 	public void renderLight(int x, int y, int r) {
 		x -= xOffset;
 		y -= yOffset;
-		
+
 		int x0 = x - r;
 		if (x0 < 0) {
 			x0 = 0;
 		} else {
 			// Do nothing
 		}
-		
+
 		int y0 = y - r;
 		if (y0 < 0) {
 			y0 = 0;
 		} else {
 			// Do nothing
 		}
-		
+
 		int x1 = x + r;
 		if (x1 > width) {
 			x1 = width;
 		} else {
 			// Do nothing
 		}
-		
+
 		int y1 = y + r;
 		if (y1 > height) {
 			y1 = height;
@@ -167,5 +182,6 @@ public class Screen {
 				}
 			}
 		}
+		TestLog.logger.info("Renderied Light");
 	}
 }
