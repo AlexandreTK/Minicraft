@@ -149,14 +149,7 @@ public class AirWizard extends Mob {
 		}
 	}
 
-	protected void doHurt(int damage, int attackDirection) {
-		super.doHurt(damage, attackDirection);
-		if (attackDelay == 0 && attackTime == 0) {
-			attackDelay = 60 * 2;
-		} else {
-			// nothing to do
-		}
-	}
+
 
 	public void render(Screen screen) {
 		int xt = 0;
@@ -244,4 +237,12 @@ public class AirWizard extends Mob {
 		Sound.bossdeath.play();
 	}
 
+	protected void doHurt(int damage, int attackDirection) {
+		super.doHurt(damage, attackDirection);
+		if (attackDelay == 0 && attackTime == 0) {
+			attackDelay = 60 * 2;
+		} else {
+			// nothing to do
+		}
+	}
 }
