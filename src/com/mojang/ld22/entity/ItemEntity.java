@@ -6,17 +6,17 @@ import com.mojang.ld22.item.Item;
 import com.mojang.ld22.sound.Sound;
 
 public class ItemEntity extends Entity {
-	private int lifeTime = 0;
-	protected int walkedDistancy = 0;
-	protected int direction = 0;
-	public int hurtTime = 0;
+	private int lifeTime = 0; // time that player are alive
+	protected int walkedDistancy = 0; //distance that player walked
+	protected int direction = 0; //direction that player walked
+	public int hurtTime = 0; // time that player need for recover of some type of hurt
 	protected int positionXKnockback = 0, positionYKnockback = 0;
 	public double positionXAbsolute = 0.0;
 	public double positionYAbsolute = 0.0;
 	public double positionZAbsolute = 0.0;
 	public double xx = 0.0, yy = 0.0, zz = 0.0;
 	public Item item;
-	private int time = 0;
+	private int time = 0; //time
 
 	public ItemEntity(Item item, int x, int y) {
 		this.item = item;
