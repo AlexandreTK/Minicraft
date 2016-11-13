@@ -29,7 +29,8 @@ public class Entity {
 		this.level = level;
 	}
 
-	public int positionX = 0, positionY = 0; //personage position in the plane XY
+	public int positionX = 0, positionY = 0; // personage position in the plane
+												// XY
 	public int positionXRelative = 6; // relative personagem postion in X
 	public int positionYRelative = 6; // relative personagem postion in Y
 
@@ -73,6 +74,30 @@ public class Entity {
 			// nothing to do
 		}
 		return true;
+	}
+
+	public boolean isBlockableBy(Mob mob) {
+		return true;
+	}
+
+	public void touchItem(ItemEntity itemEntity) {
+
+	}
+
+	public boolean canSwim() {
+		return false;
+	}
+
+	public boolean interact(Player player, Item item, int attackDir) {
+		return item.interact(player, this, attackDir);
+	}
+
+	public boolean use(Player player, int attackDir) {
+		return false;
+	}
+
+	public int getLightRadius() {
+		return 0;
 	}
 
 	protected boolean move2(int positionXAbsolute, int positionYAbsolute) {
@@ -159,29 +184,5 @@ public class Entity {
 
 	protected void touchedBy(Entity entity) {
 
-	}
-
-	public boolean isBlockableBy(Mob mob) {
-		return true;
-	}
-
-	public void touchItem(ItemEntity itemEntity) {
-
-	}
-
-	public boolean canSwim() {
-		return false;
-	}
-
-	public boolean interact(Player player, Item item, int attackDir) {
-		return item.interact(player, this, attackDir);
-	}
-
-	public boolean use(Player player, int attackDir) {
-		return false;
-	}
-
-	public int getLightRadius() {
-		return 0;
 	}
 }
