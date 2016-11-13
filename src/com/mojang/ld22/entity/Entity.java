@@ -29,9 +29,9 @@ public class Entity {
 		this.level = level;
 	}
 
-	public int positionX = 0, positionY = 0;
-	public int positionXRelative = 6;
-	public int positionYRelative = 6;
+	public int positionX = 0, positionY = 0; //personage position in the plane XY
+	public int positionXRelative = 6; // relative personagem postion in X
+	public int positionYRelative = 6; // relative personagem postion in Y
 
 	public boolean intersects(int positionX0, int positionY0, int positionX1, int positionY1) {
 		return !(positionX + positionXRelative < positionX0 || positionY + positionYRelative < positionY0
