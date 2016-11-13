@@ -142,6 +142,169 @@ public class Player extends Mob {
 			attackTime--;
 
 	}
+	public void render(Screen screen) {
+		int xt = 0;
+		int yt = 14;
+
+		if (direction == 1) {
+			xt += 2;
+		}
+
+		int flip1 = (walkedDistancy >> 3) & 1;
+		int flip2 = (walkedDistancy >> 3) & 1;
+
+		if (direction > 1) {
+			flip1 = 0;
+			flip2 = ((walkedDistancy >> 4) & 1);
+			if (direction == 2) {
+				flip1 = 1;
+			}
+			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
+		}
+
+		int xo = positionX - 8;
+		int yo = positionY - 11;
+		if (isSwimming()) {
+			yo += 4;
+			int waterColor = Color.get(-1, -1, 115, 335);
+			if (tickTime / 8 % 2 == 0) {
+				waterColor = Color.get(-1, 335, 5, 115);
+			} else {
+				// nothing to do
+			}
+			screen.render(xo + 0, yo + 3, 5 + 13 * 32, waterColor, 0);
+			screen.render(xo + 8, yo + 3, 5 + 13 * 32, waterColor, 1);
+		} else {
+			// nothing to do
+		}
+		if (attackTime > 0) {
+			switch (attackDir) {
+			case 0:
+				screen.render(xo + 0, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
+				screen.render(xo + 8, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
+				if (attackItem != null) {
+					attackItem.renderIcon(screen, xo + 4, yo + 8 + 4);
+				} else {
+					// nothing to do
+				}
+
+				break;
+			case 1:
+				screen.render(xo + 0, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
+				screen.render(xo + 8, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
+				if (attackItem != null) {
+					attackItem.renderIcon(screen, xo + 4, yo - 4);
+				} else {
+					// nothing to do
+				}
+
+				break;
+			case 2:
+				screen.render(xo - 4, yo, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
+				screen.render(xo - 4, yo + 8, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
+				if (attackItem != null) {
+					attackItem.renderIcon(screen, xo - 4, yo + 4);
+				} else {
+					// nothing to do
+				}
+
+				break;
+			case 3:
+				screen.render(xo + 8 + 4, yo, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
+				screen.render(xo + 8 + 4, yo + 8, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
+				if (attackItem != null) {
+					attackItem.renderIcon(screen, xo + 8 + 4, yo + 4);
+				} else {
+					// nothing to do
+				}
+				break;
+			}
+		} else {
+			// nothing to do
+		}
+
+		int col = Color.get(-1, 100, 220, 532);
+		if (hurtTime > 0) {
+			col = Color.get(-1, 555, 555, 555);
+		} else {
+			// nothing to do
+		}
+
+		if (activeItem instanceof FurnitureItem) {
+			yt += 2;
+		} else {
+			// nothing to do
+		}
+		screen.render(xo + 8 * flip1, yo + 0, xt + yt * 32, col, flip1);
+		screen.render(xo + 8 - 8 * flip1, yo + 0, xt + 1 + yt * 32, col, flip1);
+		if (!isSwimming()) {
+			screen.render(xo + 8 * flip2, yo + 8, xt + (yt + 1) * 32, col, flip2);
+			screen.render(xo + 8 - 8 * flip2, yo + 8, xt + 1 + (yt + 1) * 32, col, flip2);
+		} else {
+			// nothing to do
+		}
+
+		if (activeItem instanceof FurnitureItem) {
+			Furniture furniture = ((FurnitureItem) activeItem).getFurniture();
+			furniture.positionX = positionX;
+			furniture.positionY = yo;
+			furniture.render(screen);
+
+		} else {
+			// nothing to do
+		}
+	}
+
+	public void touchItem(ItemEntity itemEntity) {
+		itemEntity.take(this);
+		inventory.add(itemEntity.item);
+	}
+
+	public boolean canSwim() {
+		return true;
+	}
+
+	public boolean findStartPos(Level level) {
+		while (true) {
+			int x = random.nextInt(level.width);
+			int y = random.nextInt(level.height);
+			if (level.getTile(x, y) == Tile.grass) {
+				this.positionX = x * 16 + 8;
+				this.positionY = y * 16 + 8;
+				return true;
+			} else {
+				// nothing to do
+			}
+		}
+	}
+
+	public boolean payStamina(int cost) {
+		if (cost > stamina)
+			return false;
+		stamina -= cost;
+		return true;
+	}
+
+	public void changeLevel(int dir) {
+		game.scheduleLevelChange(dir);
+	}
+
+	public int getLightRadius() { // this method put light only on the player
+									// radius
+		int r = 2; // default radius if have a lantern
+		if (activeItem != null) {
+			if (activeItem instanceof FurnitureItem) {
+				int rr = ((FurnitureItem) activeItem).getFurniture().getLightRadius();
+				if (rr > r)
+					r = rr;
+			}
+		}
+		return r;
+	}
+	public void gameWon() {
+		level.player.invulnerableTime = 60 * 5;
+		game.won();
+	}
 
 	private boolean use() {
 		int yo = -2;
@@ -305,165 +468,7 @@ public class Player extends Mob {
 		return dmg;
 	}
 
-	public void render(Screen screen) {
-		int xt = 0;
-		int yt = 14;
-
-		if (direction == 1) {
-			xt += 2;
-		}
-
-		int flip1 = (walkedDistancy >> 3) & 1;
-		int flip2 = (walkedDistancy >> 3) & 1;
-
-		if (direction > 1) {
-			flip1 = 0;
-			flip2 = ((walkedDistancy >> 4) & 1);
-			if (direction == 2) {
-				flip1 = 1;
-			}
-			xt += 4 + ((walkedDistancy >> 3) & 1) * 2;
-		}
-
-		int xo = positionX - 8;
-		int yo = positionY - 11;
-		if (isSwimming()) {
-			yo += 4;
-			int waterColor = Color.get(-1, -1, 115, 335);
-			if (tickTime / 8 % 2 == 0) {
-				waterColor = Color.get(-1, 335, 5, 115);
-			} else {
-				// nothing to do
-			}
-			screen.render(xo + 0, yo + 3, 5 + 13 * 32, waterColor, 0);
-			screen.render(xo + 8, yo + 3, 5 + 13 * 32, waterColor, 1);
-		} else {
-			// nothing to do
-		}
-		if (attackTime > 0) {
-			switch (attackDir) {
-			case 0:
-				screen.render(xo + 0, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
-				screen.render(xo + 8, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
-				if (attackItem != null) {
-					attackItem.renderIcon(screen, xo + 4, yo + 8 + 4);
-				} else {
-					// nothing to do
-				}
-
-				break;
-			case 1:
-				screen.render(xo + 0, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
-				screen.render(xo + 8, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
-				if (attackItem != null) {
-					attackItem.renderIcon(screen, xo + 4, yo - 4);
-				} else {
-					// nothing to do
-				}
-
-				break;
-			case 2:
-				screen.render(xo - 4, yo, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
-				screen.render(xo - 4, yo + 8, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
-				if (attackItem != null) {
-					attackItem.renderIcon(screen, xo - 4, yo + 4);
-				} else {
-					// nothing to do
-				}
-
-				break;
-			case 3:
-				screen.render(xo + 8 + 4, yo, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
-				screen.render(xo + 8 + 4, yo + 8, 7 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
-				if (attackItem != null) {
-					attackItem.renderIcon(screen, xo + 8 + 4, yo + 4);
-				} else {
-					// nothing to do
-				}
-				break;
-			}
-		} else {
-			// nothing to do
-		}
-
-		int col = Color.get(-1, 100, 220, 532);
-		if (hurtTime > 0) {
-			col = Color.get(-1, 555, 555, 555);
-		} else {
-			// nothing to do
-		}
-
-		if (activeItem instanceof FurnitureItem) {
-			yt += 2;
-		} else {
-			// nothing to do
-		}
-		screen.render(xo + 8 * flip1, yo + 0, xt + yt * 32, col, flip1);
-		screen.render(xo + 8 - 8 * flip1, yo + 0, xt + 1 + yt * 32, col, flip1);
-		if (!isSwimming()) {
-			screen.render(xo + 8 * flip2, yo + 8, xt + (yt + 1) * 32, col, flip2);
-			screen.render(xo + 8 - 8 * flip2, yo + 8, xt + 1 + (yt + 1) * 32, col, flip2);
-		} else {
-			// nothing to do
-		}
-
-		if (activeItem instanceof FurnitureItem) {
-			Furniture furniture = ((FurnitureItem) activeItem).getFurniture();
-			furniture.positionX = positionX;
-			furniture.positionY = yo;
-			furniture.render(screen);
-
-		} else {
-			// nothing to do
-		}
-	}
-
-	public void touchItem(ItemEntity itemEntity) {
-		itemEntity.take(this);
-		inventory.add(itemEntity.item);
-	}
-
-	public boolean canSwim() {
-		return true;
-	}
-
-	public boolean findStartPos(Level level) {
-		while (true) {
-			int x = random.nextInt(level.width);
-			int y = random.nextInt(level.height);
-			if (level.getTile(x, y) == Tile.grass) {
-				this.positionX = x * 16 + 8;
-				this.positionY = y * 16 + 8;
-				return true;
-			} else {
-				// nothing to do
-			}
-		}
-	}
-
-	public boolean payStamina(int cost) {
-		if (cost > stamina)
-			return false;
-		stamina -= cost;
-		return true;
-	}
-
-	public void changeLevel(int dir) {
-		game.scheduleLevelChange(dir);
-	}
-
-	public int getLightRadius() { // this method put light only on the player
-									// radius
-		int r = 2; // default radius if have a lantern
-		if (activeItem != null) {
-			if (activeItem instanceof FurnitureItem) {
-				int rr = ((FurnitureItem) activeItem).getFurniture().getLightRadius();
-				if (rr > r)
-					r = rr;
-			}
-		}
-		return r;
-	}
+	
 
 	protected void die() {
 		super.die();
@@ -504,8 +509,5 @@ public class Player extends Mob {
 		invulnerableTime = 30;
 	}
 
-	public void gameWon() {
-		level.player.invulnerableTime = 60 * 5;
-		game.won();
-	}
+	
 }
