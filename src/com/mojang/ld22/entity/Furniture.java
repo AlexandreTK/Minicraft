@@ -66,6 +66,10 @@ public class Furniture extends Entity {
 		return true;
 	}
 
+	public void take(Player player) {
+		shouldTake = player;
+	}
+
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player && pushTime == 0) {
 			pushDirection = ((Player) entity).direction;
@@ -73,9 +77,5 @@ public class Furniture extends Entity {
 		} else {
 			// nothing to do
 		}
-	}
-
-	public void take(Player player) {
-		shouldTake = player;
 	}
 }
