@@ -32,19 +32,7 @@ public class Inventory {
 		}
 	}
 
-	private ResourceItem findResource(Resource resource) {
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) instanceof ResourceItem) {
-				ResourceItem hasItem = (ResourceItem) items.get(i);
-
-				if (hasItem.getResource() == resource)
-					return hasItem;
-			} else {
-				// nothing to do
-			}
-		}
-		return null;
-	}
+	
 
 	public boolean hasResources(Resource resource, int count) {
 		ResourceItem resourceItem = findResource(resource);
@@ -88,5 +76,18 @@ public class Inventory {
 			return countItems;
 		}
 		return 0;
+	}
+	private ResourceItem findResource(Resource resource) {
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i) instanceof ResourceItem) {
+				ResourceItem hasItem = (ResourceItem) items.get(i);
+
+				if (hasItem.getResource() == resource)
+					return hasItem;
+			} else {
+				// nothing to do
+			}
+		}
+		return null;
 	}
 }
