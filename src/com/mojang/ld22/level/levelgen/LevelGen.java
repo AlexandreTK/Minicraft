@@ -86,16 +86,34 @@ public class LevelGen {
 				getTile = result[0][i];
 				tileCount[getTile & 0xff]++;
 			}
-			if (tileCount[Tile.rock.id & 0xff] < MAX_TILES) 
+			if (tileCount[Tile.rock.id & 0xff] < MAX_TILES){ 
 				continue;
-			if (tileCount[Tile.sand.id & 0xff] < MAX_TILES) 
+			} else {
+				//Do nothing.
+			}
+			if (tileCount[Tile.sand.id & 0xff] < MAX_TILES) {
 				continue;
-			if (tileCount[Tile.grass.id & 0xff] < MAX_TILES) 
+			} else {
+				//Do nothing.
+			}
+			
+			if (tileCount[Tile.grass.id & 0xff] < MAX_TILES) {
 				continue;
-			if (tileCount[Tile.tree.id & 0xff] < MAX_TILES) 
+			} else {
+				//Do nothing.
+			}	
+				
+			if (tileCount[Tile.tree.id & 0xff] < MAX_TILES) {
 				continue;
-			if (tileCount[Tile.stairsDown.id & 0xff] < STAIRS_MAX_TAIL) 
+			} else {
+				//Do nothing.
+			}
+			
+			if (tileCount[Tile.stairsDown.id & 0xff] < STAIRS_MAX_TAIL) {
 				continue;
+			} else {
+				//Do nothing.
+			}
 
 			return result;
 
@@ -112,14 +130,30 @@ public class LevelGen {
 			for (int i = 0; i < w * h; i++) {
 				tileCount[result[0][i] & 0xff]++;
 			}
-			if (tileCount[Tile.rock.id & 0xff] < MAX_TILES) 
+			
+			if (tileCount[Tile.rock.id & 0xff] < MAX_TILES) {
 				continue;
-			if (tileCount[Tile.dirt.id & 0xff] < MAX_TILES) 
+			} else {
+				//Do nothing.
+			}
+			
+			if (tileCount[Tile.dirt.id & 0xff] < MAX_TILES) {
 				continue;
-			if (tileCount[(Tile.ironOre.id & 0xff) + depth - 1] < 20) 
+			} else {
+				//Do nothing.
+			}
+			
+			if (tileCount[(Tile.ironOre.id & 0xff) + depth - 1] < 20) {
 				continue;
-			if (depth < 3) if (tileCount[Tile.stairsDown.id & 0xff] < STAIRS_MAX_TAIL) 
+			} else {
+				//Do nothing.
+			}
+			
+			if (depth < 3) if (tileCount[Tile.stairsDown.id & 0xff] < STAIRS_MAX_TAIL) {
 				continue;
+			} else {
+				//Do nothing.
+			}
 
 			return result;
 
@@ -136,9 +170,19 @@ public class LevelGen {
 			for (int i = 0; i < w * h; i++) {
 				tileCount[result[0][i] & 0xff]++;
 			}
-			if (tileCount[Tile.cloud.id & 0xff] < 2000) continue;
-			if (tileCount[Tile.stairsDown.id & 0xff] < 2) continue;
-
+			
+			if (tileCount[Tile.cloud.id & 0xff] < 2000){
+				continue;
+			} else {
+				//Do nothing.
+			}
+			
+			if (tileCount[Tile.stairsDown.id & 0xff] < 2) {
+				continue;
+			} else {
+				//Do nothing.
+			}
+			
 			return result;
 
 		} while (true);
