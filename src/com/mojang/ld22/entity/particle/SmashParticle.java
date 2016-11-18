@@ -1,5 +1,8 @@
 package com.mojang.ld22.entity.particle;
 
+//File: SmashParticle.java
+//Objective: Render the small particles of any entity.
+
 import com.mojang.ld22.entity.Entity;
 import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
