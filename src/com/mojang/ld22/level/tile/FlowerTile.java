@@ -23,7 +23,7 @@ public class FlowerTile extends GrassTile {
 		super.render(screen, level, x, y);
 
 		int data = level.getData(x, y);
-		int shape = (data / 16) % 2;
+		int shape = (int) (data / 16) % 2;
 		int flowerCol = Color.get(10, level.grassColor, 555, 440);
 
 		if (shape == 0) screen.render(x * 16 + 0, y * 16 + 0, 1 + 1 * 32, flowerCol, 0);
