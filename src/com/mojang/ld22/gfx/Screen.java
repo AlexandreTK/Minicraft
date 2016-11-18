@@ -95,9 +95,9 @@ public class Screen {
 				} else {
 					// Do nothing
 				}
-				int xTile = tile % 32;
-				int yTile = tile / 32;
-				int toffs = xTile * 8 + yTile * 8 * sheet.width;
+				int xTile = (int) tile % 32;
+				int yTile = (int) tile / 32;
+				int toffs = (int) xTile * 8 + yTile * 8 * sheet.width;
 				int col = (colors >> (sheet.pixels[xs + ys * sheet.width + toffs] * 8)) & 255;
 				if (col < 255) {
 					pixels[(x + xp) + (y + yp) * width] = col;
