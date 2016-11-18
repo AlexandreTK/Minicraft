@@ -6,6 +6,7 @@
 
 package com.mojang.ld22.item;
 
+import com.mojang.ld22.TestLog;
 import com.mojang.ld22.entity.Furniture;
 import com.mojang.ld22.entity.ItemEntity;
 import com.mojang.ld22.entity.Player;
@@ -18,7 +19,8 @@ import com.mojang.ld22.level.tile.Tile;
 public class FurnitureItem extends Item {
 	private Furniture furniture = null;
 	private boolean placed = false;
-
+	TestLog logger = new TestLog();
+	
 	public FurnitureItem(Furniture furniture) {
 		this.furniture = furniture;
 	}
@@ -35,19 +37,21 @@ public class FurnitureItem extends Item {
 		screen.render(x, y, getSprite(), getColor(), 0);
 	}
 
-	public void renderInventory(Screen screen, int x, int y) {
+	public void renderInventory(Screen screen, int x, int y){
 		screen.render(x, y, getSprite(), getColor(), 0);
 		Font.draw(furniture.name, screen, x + 8, y, Color.get(-1, 555, 555, 555));
+		TestLog.logger.info("The inventory was rendered !");
 	}
 
 	public void onTake(ItemEntity itemEntity) {
 	}
 
 	public boolean canAttack() {
+		TestLog.logger.info("The player can attack ! ");
 		return false;
 	}
 
-	public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
+	public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir){
 		if (tile.mayPass(level, xt, yt, furniture)) {
 			furniture.positionX = (int)xt * 16 + 8;
 			furniture.positionY = (int)yt * 16 + 8;
