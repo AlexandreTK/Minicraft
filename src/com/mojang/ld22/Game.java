@@ -93,7 +93,9 @@ public class Game extends Canvas implements Runnable {
 		this.menu = menu;
 		if (menu != null) {
 			menu.init(this, input);
+			TestLog.logger.info("Menu started !");
 		} else {
+			TestLog.logger.info("Menu start failed!");
 			// Do nothing
 		}
 	}
@@ -131,6 +133,7 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < maxLevel; i++) {
 			levels[i].trySpawn(5000);
 		}
+		TestLog.logger.info("The game was reset !");
 		
 	}
 
