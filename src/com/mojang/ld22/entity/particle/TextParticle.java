@@ -1,5 +1,8 @@
 package com.mojang.ld22.entity.particle;
 
+//File : TextParticle.java
+//Objective: Render the thext particles on the game.
+
 import com.mojang.ld22.entity.Entity;
 import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Font;
