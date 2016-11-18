@@ -12,7 +12,8 @@ import com.mojang.ld22.level.tile.Tile;
 public class LevelGen {
 	private static final Random random = new Random();
 	public double[] values;
-	private int w, h;
+	private int w = 0;
+	private int h = 0;
 	private final static int MAX_TILES = 100;
 	private final static int STAIRS_MAX_TAIL = 2;
 
