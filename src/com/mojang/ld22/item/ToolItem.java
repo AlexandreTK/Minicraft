@@ -8,6 +8,7 @@ package com.mojang.ld22.item;
 
 import java.util.Random;
 
+import com.mojang.ld22.TestLog;
 import com.mojang.ld22.entity.Entity;
 import com.mojang.ld22.entity.ItemEntity;
 import com.mojang.ld22.gfx.Color;
@@ -21,7 +22,7 @@ public class ToolItem extends Item {
 	public static final String[] LEVEL_NAMES = { //
 	"Wood", "Rock", "Iron", "Gold", "Gem"//
 	};
-
+	
 	public static final int[] LEVEL_COLORS = {//
 	Color.get(-1, 100, 321, 431),//
 			Color.get(-1, 100, 321, 111),//
@@ -29,7 +30,7 @@ public class ToolItem extends Item {
 			Color.get(-1, 100, 321, 550),//
 			Color.get(-1, 100, 321, 055),//
 	};
-
+	TestLog logger = new TestLog();
 	public ToolType type = null;
 	public int level = 0;
 
@@ -70,11 +71,13 @@ public class ToolItem extends Item {
 
 	public int getAttackDamageBonus(Entity e) {
 		if (type == ToolType.axe) {
+			TestLog.logger.info("This weapon is an axe ! Bonus attack damage calculation...");
 			int attackDamageBonus = (level + 1) * 2 + random.nextInt(4);
 			return attackDamageBonus;
 		}
 		
 		if (type == ToolType.sword) {
+			TestLog.logger.info("This weapon is an sword ! Bonus attack damage calculation...");
 			int attackDamageBonus = (level + 1) * 3 + random.nextInt(2 + level * level * 2);
 			return attackDamageBonus;
 		}
