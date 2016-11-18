@@ -26,7 +26,7 @@ public class Sound {
 		}
 	}
 	
-	private Sound(String name) {
+	private Sound(final String name) {
 		try {
 			clip = Applet.newAudioClip(Sound.class.getResource(name));
 		} catch (Throwable e) {
