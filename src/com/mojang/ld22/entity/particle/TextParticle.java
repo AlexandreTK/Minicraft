@@ -7,10 +7,14 @@ import com.mojang.ld22.gfx.Screen;
 
 public class TextParticle extends Entity {
 	private String msg;
-	private int col;
+	private int col = 0;
 	private int time = 0;
-	public double xa, ya, za;
-	public double xx, yy, zz;
+	public double xa = 0;
+	public double ya = 0;
+	public double za = 0;
+	public double xx = 0;
+	public double yy = 0;
+	public double zz = 0;
 
 	public TextParticle(String msg, int x, int y, int col) {
 		this.msg = msg;
