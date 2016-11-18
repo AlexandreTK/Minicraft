@@ -33,7 +33,10 @@ public class TextParticle extends Entity {
 		time++;
 		if (time > 60) {
 			remove();
+		} else {
+			//Do nothing.
 		}
+		
 		xx += xa;
 		yy += ya;
 		zz += za;
@@ -42,6 +45,8 @@ public class TextParticle extends Entity {
 			za *= -0.5;
 			xa *= 0.6;
 			ya *= 0.6;
+		}else{
+			//Do nothing;
 		}
 		za -= 0.15;
 		try{
