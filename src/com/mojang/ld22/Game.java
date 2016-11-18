@@ -1,8 +1,5 @@
-/*
-* Objective:  Game Management - Game main methods and attributes.
-* Last Modification: 04/09/2016.
-* Modifier: Alexandre T Kryonidis.
-*/
+//File: Game.java
+//Objective: Main class aplicattion, starting the game.
 
 
 package com.mojang.ld22;
