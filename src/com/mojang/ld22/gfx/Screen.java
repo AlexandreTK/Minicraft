@@ -11,8 +11,8 @@ public class Screen {
 	 * = new int[MAP_WIDTH * MAP_WIDTH]; public int[] databits = new
 	 * int[MAP_WIDTH * MAP_WIDTH];
 	 */
-	public int xOffset;
-	public int yOffset;
+	public int xOffset = 0;
+	public int yOffset = 0;
 
 	public static final int BIT_MIRROR_X = 0x01;
 	public static final int BIT_MIRROR_Y = 0x02;
