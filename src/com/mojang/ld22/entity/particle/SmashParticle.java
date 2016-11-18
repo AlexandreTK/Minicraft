@@ -18,6 +18,8 @@ public class SmashParticle extends Entity {
 		time++;
 		if (time > 10) {
 			remove();
+		} else {
+			//Do nothing.
 		}
 	}
 
