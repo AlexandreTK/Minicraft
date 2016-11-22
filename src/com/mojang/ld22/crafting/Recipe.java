@@ -13,6 +13,9 @@ import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.screen.ListItem;
 
 public abstract class Recipe implements ListItem {
+
+	public boolean canCraft = false;
+	
 	public List<Item> costs = new ArrayList<Item>();
 	
 	public Item resultTemplate;
@@ -27,7 +30,6 @@ public abstract class Recipe implements ListItem {
 		return this;
 	}
 
-	public boolean canCraft = false;
 	
 	public void checkCanCraft(final Player player) {
 		assert(player != null): "parameter player is null";

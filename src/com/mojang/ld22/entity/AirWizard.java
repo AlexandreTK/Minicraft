@@ -6,18 +6,18 @@ import com.mojang.ld22.sound.Sound;
 
 public class AirWizard extends Mob {
 
-	public AirWizard() {
-		positionX = random.nextInt(64 * 16);
-		positionY = random.nextInt(64 * 16);
-		health = maxHealth = 2000;
-	}
-
 	private int positionXAbsolute = 0;
 	private int positionYAbsolute = 0;
 	private int randomWalkTime = 0; 
 	private int attackDelay = 0;  // time that the player need to wait for attack again
 	private int attackTime = 0; //time that the person are attacking something
 	private int attackType = 0; // the type of attack, or normal ,or with some weapon 
+
+	public AirWizard() {
+		positionX = random.nextInt(64 * 16);
+		positionY = random.nextInt(64 * 16);
+		health = maxHealth = 2000;
+	}
 
 	public void tick() {
 		super.tick();
