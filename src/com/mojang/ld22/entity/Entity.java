@@ -9,6 +9,14 @@ import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
 public class Entity {
+
+	public boolean isRemoved = false;
+	public Level level = null;
+	public int positionX = 0, positionY = 0; // personage position in the plane XY
+	public int positionXRelative = 6; // relative personagem postion in X
+	public int positionYRelative = 6; // relative personagem postion in Y
+
+
 	protected final Random random = new Random();
 
 	public void render(Screen screen) {
@@ -17,22 +25,16 @@ public class Entity {
 	public void tick() {
 	}
 
-	public boolean isRemoved;
 
 	public void remove() {
 		isRemoved = true;
 	}
 
-	public Level level;
 
 	public final void init(Level level) {
 		this.level = level;
 	}
 
-	public int positionX = 0, positionY = 0; // personage position in the plane
-												// XY
-	public int positionXRelative = 6; // relative personagem postion in X
-	public int positionYRelative = 6; // relative personagem postion in Y
 
 	public boolean intersects(int positionX0, int positionY0, int positionX1, int positionY1) {
 		return !(positionX + positionXRelative < positionX0 || positionY + positionYRelative < positionY0
