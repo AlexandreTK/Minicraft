@@ -338,7 +338,11 @@ public class Player extends Mob {
 
 		return false;
 	}
-
+	/**
+	     *this class is about power attack of players
+	     *defining ranger and where his gonna attack (position in X and Y)
+	     *
+	    */
 	private void attack() {
 		walkedDistancy += 8;
 		attackDir = direction;
