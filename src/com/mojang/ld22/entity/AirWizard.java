@@ -149,7 +149,10 @@ public class AirWizard extends Mob {
 		}
 	}
 
-
+/**
+ * this class is about the effects in the screen
+ * like personage movement, distancy , color
+ */
 
 	public void render(Screen screen) {
 		int xt = 0;
