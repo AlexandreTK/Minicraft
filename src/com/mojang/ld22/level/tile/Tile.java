@@ -75,7 +75,7 @@ public class Tile {
 	public void steppedOn(Level level, int xt, int yt, Entity entity) {
 	}
 
-	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
+	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) throws Exception {
 		return false;
 	}
 
