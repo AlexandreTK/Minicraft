@@ -35,22 +35,22 @@ public class DeadMenu extends Menu {
 		String timeString = "";
 		if (hours > 0) {
 			if(minutes < 10){
-				timeString = hours + "h" + "0" + minutes + "m";
+				timeString = Integer.toString(hours) + "h" + "0" + Integer.toString(minutes) + "m";
 			}else{
-				timeString = hours + "h" + "" + minutes + "m";
+				timeString = Integer.toString(hours) + "h" + "" + Integer.toString(minutes) + "m";
 			}
 		} else {
 			if(seconds < 10){
-				timeString = minutes + "m " + "0" + seconds + "s";
+				timeString = Integer.toString(minutes) + "m " + "0" + Integer.toString(seconds) + "s";
 			}else{
-				timeString = minutes + "m " + "" + seconds + "s";
+				timeString = Integer.toString(minutes) + "m " + "" + Integer.toString(seconds) + "s";
 			}
 		}
 		
 		Font.draw("Time:", screen, 2 * 8, 5 * 8, Color.get(-1, 555, 555, 555));
 		Font.draw(timeString, screen, (2 + 5) * 8, 5 * 8, Color.get(-1, 550, 550, 550));
 		Font.draw("Score:", screen, 2 * 8, 6 * 8, Color.get(-1, 555, 555, 555));
-		Font.draw("" + game.player.score, screen, (2 + 6) * 8, 6 * 8, Color.get(-1, 550, 550, 550));
+		Font.draw(Integer.toString(game.player.score), screen, (2 + 6) * 8, 6 * 8, Color.get(-1, 550, 550, 550));
 		Font.draw("Press C to lose", screen, 2 * 8, 8 * 8, Color.get(-1, 333, 333, 333));
 	}
 }
