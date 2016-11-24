@@ -32,62 +32,78 @@ public class Inventory {
 		}
 	}
 
-	
 
 	public boolean hasResources(Resource resource, int count) {
 		ResourceItem resourceItem = findResource(resource);
-
-		if (resourceItem == null)
-			return false;
-
-		return resourceItem.getCount() >= count;
+		boolean returnFlag = false;
+		
+		if (resourceItem != null) {
+			returnFlag = (resourceItem.getCount() >= count);
+		} else {
+			returnFlag = false;
+		}
+		
+		assert(returnFlag == true ||  returnFlag == false);
+		return returnFlag;
 	}
+
 
 	public boolean removeResource(Resource resource, int count) {
 		ResourceItem resourceItem = findResource(resource);
+		boolean returnFlag = false;
 
-		if (resourceItem == null)
-			return false;
+		if (resourceItem != null) {
 
-		if (resourceItem.getCount() < count)
-			return false;
-
-		resourceItem.lessSetCount(count); // 
-
-		if (resourceItem.getCount() <= 0)
-			items.remove(resourceItem);
-
-		return true;
+			if (resourceItem.getCount() < count) {
+				returnFlag = false;
+			} else {
+				resourceItem.lessSetCount(count);
+	
+				if (resourceItem.getCount() <= 0)
+					items.remove(resourceItem);
+				returnFlag = true;
+			}
+		} else {
+			returnFlag = false;
+		}
+		assert(returnFlag == true ||  returnFlag == false);
+		return returnFlag;
 	}
 
+
 	public int countItems(Item item) { 
+		
+		int countItems = 0;
 		if (item instanceof ResourceItem) {
 			ResourceItem resourceItem = findResource(((ResourceItem) item).getResource());
 
 			if (resourceItem != null)
-				return resourceItem.getCount();//item counter on inventory
+				countItems = resourceItem.getCount();//item counter on inventory
 		} else {
-			int countItems = 0;
 
 			for (int i = 0; i < items.size(); i++) {
 				if (items.get(i).matches(item))
 					countItems++;
 			}
-			return countItems;
 		}
-		return 0;
-	}
+		assert(countItems >= 0);
+		return countItems;
+	}	
+	
+	
 	private ResourceItem findResource(Resource resource) {
+		ResourceItem itemReturned = null;
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i) instanceof ResourceItem) {
 				ResourceItem hasItem = (ResourceItem) items.get(i);
 
 				if (hasItem.getResource() == resource)
-					return hasItem;
+					itemReturned = hasItem;
 			} else {
 				// nothing to do
 			}
 		}
-		return null;
+		assert(itemReturned instanceof ResourceItem || itemReturned == null);
+		return itemReturned;
 	}
 }

@@ -299,6 +299,7 @@ public class Player extends Mob {
 					r = rr;
 			}
 		}
+		assert(r >= 0): "Radius should be positive";
 		return r;
 	}
 	public void gameWon() {
@@ -469,6 +470,7 @@ public class Player extends Mob {
 		} else {
 			// nothing to do
 		}
+		assert(dmg >= 0) : "Damage must be positive";
 		return dmg;
 	}
 
