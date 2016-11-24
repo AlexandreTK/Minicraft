@@ -106,9 +106,14 @@ public class CloudTile extends Tile {
 		return true;
 	}
 
-	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
+	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) throws Exception {
 		if (item instanceof ToolItem) {
 			ToolItem tool = (ToolItem) item;
+			if(tool == null){
+			throw new Exception("Null item");
+			}else {
+	 				//NOTHINHG TO DO
+		 			 }
 			if (tool.type == ToolType.shovel) {
 				if (player.payStamina(5)) {
 					// level.setTile(xt, yt, Tile.infiniteFall, 0);
