@@ -20,6 +20,12 @@ public class TextParticle extends Entity {
 	public double zz = 0;
 
 	public TextParticle(String msg, int x, int y, int col) {
+		// Secure constructor
+		assert msg != null : "Message cannot be null";
+		assert x >= 0 : "Position x must be positive";
+		assert y >= 0 : "Position y must be positive";
+		assert col >= 0 : "Color value must be positive";
+		
 		this.msg = msg;
 		this.positionX = x;
 		this.positionY = y;
@@ -63,6 +69,9 @@ public class TextParticle extends Entity {
 	}
 
 	public void render(Screen screen) {
+		// Secure method
+		assert screen != null : "Screen cannot be null";
+		
 //		Font.draw(msg, screen, x - msg.length() * 4, y, Color.get(-1, 0, 0, 0));
 		Font.draw(msg, screen, positionX - msg.length() * 4 + 1, positionY - (int) (zz) + 1, Color.get(-1, 0, 0, 0));
 		Font.draw(msg, screen, positionX - msg.length() * 4, positionY - (int) (zz), col);
