@@ -18,6 +18,10 @@ public class LevelGen {
 	private final static int STAIRS_MAX_TAIL = 2;
 
 	public LevelGen(int w, int h, int featureSize) {
+		// Secure constructor
+		assert (w >= 0) : "Width must be positive";
+		assert (h >= 0) : "Height must be positive";
+		
 		this.w = w;
 		this.h = h;
 
@@ -67,14 +71,26 @@ public class LevelGen {
 	}
 
 	private double sample(int x, int y) {
+		// Secure method
+		assert (x >= 0) : "x position must be positive";
+		assert (y >= 0) : "y position must be positive";
+		
 		return values[(x & (w - 1)) + (y & (h - 1)) * w];
 	}
 
 	private void setSample(int x, int y, double value) {
+		// Secure method
+		assert (x >= 0) : "x position must be positive";
+		assert (y >= 0) : "y position must be positive";
+		
 		values[(x & (w - 1)) + (y & (h - 1)) * w] = value;
 	}
 
 	public static byte[][] createAndValidateTopMap(int w, int h) {
+		// Secure method
+		assert (w >= 0) : "Width must be positive";
+		assert (h >= 0) : "Height must be positive";
+				
 		do {
 			int attempt = 0;
 			
@@ -121,6 +137,10 @@ public class LevelGen {
 	}
 
 	public static byte[][] createAndValidateUndergroundMap(int w, int h, int depth) {
+		// Secure method
+		assert (w >= 0) : "Width must be positive";
+		assert (h >= 0) : "Height must be positive";
+		
 		int attempt = 0;
 		do {
 			byte[][] result = createUndergroundMap(w, h, depth);
@@ -161,6 +181,10 @@ public class LevelGen {
 	}
 
 	public static byte[][] createAndValidateSkyMap(int w, int h) {
+		// Secure method
+		assert (w >= 0) : "Width must be positive";
+		assert (h >= 0) : "Height must be positive";
+		
 		int attempt = 0;
 		do {
 			byte[][] result = createSkyMap(w, h);
@@ -189,6 +213,10 @@ public class LevelGen {
 	}
 
 	private static byte[][] createTopMap(int w, int h) {
+		// Secure method
+		assert (w >= 0) : "Width must be positive";
+		assert (h >= 0) : "Height must be positive";
+		
 		LevelGen mnoise1 = new LevelGen(w, h, 16);
 		LevelGen mnoise2 = new LevelGen(w, h, 16);
 		LevelGen mnoise3 = new LevelGen(w, h, 16);
@@ -308,6 +336,10 @@ public class LevelGen {
 	}
 
 	private static byte[][] createUndergroundMap(int w, int h, int depth) {
+		// Secure method
+		assert (w >= 0) : "Width must be positive";
+		assert (h >= 0) : "Height must be positive";
+		
 		LevelGen mnoise1 = new LevelGen(w, h, 16);
 		LevelGen mnoise2 = new LevelGen(w, h, 16);
 		LevelGen mnoise3 = new LevelGen(w, h, 16);
@@ -400,6 +432,10 @@ public class LevelGen {
 	}
 
 	private static byte[][] createSkyMap(int w, int h) {
+		// Secure method
+		assert (w >= 0) : "Width must be positive";
+		assert (h >= 0) : "Height must be positive";
+		
 		LevelGen noise1 = new LevelGen(w, h, 8);
 		LevelGen noise2 = new LevelGen(w, h, 8);
 
