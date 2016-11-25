@@ -63,7 +63,7 @@ public class Tile {
 		return 0;
 	}
 
-	public void hurt(Level level, int x, int y, Mob source, int dmg, int attackDir) throws Exception {
+	public void hurt(Level level, int x, int y, Mob source, int dmg, int attackDir) {
 	}
 
 	public void bumpedInto(Level level, int xt, int yt, Entity entity) {

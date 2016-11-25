@@ -47,14 +47,10 @@ public class FlowerTile extends GrassTile {
 		return false;
 	}
 
-	public void hurt(Level level, int x, int y, Mob source, int dmg, int attackDir) throws Exception {
+	public void hurt(Level level, int x, int y, Mob source, int dmg, int attackDir) {
 		int count = random.nextInt(2) + 1;
 		for (int i = 0; i < count; i++) {
-			if(level == null){
-				 				throw new Exception("Null item");
-				 			}else {
-				 				//NOTHINHG TO DO
-				 			 }
+		
 			level.add(new ItemEntity(new ResourceItem(Resource.flower), x * 16 + random.nextInt(10) + 3, y * 16 + random.nextInt(10) + 3));
 		}
 		level.setTile(x, y, Tile.grass, 0);
