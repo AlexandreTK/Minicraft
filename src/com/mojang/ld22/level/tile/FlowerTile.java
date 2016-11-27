@@ -48,6 +48,7 @@ public class FlowerTile extends GrassTile {
 	}
 
 	public void hurt(Level level, int x, int y, Mob source, int dmg, int attackDir) {
+		assert(source != null): "parameter source is null";
 		int count = random.nextInt(2) + 1;
 		for (int i = 0; i < count; i++) {
 		
