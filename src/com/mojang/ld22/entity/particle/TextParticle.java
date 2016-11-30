@@ -77,4 +77,9 @@ public class TextParticle extends Entity {
 		Font.draw(msg, screen, positionX - msg.length() * 4, positionY - (int) (zz), col);
 	}
 
+	//Free object's memory to make it easier for the garbage collector get it
+	public void finalizeObject() throws Throwable
+	{
+		this.finalize();
+	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mojang.ld22.Game;
 import com.mojang.ld22.InputHandler;
+import com.mojang.ld22.TestLog;
 import com.mojang.ld22.entity.particle.TextParticle;
 import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
@@ -479,6 +480,13 @@ public class Player extends Mob {
 	protected void die() {
 		super.die();
 		Sound.playerDeath.play();
+		
+		try {
+			super.finalize();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the player");
+			assert(false);
+		}
 	}
 
 	protected void touchedBy(Entity entity) {
@@ -494,7 +502,8 @@ public class Player extends Mob {
 			return;
 
 		Sound.playerHurt.play();
-		level.add(new TextParticle("" + damage, positionX, positionY, Color.get(-1, 504, 504, 504)));
+		TextParticle textParticle = new TextParticle("" + damage, positionX, positionY, Color.get(-1, 504, 504, 504));
+		level.add(textParticle);
 		health -= damage;
 		switch (attackDir) {
 		case 0:
@@ -510,9 +519,17 @@ public class Player extends Mob {
 			positionXKnockback = +6;
 			break;
 		}
-
 		hurtTime = 10;
 		invulnerableTime = 30;
+		
+		try {
+			// finalizeObject is calling finalize() in the textParticle class
+			textParticle.finalizeObject();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the Players TextParticle");
+			assert(false);
+		}
+
 	}
 
 	
