@@ -34,6 +34,14 @@ public class Zombie extends Mob {
 	 * @return none.
 	 */
 	public Zombie(int level) {
+		
+		if(lvl < 0){
+			TestLog.logger.severe("Error level is negative - Zombie");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
 		this.lvl = level;
 		positionX = random.nextInt(64 * 16); // Zombie X position will be
 												// located between 0 and (64 *
@@ -134,7 +142,14 @@ public class Zombie extends Mob {
 	 * @return none.
 	 */
 	public void render(Screen screen) {
-
+		
+		if(screen == null){
+			TestLog.logger.severe("Error screen is null - Zombie");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
 		// This variables indicate which visual element will be rendered in the
 		// screen
 		int elementXPositionSpriteSheet = 0;
@@ -239,6 +254,14 @@ public class Zombie extends Mob {
 	 * @return none.
 	 */
 	protected void touchedBy(Entity entity) {
+		
+		if(entity == null){
+			TestLog.logger.severe("Error entity is null - Zombie");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
 		// Hurts the Player, if it touches the Zombie
 		if (entity instanceof Player) {
 			entity.hurt(this, lvl + 1, direction);
