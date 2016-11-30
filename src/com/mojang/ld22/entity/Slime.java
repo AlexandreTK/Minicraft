@@ -119,45 +119,7 @@ public class Slime extends Mob {
 			//nothing to do
 		}
 	}
-	/**
-	 * This method is used to control how the game behaves when a Slime dies. That is, 
-	 * when it's attacked by the player and its life is decreased to zero.
-	 * 
-	 * Items are dropped and the player score increases.
-	 * 
-	 * @param none.
-	 * @return none.
-	 */
-	protected void die() {
-		super.die();
-
-		// Indicates the number of items will be dropped
-		int count = random.nextInt(2) + 1; // value between 1 and 2
-		for (int i = 0; i < count; i++) {
-			// When the Slime dies new items are created and dropped.
-			ResourceItem resourceItem = new ResourceItem(Resource.slime);
-			int resourcePositionX = positionX + random.nextInt(11) - 5;// Item dropped at the position X of the player +- 5
-			int resourcePositionY = positionY + random.nextInt(11) - 5;// Item dropped at the position Y of the player +- 5
-			level.add(new ItemEntity(resourceItem, resourcePositionX, resourcePositionY));
-		}
-
-		// Increase player score
-		if (level.player != null) {
-			level.player.score += 25*lvl;
-		}else{
-			//nothing to do
-		}
-		TestLog.logger.info("Slime died...");
-
-		try {
-			super.finalize();
-		} catch (Throwable e) {
-			TestLog.logger.severe("Error finalizing the slime");
-			assert(false);
-		}
-		
-	}
-
+	
 	/**
 	 * This method is used to control how the game behaves when a Slime is rendered.
 	 * It indicates what visual element should be rendered and at which position.
@@ -248,6 +210,47 @@ public class Slime extends Mob {
 		screen.render(distFromPlayerX + 8, distFromPlayerY + 8, elementXPositionSpriteSheet + 1 + (elementYPositionSpriteSheet + 1) * 32, col, 0);
 		TestLog.logger.info("Slime with level: " + level + ", and color " + col + " rendered");
 	}
+
+	
+	/**
+	 * This method is used to control how the game behaves when a Slime dies. That is, 
+	 * when it's attacked by the player and its life is decreased to zero.
+	 * 
+	 * Items are dropped and the player score increases.
+	 * 
+	 * @param none.
+	 * @return none.
+	 */
+	protected void die() {
+		super.die();
+
+		// Indicates the number of items will be dropped
+		int count = random.nextInt(2) + 1; // value between 1 and 2
+		for (int i = 0; i < count; i++) {
+			// When the Slime dies new items are created and dropped.
+			ResourceItem resourceItem = new ResourceItem(Resource.slime);
+			int resourcePositionX = positionX + random.nextInt(11) - 5;// Item dropped at the position X of the player +- 5
+			int resourcePositionY = positionY + random.nextInt(11) - 5;// Item dropped at the position Y of the player +- 5
+			level.add(new ItemEntity(resourceItem, resourcePositionX, resourcePositionY));
+		}
+
+		// Increase player score
+		if (level.player != null) {
+			level.player.score += 25*lvl;
+		}else{
+			//nothing to do
+		}
+		TestLog.logger.info("Slime died...");
+
+		try {
+			super.finalize();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the slime");
+			assert(false);
+		}
+		
+	}
+
 
 	/**
 	 * This method is used to control how the game behaves when a Slime touches some other entity.
