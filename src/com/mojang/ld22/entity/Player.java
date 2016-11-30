@@ -308,6 +308,63 @@ public class Player extends Mob {
 		game.won();
 	}
 
+
+	protected void die() {
+		super.die();
+		Sound.playerDeath.play();
+		
+		try {
+			super.finalize();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the player");
+			assert(false);
+		}
+	}
+
+	protected void touchedBy(Entity entity) {
+		if (!(entity instanceof Player)) {
+			entity.touchedBy(this);
+		} else {
+			// nothing to do
+		}
+	}
+
+	protected void doHurt(int damage, int attackDir) {
+		if (hurtTime > 0 || invulnerableTime > 0)
+			return;
+
+		Sound.playerHurt.play();
+		TextParticle textParticle = new TextParticle("" + damage, positionX, positionY, Color.get(-1, 504, 504, 504));
+		level.add(textParticle);
+		health -= damage;
+		switch (attackDir) {
+		case 0:
+			positionYKnockback = +6;
+			break;
+		case 1:
+			positionYKnockback = -6;
+			break;
+		case 2:
+			positionXKnockback = -6;
+			break;
+		case 3:
+			positionXKnockback = +6;
+			break;
+		}
+		hurtTime = 10;
+		invulnerableTime = 30;
+		
+		try {
+			// finalizeObject is calling finalize() in the textParticle class
+			textParticle.finalizeObject();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the Players TextParticle");
+			assert(false);
+		}
+
+	}
+
+
 	private boolean use() {
 		int yo = -2;
 		if (direction == 0 && use(positionX - 8, positionY + 4 + yo, positionX + 8, positionY + 12 + yo))
@@ -340,6 +397,38 @@ public class Player extends Mob {
 
 		return false;
 	}
+	
+	private boolean interact(int x0, int y0, int x1, int y1) {
+		List<Entity> entities = level.getEntities(x0, y0, x1, y1);
+		for (int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
+			if (e != this)
+				if (e.interact(this, activeItem, attackDir))
+					return true;
+		}
+		return false;
+	}
+
+	private void hurt(int x0, int y0, int x1, int y1) {
+		List<Entity> entities = level.getEntities(x0, y0, x1, y1);
+		for (int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
+			if (e != this)
+				e.hurt(this, getAttackDamage(e), attackDir);
+		}
+	}
+
+	private int getAttackDamage(Entity e) {
+		int dmg = random.nextInt(3) + 1;
+		if (attackItem != null) {
+			dmg += attackItem.getAttackDamageBonus(e);
+		} else {
+			// nothing to do
+		}
+		assert(dmg >= 0) : "Damage must be positive";
+		return dmg;
+	}
+	
 	/**
 	     *this class is about power attack of players
 	     *defining ranger and where his gonna attack (position in X and Y)
@@ -442,94 +531,6 @@ public class Player extends Mob {
 					return true;
 		}
 		return false;
-	}
-
-	private boolean interact(int x0, int y0, int x1, int y1) {
-		List<Entity> entities = level.getEntities(x0, y0, x1, y1);
-		for (int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
-			if (e != this)
-				if (e.interact(this, activeItem, attackDir))
-					return true;
-		}
-		return false;
-	}
-
-	private void hurt(int x0, int y0, int x1, int y1) {
-		List<Entity> entities = level.getEntities(x0, y0, x1, y1);
-		for (int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
-			if (e != this)
-				e.hurt(this, getAttackDamage(e), attackDir);
-		}
-	}
-
-	private int getAttackDamage(Entity e) {
-		int dmg = random.nextInt(3) + 1;
-		if (attackItem != null) {
-			dmg += attackItem.getAttackDamageBonus(e);
-		} else {
-			// nothing to do
-		}
-		assert(dmg >= 0) : "Damage must be positive";
-		return dmg;
-	}
-
-	
-
-	protected void die() {
-		super.die();
-		Sound.playerDeath.play();
-		
-		try {
-			super.finalize();
-		} catch (Throwable e) {
-			TestLog.logger.severe("Error finalizing the player");
-			assert(false);
-		}
-	}
-
-	protected void touchedBy(Entity entity) {
-		if (!(entity instanceof Player)) {
-			entity.touchedBy(this);
-		} else {
-			// nothing to do
-		}
-	}
-
-	protected void doHurt(int damage, int attackDir) {
-		if (hurtTime > 0 || invulnerableTime > 0)
-			return;
-
-		Sound.playerHurt.play();
-		TextParticle textParticle = new TextParticle("" + damage, positionX, positionY, Color.get(-1, 504, 504, 504));
-		level.add(textParticle);
-		health -= damage;
-		switch (attackDir) {
-		case 0:
-			positionYKnockback = +6;
-			break;
-		case 1:
-			positionYKnockback = -6;
-			break;
-		case 2:
-			positionXKnockback = -6;
-			break;
-		case 3:
-			positionXKnockback = +6;
-			break;
-		}
-		hurtTime = 10;
-		invulnerableTime = 30;
-		
-		try {
-			// finalizeObject is calling finalize() in the textParticle class
-			textParticle.finalizeObject();
-		} catch (Throwable e) {
-			TestLog.logger.severe("Error finalizing the Players TextParticle");
-			assert(false);
-		}
-
 	}
 
 	
