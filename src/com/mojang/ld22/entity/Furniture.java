@@ -1,5 +1,6 @@
 package com.mojang.ld22.entity;
 
+import com.mojang.ld22.TestLog;
 import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.FurnitureItem;
 import com.mojang.ld22.item.PowerGloveItem;
@@ -15,6 +16,15 @@ public class Furniture extends Entity {
 	
 
 	public Furniture(String name) {
+		
+		if(name == null){	
+			TestLog.logger.severe("Error String is null - Furniture");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
+		
 		this.name = name;
 		positionXRelative = 3;
 		positionYRelative = 3;
@@ -61,6 +71,14 @@ public class Furniture extends Entity {
 	 * @return nothing (void)
 	 */
 	public void render(Screen screen) {
+
+		if(screen == null){
+			TestLog.logger.severe("Error Screen is null - Furniture");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
 		screen.render(positionX - 8, positionY - 8 - 4, sprite * 2 + 8 * 32, color, 0);
 		screen.render(positionX - 0, positionY - 8 - 4, sprite * 2 + 8 * 32 + 1, color, 0);
 		screen.render(positionX - 8, positionY - 0 - 4, sprite * 2 + 8 * 32 + 32, color, 0);
@@ -83,6 +101,13 @@ public class Furniture extends Entity {
 	 * @param player - object Player.
 	 */
 	public void take(Player player) {
+		if(player == null){
+			TestLog.logger.severe("Error Player is null - Furniture");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
 		shouldTake = player;
 	}
 	
@@ -93,6 +118,14 @@ public class Furniture extends Entity {
 	 * @param entity - indicates the entity which touched the furniture.
 	 */
 	protected void touchedBy(Entity entity) {
+		
+		if(entity == null){
+			TestLog.logger.severe("Error Entity is null - Furniture");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
 		if (entity instanceof Player && pushTime == 0) {
 			pushDirection = ((Player) entity).direction;
 			pushTime = 10;
