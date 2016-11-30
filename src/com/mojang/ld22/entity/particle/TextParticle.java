@@ -19,6 +19,16 @@ public class TextParticle extends Entity {
 	public double yy = 0;
 	public double zz = 0;
 
+	/** 
+	 * TextParticle constructor. It is used to display a message on the screen.
+	 * It's usually used to display the damage one entity took from another.
+	 * It's usually a number.
+	 * 
+	 * @param msg String representing the message to be displayed
+	 * @param x The horizontal coordinate where the message will be displayed
+	 * @param y The vertical coordinate where the message will be displayed
+	 * @param y The color of the message.
+	 */
 	public TextParticle(String msg, int x, int y, int col) {
 		// Secure constructor
 		assert msg != null : "Message cannot be null";
@@ -38,6 +48,17 @@ public class TextParticle extends Entity {
 		za = random.nextFloat() * 0.7 + 2;
 	}
 
+	/**
+	 * This is a method  used to control the logic updates of the game.
+	 * It basically indicates when each action will take place in the game.
+	 * 
+	 * It's related to the FPS(Frames Per Second), but while the last indicates how many times the
+	 * screen will be refreshed, the Tick indicates how many times the logic of the game will
+	 * be updated per second.
+	 *
+	 * @param none.
+	 * @return none.
+	 */
 	public void tick() {
 		time++;
 		if (time > 60) {
@@ -68,6 +89,11 @@ public class TextParticle extends Entity {
 		
 	}
 
+	/** 
+	 * Renders the message on the screen
+	 * 
+	 * @param screen Represents where the message will be displayed
+	 */
 	public void render(Screen screen) {
 		// Secure method
 		assert screen != null : "Screen cannot be null";
@@ -77,7 +103,11 @@ public class TextParticle extends Entity {
 		Font.draw(msg, screen, positionX - msg.length() * 4, positionY - (int) (zz), col);
 	}
 
-	//Free object's memory to make it easier for the garbage collector get it
+
+	/** 
+	 * Frees the object's memory to make it easier for the garbage collector to get it.
+	 * 
+	 */
 	public void finalizeObject() throws Throwable
 	{
 		this.finalize();
