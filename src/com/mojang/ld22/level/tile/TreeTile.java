@@ -70,6 +70,13 @@ public class TreeTile extends Tile {
 		hurt(level, x, y, dmg);
 	}
 
+	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
+		if (item instanceof ToolItem) {
+			useAxe(level, xt, yt, player, item);
+		}
+		return false;
+	}
+
 	private boolean useAxe(Level level, int xt, int yt, Player player, Item item){
 		ToolItem tool = (ToolItem) item;
 		if (tool.type == ToolType.axe) {
@@ -81,13 +88,6 @@ public class TreeTile extends Tile {
 		return false;
 	}
 	
-	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
-		if (item instanceof ToolItem) {
-			useAxe(level, xt, yt, player, item);
-		}
-		return false;
-	}
-
 	private void hurt(Level level, int x, int y, int dmg) {
 		{
 			int count = random.nextInt(10) == 0 ? 1 : 0;
@@ -112,4 +112,5 @@ public class TreeTile extends Tile {
 			level.setData(x, y, damage);
 		}
 	}
+
 }
