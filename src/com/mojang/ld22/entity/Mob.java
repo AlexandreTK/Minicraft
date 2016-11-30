@@ -1,5 +1,6 @@
 package com.mojang.ld22.entity;
 
+import com.mojang.ld22.TestLog;
 import com.mojang.ld22.entity.particle.TextParticle;
 import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.level.Level;
@@ -114,11 +115,21 @@ public class Mob extends Entity {
 		if (hurtTime > 0)
 			return;
 
-		level.add(new TextParticle("" + heal, positionX, positionY, Color.get(-1, 50, 50, 50)));
+		TextParticle textParticle = new TextParticle("" + heal, positionX, positionY, Color.get(-1, 50, 50, 50));
+		level.add(textParticle);
 		health += heal;
 
 		if (health > maxHealth)
 			health = maxHealth;
+		
+		try {
+			// finalizeObject is calling finalize() in the textParticle class
+			textParticle.finalizeObject();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the Mob's TextParticle");
+			assert(false);
+		}
+
 	}
 
 	public boolean findStartPos(Level level) {

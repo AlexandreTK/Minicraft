@@ -247,6 +247,13 @@ public class Zombie extends Mob {
 			// nothing to do
 		}
 		TestLog.logger.info("Zombie was touched.");
+		
+		try {
+			entity.finalizeObject();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the entity - Zombie");
+			assert(false);
+		}
 	}
 
 	/**
@@ -280,6 +287,14 @@ public class Zombie extends Mob {
 			// nothing to do
 		}
 		TestLog.logger.info("Zombie died...");
+		
+		try {
+			super.finalize();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the Zombie");
+			assert(false);
+		}
+		
 	}
 
 }
