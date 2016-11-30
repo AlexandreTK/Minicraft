@@ -36,6 +36,14 @@ public class Slime extends Mob {
 	 * @return none.
 	 */
 	public Slime(int lvl) {
+		
+		if(lvl < 0){	
+			TestLog.logger.severe("Error lvl is negative - Slime");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
 		this.lvl = lvl;
 		positionX = random.nextInt(64 * 16); // Slime X position will be located between 0 and (64 * 16)
 		positionY = random.nextInt(64 * 16); // Slime Y position will be located between 0 and (64 * 16)
@@ -160,6 +168,13 @@ public class Slime extends Mob {
 	 * @return none.
 	 */
 	public void render(Screen screen) {
+
+		if(screen == null){
+			TestLog.logger.severe("Error screen is null - Slime");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
 		
 		// This variables indicate which visual element will be rendered in the screen 
 		int elementXPositionSpriteSheet = 0;
@@ -241,6 +256,14 @@ public class Slime extends Mob {
 	 * @return none.
 	 */
 	protected void touchedBy(Entity entity) {
+
+		if(entity == null){
+			TestLog.logger.severe("Error entity is null - Slime");
+			// Since this class do not receive user inputs, any wrong argument came from 
+			// the game, so it's better to use assert instead of throwing exceptions. 
+			assert(false);
+		}
+		
 		// Hurts the Player, if it touches the Slime
 		if (entity instanceof Player) {
 			entity.hurt(this, lvl, direction);
