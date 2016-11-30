@@ -32,7 +32,13 @@ public class Inventory {
 		}
 	}
 
-
+	/**
+	 * Verify whether there are enough resources on the inventory or not.
+	 * 
+	 * @param resource - Object of the type resource
+	 * @param count - minimum number of resourceItems that should be available.
+	 * @return "true" if there are enough resources.
+	 */
 	public boolean hasResources(Resource resource, int count) {
 		ResourceItem resourceItem = findResource(resource);
 		boolean returnFlag = false;
@@ -47,7 +53,15 @@ public class Inventory {
 		return returnFlag;
 	}
 
-
+	/**
+	 * Remove the resource Item from the inventory if there are more than
+	 * "count" available items.
+	 * 
+	 * @param resource - Object of the type resource
+	 * @param count maximum number of ResourceItems that will not be 
+	 * removed by this function
+	 * @return "true" if an item was removed, false otherwise.
+	 */
 	public boolean removeResource(Resource resource, int count) {
 		ResourceItem resourceItem = findResource(resource);
 		boolean returnFlag = false;
@@ -70,7 +84,12 @@ public class Inventory {
 		return returnFlag;
 	}
 
-
+	/**
+	 * This method is used to count the amount of ResourceItems available on the inventory.
+	 * 
+	 * @param item Object that represents an Item
+	 * @return The amount of Items that are of the type ResourceItem.
+	 */
 	public int countItems(Item item) { 
 		
 		int countItems = 0;
