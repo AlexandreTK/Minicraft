@@ -66,6 +66,7 @@ public class GrassTile extends Tile {
 	}
 
 	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
+		assert(player != null): "parameter player is null";
 		if (item instanceof ToolItem) {
 			ToolItem tool = (ToolItem) item;
 			if (tool.type == ToolType.shovel) {
