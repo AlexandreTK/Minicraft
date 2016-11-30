@@ -13,7 +13,7 @@ public class Furniture extends Entity {
 	public int color = 0;
 	public int sprite = 0;
 	
-	
+
 	public Furniture(String name) {
 		this.name = name;
 		positionXRelative = 3;
@@ -53,7 +53,13 @@ public class Furniture extends Entity {
 		if (pushTime > 0)
 			pushTime--;
 	}
-
+	
+	/**
+	 * Render the furniture on the screen.
+	 * 
+	 * @param screen - object Screen, where the furniture will be rendered.
+	 * @return nothing (void)
+	 */
 	public void render(Screen screen) {
 		screen.render(positionX - 8, positionY - 8 - 4, sprite * 2 + 8 * 32, color, 0);
 		screen.render(positionX - 0, positionY - 8 - 4, sprite * 2 + 8 * 32 + 1, color, 0);
@@ -61,14 +67,31 @@ public class Furniture extends Entity {
 		screen.render(positionX - 0, positionY - 0 - 4, sprite * 2 + 8 * 32 + 33, color, 0);
 	}
 
+	/**
+	 * This function only returns true.
+	 * 
+	 * @param entity - object Entity.
+	 * @return true
+	 */
 	public boolean blocks(Entity entity) {
 		return true;
 	}
 
+	/**
+	 * This method only sets the variable shouldTake to the player.
+	 * 
+	 * @param player - object Player.
+	 */
 	public void take(Player player) {
 		shouldTake = player;
 	}
-
+	
+	/**
+	 * This method verifies whether a player touched the furniture or not.
+	 * If so, the furniture will be pushed towards the players direction.
+	 * 
+	 * @param entity - indicates the entity which touched the furniture.
+	 */
 	protected void touchedBy(Entity entity) {
 		if (entity instanceof Player && pushTime == 0) {
 			pushDirection = ((Player) entity).direction;
