@@ -140,6 +140,14 @@ public class Slime extends Mob {
 			//nothing to do
 		}
 		TestLog.logger.info("Slime died...");
+
+		try {
+			super.finalize();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the slime");
+			assert(false);
+		}
+		
 	}
 
 	/**
@@ -241,5 +249,13 @@ public class Slime extends Mob {
 			//nothing to do
 		}
 		TestLog.logger.info("Slime was touched.");
+
+		try {
+			entity.finalizeObject();
+		} catch (Throwable e) {
+			TestLog.logger.severe("Error finalizing the entity - Slime");
+			assert(false);
+		}
+		
 	}
 }

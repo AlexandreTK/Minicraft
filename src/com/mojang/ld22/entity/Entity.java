@@ -187,4 +187,10 @@ public class Entity {
 	protected void touchedBy(Entity entity) {
 
 	}
+	
+	//Free object's memory to make it easier for the garbage collector get it
+	public void finalizeObject() throws Throwable
+	{
+		this.finalize();
+	}
 }
