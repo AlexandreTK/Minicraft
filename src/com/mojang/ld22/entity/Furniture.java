@@ -16,14 +16,10 @@ public class Furniture extends Entity {
 	
 
 	public Furniture(String name) {
-		
 		if(name == null){	
 			TestLog.logger.severe("Error String is null - Furniture");
-			// Since this class do not receive user inputs, any wrong argument came from 
-			// the game, so it's better to use assert instead of throwing exceptions. 
 			assert(false);
 		}
-		
 		
 		this.name = name;
 		positionXRelative = 3;
@@ -37,26 +33,13 @@ public class Furniture extends Entity {
 				shouldTake.inventory.add(0, shouldTake.activeItem);
 				shouldTake.activeItem = new FurnitureItem(this);
 			} else {
-				// nothing to do
+				// DO NOTHING
 			}
 
 			shouldTake = null;
 		}
 
-		switch (pushDirection) {
-		case 0:
-			move(0, +1);
-			break;
-		case 1:
-			move(0, -1);
-			break;
-		case 2:
-			move(-1, 0);
-			break;
-		case 3:
-			move(+1, 0);
-			break;
-		}
+		pushFurniture(pushDirection);
 
 		pushDirection = -1;
 
@@ -74,15 +57,22 @@ public class Furniture extends Entity {
 
 		if(screen == null){
 			TestLog.logger.severe("Error Screen is null - Furniture");
-			// Since this class do not receive user inputs, any wrong argument came from 
-			// the game, so it's better to use assert instead of throwing exceptions. 
 			assert(false);
 		}
 		
-		screen.render(positionX - 8, positionY - 8 - 4, sprite * 2 + 8 * 32, color, 0);
-		screen.render(positionX - 0, positionY - 8 - 4, sprite * 2 + 8 * 32 + 1, color, 0);
-		screen.render(positionX - 8, positionY - 0 - 4, sprite * 2 + 8 * 32 + 32, color, 0);
-		screen.render(positionX - 0, positionY - 0 - 4, sprite * 2 + 8 * 32 + 33, color, 0);
+		// Renders the Furniture in the screen at the (positionX, positionY) coordinate
+		// and the sprite rendered is spriteBasePosition.
+		final int leftPosition = -8;
+		final int downPosition = -8;
+		final int spriteBasePosition = sprite * 2 + 8 * 32;
+		screen.render(positionX + leftPosition, positionY + downPosition- 4,
+				spriteBasePosition, color, 0); 
+		screen.render(positionX, positionY + downPosition - 4,
+				spriteBasePosition + 1, color, 0);
+		screen.render(positionX + leftPosition, positionY - 4,
+				spriteBasePosition + 32, color, 0);
+		screen.render(positionX, positionY - 4,
+				spriteBasePosition + 33, color, 0);
 	}
 
 	/**
@@ -130,7 +120,24 @@ public class Furniture extends Entity {
 			pushDirection = ((Player) entity).direction;
 			pushTime = 10;
 		} else {
-			// nothing to do
+			// DO NOTHING
+		}
+	}
+
+	private void pushFurniture(int pushDirection) {
+		switch (pushDirection) {
+		case 0:
+			move(0, +1);
+			break;
+		case 1:
+			move(0, -1);
+			break;
+		case 2:
+			move(-1, 0);
+			break;
+		case 3:
+			move(+1, 0);
+			break;
 		}
 	}
 }
