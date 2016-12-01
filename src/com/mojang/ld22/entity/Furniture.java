@@ -125,6 +125,12 @@ public class Furniture extends Entity {
 	}
 
 	private void pushFurniture(int pushDirection) {
+		
+		if(pushDirection > 3 || pushDirection < 0){
+			TestLog.logger.severe("Error pushDirection is invalid - Furiniture");
+			assert(false);
+		}
+		
 		switch (pushDirection) {
 		case 0:
 			move(0, +1);
