@@ -70,10 +70,13 @@ public class Slime extends Mob {
 			if (jumpTime <= -10) {
 				
 				// Slime movement when it's not following the player
-				positionXAbsolute = (random.nextInt(3) - 1); // Slime will move between -1(away) and 1 unit from the Player
-				positionYAbsolute = (random.nextInt(3) - 1); // Slime will move between -1(away) and 1 unit from the Player
+				// Slime will move between -1(away) and 1 unit from the Player
+				positionXAbsolute = (random.nextInt(3) - 1); 
+				// Slime will move between -1(away) and 1 unit from the Player
+				positionYAbsolute = (random.nextInt(3) - 1); 
  
-				//TestLog.logger.info("Slime movement in X: " + positionXAbsolute + ", and movement in Y" + positionYAbsolute);
+				//TestLog.logger.info("Slime movement in X: " + positionXAbsolute + ",
+				// and movement in Y" + positionYAbsolute);
 				if (level.player != null) {
 					//Distance Walked from the player
 					int positionXWalked = level.player.positionX - positionX;
@@ -154,60 +157,17 @@ public class Slime extends Mob {
 			//nothing to do
 		}
 		
-		int colorAroundEntity = 0;
-		int borderColor = 0;
-		int bodyColor = 0;
-		int eyeColor = 0;
-		int col = 0;
-		// Choose the slime color according to its level.
-		switch(lvl){
+		int colorAroundEntity = getColorAroundEntity(lvl);
+		int borderColor = getBorderColor(lvl);
+		int bodyColor = getBodyColor(lvl);
+		int eyeColor = getEyeColor(lvl);
+		int col = Color.get(colorAroundEntity, borderColor, bodyColor, eyeColor);
 
-		case 1:
-			colorAroundEntity = -1; // -1 => Background color
-			borderColor = 10;		// Border color is dark
-			bodyColor = 252;		// Body color is GREEN
-			eyeColor = 555; 		// Eye color is WHITE
-			col = Color.get(colorAroundEntity, borderColor, bodyColor, eyeColor);
-			break;
+		col = getSlimeColorIfHurt(hurtTime, col);
 		
-		case 2:
-			colorAroundEntity = -1; // -1 => Background color
-			borderColor = 100;		// Border color is dark
-			bodyColor = 522;		// Body color is PINK
-			eyeColor = 555; 		// Eye color is WHITE
-			col = Color.get(colorAroundEntity, borderColor, bodyColor, 555);
-			break;
-		
-		case 3:
-			colorAroundEntity = -1; // -1 => Background color
-			borderColor = 111;		// Border color is GRAY
-			bodyColor = 444;		// Body color is GRAY
-			eyeColor = 555; 		// Eye color is WHITE
-			col = Color.get(colorAroundEntity, bodyColor, bodyColor, eyeColor);
-			break;
+		renderSlime(distFromPlayerX, distFromPlayerY, col, screen, 
+				elementXPositionSpriteSheet, elementYPositionSpriteSheet);
 
-		case 4:
-			colorAroundEntity = -1; // -1 => Background color
-			borderColor = 000;		// Border color is BLACK
-			bodyColor = 111;		// Border color is DARK GRAY
-			eyeColor = 224;			// Border color is PURPLE
-			col = Color.get(colorAroundEntity, borderColor, bodyColor, eyeColor);
-			break;
-		}
-		// The slime becomes WHITE if it is damaged
-		if (hurtTime > 0) {
-			final int background_color = -1;
-			final int white_color = 555;
-			col = Color.get(background_color, white_color, white_color, white_color);
-		}else{
-			//nothing to do
-		}
-
-		// The slime is rendered in 4 different pieces, top-left, top-right, bottom-left, bottom-down
-		screen.render(distFromPlayerX + 0, distFromPlayerY + 0, elementXPositionSpriteSheet + elementYPositionSpriteSheet * 32, col, 0);
-		screen.render(distFromPlayerX + 8, distFromPlayerY + 0, elementXPositionSpriteSheet + 1 + elementYPositionSpriteSheet * 32, col, 0);
-		screen.render(distFromPlayerX + 0, distFromPlayerY + 8, elementXPositionSpriteSheet + (elementYPositionSpriteSheet + 1) * 32, col, 0);
-		screen.render(distFromPlayerX + 8, distFromPlayerY + 8, elementXPositionSpriteSheet + 1 + (elementYPositionSpriteSheet + 1) * 32, col, 0);
 		TestLog.logger.info("Slime with level: " + level + ", and color " + col + " rendered");
 	}
 
@@ -229,8 +189,10 @@ public class Slime extends Mob {
 		for (int i = 0; i < count; i++) {
 			// When the Slime dies new items are created and dropped.
 			ResourceItem resourceItem = new ResourceItem(Resource.slime);
-			int resourcePositionX = positionX + random.nextInt(11) - 5;// Item dropped at the position X of the player +- 5
-			int resourcePositionY = positionY + random.nextInt(11) - 5;// Item dropped at the position Y of the player +- 5
+			// Item dropped at the position X of the player +- 5
+			int resourcePositionX = positionX + random.nextInt(11) - 5;
+			// Item dropped at the position Y of the player +- 5
+			int resourcePositionY = positionY + random.nextInt(11) - 5;
 			level.add(new ItemEntity(resourceItem, resourcePositionX, resourcePositionY));
 		}
 
@@ -284,4 +246,144 @@ public class Slime extends Mob {
 		}
 		
 	}
+
+	private void renderSlime(int distFromPlayerX, int distFromPlayerY, int col, Screen screen, 
+			int elementXPositionSpriteSheet, int elementYPositionSpriteSheet) {
+
+		if(screen == null){
+			TestLog.logger.severe("Error screen is null - Slime");
+			assert(false);
+		}
+		// The slime is rendered in 4 different pieces, top-left, top-right, bottom-left, bottom-down
+		screen.render(distFromPlayerX + 0, distFromPlayerY + 0,
+				elementXPositionSpriteSheet + elementYPositionSpriteSheet * 32, col, 0);
+		screen.render(distFromPlayerX + 8, distFromPlayerY + 0,
+				elementXPositionSpriteSheet + 1 + elementYPositionSpriteSheet * 32, col, 0);
+		screen.render(distFromPlayerX + 0, distFromPlayerY + 8,
+				elementXPositionSpriteSheet + (elementYPositionSpriteSheet + 1) * 32, col, 0);
+		screen.render(distFromPlayerX + 8, distFromPlayerY + 8,
+				elementXPositionSpriteSheet + 1 + (elementYPositionSpriteSheet + 1) * 32, col, 0);
+	}
+	
+	private int getSlimeColorIfHurt(int hurtTime, int col) {
+
+		// The slime becomes WHITE if it is damaged
+		if (hurtTime > 0) {
+			final int background_color = -1;
+			final int white_color = 555;
+			col = Color.get(background_color, white_color, white_color, white_color);
+		}else{
+			//nothing to do
+		}	
+		return col;
+	}
+	
+	private int getColorAroundEntity(int level) {
+		
+		if(level > 4 || level < 1){
+			TestLog.logger.severe("Error level is invalid - Slime");
+			assert(false);
+		}
+		
+		int colorAroundEntity = 0;
+		// Choose the Slime color according to its level.
+		switch (level) {
+		case 1:
+			colorAroundEntity = -1; // -1 => Background color
+			break;
+		case 2:
+			colorAroundEntity = -1; // -1 => Background color
+			break;
+		case 3:
+			colorAroundEntity = -1; // -1 => Background color
+			break;
+		case 4:
+			colorAroundEntity = -1; // -1 => Background color
+			break;
+		}
+		
+		return colorAroundEntity;
+	}
+
+	private int getBorderColor(int level) {
+		
+		if(level > 4 || level < 1){
+			TestLog.logger.severe("Error level is invalid - Slime");
+			assert(false);
+		}
+		
+		int borderColor = 0;
+		// Choose the Slime color according to its level.
+		switch (lvl) {
+		case 1:
+			borderColor = 10;		// Border color is dark
+			break;
+		case 2:
+			borderColor = 100;		// Border color is dark
+			break;
+		case 3:
+			borderColor = 111;		// Border color is GRAY
+			break;
+		case 4:
+			borderColor = 000;		// Border color is BLACK
+			break;
+		}
+		
+		return borderColor;
+	}
+
+	private int getBodyColor(int level) {
+		
+		if(level > 4 || level < 1){
+			TestLog.logger.severe("Error level is invalid - Slime");
+			assert(false);
+		}
+		
+		int bodyColor = 0;
+		// Choose the Slime color according to its level.
+		switch (lvl) {
+		case 1:
+			bodyColor = 252;		// Body color is GREEN
+			break;
+		case 2:
+			bodyColor = 522;		// Body color is PINK
+			break;
+		case 3:
+			bodyColor = 444;		// Body color is GRAY
+			break;
+		case 4:
+			bodyColor = 111;		// Body color is DARK GRAY
+			break;
+		}
+		
+		return bodyColor;
+	}
+
+	private int getEyeColor(int level) {
+		
+		if(level > 4 || level < 1){
+			TestLog.logger.severe("Error level is invalid - Slime");
+			assert(false);
+		}
+		
+		int eyeColor = 0;
+		// Choose the Slime color according to its level.
+		switch (lvl) {
+		case 1:
+			eyeColor = 555; 		// Eye color is WHITE
+			break;
+		case 2:
+			eyeColor = 555; 		// Eye color is WHITE
+			break;
+		case 3:
+			eyeColor = 555; 		// Eye color is WHITE
+			break;
+		case 4:
+			eyeColor = 224;			// Border color is PURPLE
+			break;
+		}
+		
+		return eyeColor;
+	}
+	
 }
