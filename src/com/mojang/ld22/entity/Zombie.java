@@ -37,18 +37,14 @@ public class Zombie extends Mob {
 		
 		if(lvl < 0){
 			TestLog.logger.severe("Error level is negative - Zombie");
-			// Since this class do not receive user inputs, any wrong argument came from 
-			// the game, so it's better to use assert instead of throwing exceptions. 
 			assert(false);
 		}
 		
 		this.lvl = level;
-		positionX = random.nextInt(64 * 16); // Zombie X position will be
-												// located between 0 and (64 *
-												// 16)
-		positionY = random.nextInt(64 * 16); // Zombie Y position will be
-												// located between 0 and (64 *
-												// 16)
+		// Zombie X position will be located between 0 and (64 * 16)
+		positionX = random.nextInt(64 * 16);
+		// Zombie Y position will be located between 0 and (64 * 16)
+		positionY = random.nextInt(64 * 16); 
 		health = maxHealth = level * level * 10;
 		// TestLog.logger.info("Zombie was created.");
 	}
@@ -91,40 +87,21 @@ public class Zombie extends Mob {
 				}
 				TestLog.logger.info("Zombie walked more than 50*50 units.");
 			} else {
-				// nothing to do
+				// DO NOTHING
 			}
 		} else {
-			// nothing to do
+			// DO NOTHING
 		}
 
 		int speed = tickTime & 1;
 
 		if (!move(positionXAbsolute * speed, positionYAbsolute * speed) || random.nextInt(200) == 0) {
 			randomWalkTime = 60;
-			positionXAbsolute = (random.nextInt(3) - 1) * random.nextInt(2); // Zombie
-																				// will
-																				// move
-																				// between
-																				// -1(away)
-																				// and
-																				// 1
-																				// unit
-																				// from
-																				// the
-																				// Player
-			positionYAbsolute = (random.nextInt(3) - 1) * random.nextInt(2); // Zombie
-																				// will
-																				// move
-																				// between
-																				// -1(away)
-																				// and
-																				// 1
-																				// unit
-																				// from
-																				// the
-																				// Player
+			// Zombie will move between -1(away) and 1 unit from the Player.
+			positionXAbsolute = (random.nextInt(3) - 1) * random.nextInt(2); 
+			positionYAbsolute = (random.nextInt(3) - 1) * random.nextInt(2);
 		} else {
-			// nothing to do
+			// DO NOTHING
 		}
 
 		if (randomWalkTime > 0)
@@ -144,9 +121,7 @@ public class Zombie extends Mob {
 	public void render(Screen screen) {
 		
 		if(screen == null){
-			TestLog.logger.severe("Error screen is null - Zombie");
-			// Since this class do not receive user inputs, any wrong argument came from 
-			// the game, so it's better to use assert instead of throwing exceptions. 
+			TestLog.logger.severe("Error screen is null - Zombie"); 
 			assert(false);
 		}
 		
@@ -159,89 +134,36 @@ public class Zombie extends Mob {
 		// figure of the Zombie.
 		int flip1 = (walkedDistancy >> 3) & 1;
 		int flip2 = (walkedDistancy >> 3) & 1;
-
-		if (direction == 1) {
-			elementXPositionSpriteSheet += 2; // A different picture of the
-												// Zombie is rendered
-		} else {
-			// nothing to do
-		}
+		
 		if (direction > 1) {
-
 			flip1 = 0;
 			flip2 = ((walkedDistancy >> 4) & 1);
-
 			if (direction == 2) {
 				flip1 = 1;
+			} else {
+				// DO NOTHING
 			}
-
-			elementXPositionSpriteSheet += 4 + ((walkedDistancy >> 3) & 1) * 2;
 		} else {
-			// nothing to do
+			// DO NOTHING
 		}
+		elementXPositionSpriteSheet = ChangeElementXPositionSpriteSheet(elementXPositionSpriteSheet);
 
-		// This variables indicate the distance from the Player to the element
-		// rendered
+		// This variables indicate the distance from the Player to the element rendered
 		int distFromPlayerX = positionX - 8;
 		int distFromPlayerY = positionY - 11;
 
 		// Zombie Attributes colors
-		int colorAroundEntity = 0;
-		int borderColor = 0;
-		int bodyColor = 0;
-		int headColor = 0;
-		int col = 0;
-
-		// Choose the Zombie color according to its level.
-		switch (lvl) {
-		case 1:
-			colorAroundEntity = -1; // -1 => Background color
-			borderColor = 10; // Border color is dark
-			bodyColor = 252; // Body/shirt color is light GREEN
-			headColor = 050; // Head color is Green
-			col = Color.get(colorAroundEntity, borderColor, bodyColor, headColor);
-			break;
-		case 2:
-			colorAroundEntity = -1; // -1 => Background color
-			borderColor = 100; // Border color is dark
-			bodyColor = 522; // Body color is PINK
-			headColor = 050; // Head color is Green
-			col = Color.get(colorAroundEntity, borderColor, bodyColor, headColor);
-			break;
-		case 3:
-			colorAroundEntity = -1; // -1 => Background color
-			borderColor = 111; // Border color is GRAY
-			bodyColor = 444; // Body color is GRAY
-			headColor = 555; // Head color is WHITE
-			col = Color.get(colorAroundEntity, borderColor, bodyColor, headColor);
-			break;
-		case 4:
-			colorAroundEntity = -1; // -1 => Background color
-			borderColor = 000; // Border color is BLACK
-			bodyColor = 111; // Body color is DARK GRAY
-			headColor = 020; // Head color is Dark Green
-			col = Color.get(colorAroundEntity, borderColor, bodyColor, headColor);
-			break;
-		}
-		// The Zombie becomes WHITE if it is damaged
-		if (hurtTime > 0) {
-			final int background_color = -1;
-			final int white_color = 555;
-			col = Color.get(background_color, white_color, white_color, white_color);
-		} else {
-			// nothing to do
-		}
-
-		// The Zombie is rendered in 4 different pieces, top-left, top-right,
-		// bottom-left, bottom-down
-		screen.render(distFromPlayerX + 8 * flip1, distFromPlayerY + 0,
-				elementXPositionSpriteSheet + elementYPositionSpriteSheet * 32, col, flip1);
-		screen.render(distFromPlayerX + 8 - 8 * flip1, distFromPlayerY + 0,
-				elementXPositionSpriteSheet + 1 + elementYPositionSpriteSheet * 32, col, flip1);
-		screen.render(distFromPlayerX + 8 * flip2, distFromPlayerY + 8,
-				elementXPositionSpriteSheet + (elementYPositionSpriteSheet + 1) * 32, col, flip2);
-		screen.render(distFromPlayerX + 8 - 8 * flip2, distFromPlayerY + 8,
-				elementXPositionSpriteSheet + 1 + (elementYPositionSpriteSheet + 1) * 32, col, flip2);
+		int colorAroundEntity = getColorAroundEntity(lvl);
+		int borderColor = getBorderColor(lvl);
+		int bodyColor = getBodyColor(lvl);
+		int headColor = getHeadColor(lvl);
+		int col = Color.get(colorAroundEntity, borderColor, bodyColor, headColor);
+		
+		// If Zombie is hurt, change its colors
+		col = getZombieColorIfHurt(hurtTime,col);
+		
+		renderZombie(distFromPlayerX, distFromPlayerY, flip1, flip2, col,
+				screen, elementXPositionSpriteSheet, elementYPositionSpriteSheet);
 		TestLog.logger.info("Zombie with level: " + lvl + ", and color " + col + " rendered");
 	}
 
@@ -257,8 +179,6 @@ public class Zombie extends Mob {
 		
 		if(entity == null){
 			TestLog.logger.severe("Error entity is null - Zombie");
-			// Since this class do not receive user inputs, any wrong argument came from 
-			// the game, so it's better to use assert instead of throwing exceptions. 
 			assert(false);
 		}
 		
@@ -267,7 +187,7 @@ public class Zombie extends Mob {
 			entity.hurt(this, lvl + 1, direction);
 			TestLog.logger.info("Player was hurt by the Zombie...");
 		} else {
-			// nothing to do
+			// DO NOTHING
 		}
 		TestLog.logger.info("Zombie was touched.");
 		
@@ -292,9 +212,8 @@ public class Zombie extends Mob {
 	protected void die() {
 		super.die();
 
-		int count = random.nextInt(2) + 1; // value between 1 and 2, Indicates
-											// the number of items will be
-											// dropped
+		// value between 1 and 2, Indicates the number of items will be dropped
+		int count = random.nextInt(2) + 1;
 		// When the Zombie dies new items are created and dropped.
 		for (int i = 0; i < count; i++) {
 			ResourceItem resourceItem = new ResourceItem(Resource.cloth);
@@ -307,7 +226,7 @@ public class Zombie extends Mob {
 		if (level.player != null) {
 			level.player.score += 50 * lvl;
 		} else {
-			// nothing to do
+			// DO NOTHING
 		}
 		TestLog.logger.info("Zombie died...");
 		
@@ -317,7 +236,165 @@ public class Zombie extends Mob {
 			TestLog.logger.severe("Error finalizing the Zombie");
 			assert(false);
 		}
+	}
+	
+	private int ChangeElementXPositionSpriteSheet(int elementXPositionSpriteSheet) {
 		
+		if (direction == 1) {
+			// A different picture of the Zombie is rendered
+			elementXPositionSpriteSheet += 2;
+		} else {
+			// DO NOTHING
+		}
+		
+		if (direction > 1) {
+			elementXPositionSpriteSheet += 4 + ((walkedDistancy >> 3) & 1) * 2;
+		} else {
+			// DO NOTHING
+		}
+		
+		return elementXPositionSpriteSheet;
+	}
+	
+	private int getColorAroundEntity(int level) {
+		
+		if(level > 4 || level < 1){
+			TestLog.logger.severe("Error level is invalid - Zombie");
+			assert(false);
+		}
+		
+		int colorAroundEntity = 0;
+		// Choose the Zombie color according to its level.
+		switch (level) {
+		case 1:
+			colorAroundEntity = -1; // -1 => Background color
+			break;
+		case 2:
+			colorAroundEntity = -1; // -1 => Background color
+			break;
+		case 3:
+			colorAroundEntity = -1; // -1 => Background color
+			break;
+		case 4:
+			colorAroundEntity = -1; // -1 => Background color
+			break;
+		}
+		
+		return colorAroundEntity;
+	}
+
+	private int getBorderColor(int level) {
+		
+		if(level > 4 || level < 1){
+			TestLog.logger.severe("Error level is invalid - Zombie");
+			assert(false);
+		}
+		
+		int borderColor = 0;
+		// Choose the Zombie color according to its level.
+		switch (lvl) {
+		case 1:
+			borderColor = 10; // Border color is dark
+			break;
+		case 2:
+			borderColor = 100; // Border color is dark
+			break;
+		case 3:
+			borderColor = 111; // Border color is GRAY
+			break;
+		case 4:
+			borderColor = 000; // Border color is BLACK
+			break;
+		}
+		
+		return borderColor;
+	}
+
+	private int getBodyColor(int level) {
+		
+		if(level > 4 || level < 1){
+			TestLog.logger.severe("Error level is invalid - Zombie");
+			assert(false);
+		}
+		
+		int bodyColor = 0;
+		// Choose the Zombie color according to its level.
+		switch (lvl) {
+		case 1:
+			bodyColor = 252; // Body/shirt color is light GREEN
+			break;
+		case 2:
+			bodyColor = 522; // Body color is PINK
+			break;
+		case 3:
+			bodyColor = 444; // Body color is GRAY
+			break;
+		case 4:
+			bodyColor = 111; // Body color is DARK GRAY
+			break;
+		}
+		
+		return bodyColor;
+	}
+
+	private int getHeadColor(int level) {
+		
+		if(level > 4 || level < 1){
+			TestLog.logger.severe("Error level is invalid - Zombie");
+			assert(false);
+		}
+		
+		int headColor = 0;
+		// Choose the Zombie color according to its level.
+		switch (lvl) {
+		case 1:
+			headColor = 050; // Head color is Green
+			break;
+		case 2:
+			headColor = 050; // Head color is Green
+			break;
+		case 3:
+			headColor = 555; // Head color is WHITE
+			break;
+		case 4:
+			headColor = 020; // Head color is Dark Green
+			break;
+		}
+		
+		return headColor;
+	}
+
+	private int getZombieColorIfHurt(int hurtTime, int col) {
+
+		// The Zombie becomes WHITE if it is damaged
+		if (hurtTime > 0) {
+			final int background_color = -1;
+			final int white_color = 555;
+			col = Color.get(background_color, white_color, white_color, white_color);
+		} else {
+			// DO NOTHING
+		}		
+		return col;
+	}
+	
+	private void renderZombie(int distFromPlayerX, int distFromPlayerY, int flip1, int flip2, int col,
+			Screen screen, int elementXPositionSpriteSheet, int elementYPositionSpriteSheet) {
+
+		if(screen == null){
+			TestLog.logger.severe("Error screen is null - Zombie");
+			assert(false);
+		}
+		
+		// The Zombie is rendered in 4 different pieces, top-left, top-right,
+		// bottom-left, bottom-down
+		screen.render(distFromPlayerX + 8 * flip1, distFromPlayerY + 0,
+				elementXPositionSpriteSheet + elementYPositionSpriteSheet * 32, col, flip1);
+		screen.render(distFromPlayerX + 8 - 8 * flip1, distFromPlayerY + 0,
+				elementXPositionSpriteSheet + 1 + elementYPositionSpriteSheet * 32, col, flip1);
+		screen.render(distFromPlayerX + 8 * flip2, distFromPlayerY + 8,
+				elementXPositionSpriteSheet + (elementYPositionSpriteSheet + 1) * 32, col, flip2);
+		screen.render(distFromPlayerX + 8 - 8 * flip2, distFromPlayerY + 8,
+				elementXPositionSpriteSheet + 1 + (elementYPositionSpriteSheet + 1) * 32, col, flip2);
 	}
 
 }
